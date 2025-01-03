@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techpro99 - Phone & Electronics Repair</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .service {
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .service:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        .service img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .service h2 {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            color: #007bff;
+        }
+        .service button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .service button:hover {
+            background-color: #0056b3;
+        }
+        .contact {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .contact p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .service {
+                width: 90%;
+            }
+            .services {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            header p {
+                font-size: 0.9rem;
+            }
+            .contact {
+                padding: 15px;
+            }
+            .contact p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Techpro99</h1>
+        <p>Phone & Electronics Repair</p>
+        <a href="tel:+17736287132" style="background-color: #007bff; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-block;">Call Us</a>
+        <p>Address: 4362 N Elston Ave, Chicago, IL 60641</p>
+    </header>
+    
+    <section class="services">
+        <div class="service">
+            <img src="backglass.jpg" alt="Back Glass Repair">
+            <h2>Back Glass Repair</h2>
+            <button>Learn More</button>
+        </div>
+        <div class="service">
+            <img src="batt.jpg" alt="Battery Replacement">
+            <h2>Battery Replacement</h2>
+            <button>Learn More</button>
+        </div>
+        <div class="service">
+            <img src="screen.jpg" alt="Screen Replacement">
+            <h2>Screen Replacement</h2>
+            <button>Learn More</button>
+        </div>
+        <div class="service">
+            <img src="mother.jpg" alt="Motherboard Repair">
+            <h2>Motherboard Repair</h2>
+            <button>Learn More</button>
+        </div>
+    </section>
+    
+    <footer class="contact">
+<p><strong>Call us: (773)6287132</strong></p>
+        <p>Address: 4362 N Elston Ave, Chicago, IL 60641</p>
+        <p>&copy; 2025 Techpro99</p>
+    </footer>
+</body>
+</html>
