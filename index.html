@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Techpro99 - Phone & Electronics Repair</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PWLSS3VE8R');
+    </script>
+
     <style>
         /* General Styles */
         body {
@@ -41,21 +51,12 @@
         }
         .banner span {
             display: inline-block;
-            animation: slideIn 6s infinite; /* Animation duration set to 6s */
+            animation: slideIn 6s infinite;
         }
         @keyframes slideIn {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            50% {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(100%);
-                opacity: 0;
-            }
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
         }
         .services {
             display: flex;
@@ -114,32 +115,16 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            .service {
-                width: 90%;
-            }
-            .services {
-                padding: 10px;
-            }
+            header h1 { font-size: 2rem; }
+            .service { width: 90%; }
+            .services { padding: 10px; }
         }
         @media (max-width: 480px) {
-            header {
-                padding: 15px;
-            }
-            header h1 {
-                font-size: 1.8rem;
-            }
-            header p {
-                font-size: 0.9rem;
-            }
-            .contact {
-                padding: 15px;
-            }
-            .contact p {
-                font-size: 0.9rem;
-            }
+            header { padding: 15px; }
+            header h1 { font-size: 1.8rem; }
+            header p { font-size: 0.9rem; }
+            .contact { padding: 15px; }
+            .contact p { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -160,44 +145,32 @@
         <div class="service">
             <img src="backglass.jpg" alt="Back Glass Repair">
             <h2>Back Glass Repair</h2>
-            <a href="tel:+17736287132">
-                <button>Learn More</button>
-            </a>
+            <a href="tel:+17736287132"><button>Learn More</button></a>
         </div>
         <div class="service">
             <img src="batt.jpg" alt="Battery Replacement">
             <h2>Battery Replacement</h2>
-            <a href="tel:+17736287132">
-                <button>Learn More</button>
-            </a>
+            <a href="tel:+17736287132"><button>Learn More</button></a>
         </div>
         <div class="service">
             <img src="screen.jpg" alt="Screen Replacement">
             <h2>Screen Replacement</h2>
-            <a href="mailto:info@techpro99.com">
-                <button>Learn More</button>
-            </a>
+            <a href="mailto:info@techpro99.com"><button>Learn More</button></a>
         </div>
         <div class="service">
             <img src="mother.jpg" alt="Motherboard Repair">
             <h2>Motherboard Repair</h2>
-            <a href="mailto:info@techpro99.com">
-                <button>Learn More</button>
-            </a>
+            <a href="mailto:info@techpro99.com"><button>Learn More</button></a>
         </div>
         <div class="service">
             <img src="ps4.jpg" alt="HDMI Port Repair">
             <h2>HDMI Port Repair</h2>
-            <a href="tel:+17736287132">
-                <button>Learn More</button>
-            </a>
+            <a href="tel:+17736287132"><button>Learn More</button></a>
         </div>
         <div class="service">
             <img src="water.jpg" alt="Water Damage Repair">
             <h2>Water Damage Repair</h2>
-            <a href="mailto:info@techpro99.com">
-                <button>Learn More</button>
-            </a>
+            <a href="mailto:info@techpro99.com"><button>Learn More</button></a>
         </div>
     </section>
     
@@ -209,4 +182,3 @@
     </footer>
 </body>
 </html>
-        
