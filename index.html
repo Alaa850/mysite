@@ -1,184 +1,700 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Techpro99 - Phone & Electronics Repair</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TecPro99</title>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PWLSS3VE8R');
-    </script>
+  <!-- Optional: modern font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-        header p {
-            margin: 5px 0;
-            font-size: 1rem;
-        }
-        .banner {
-            background: linear-gradient(45deg, #ff5722, #e91e63);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 2rem;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .banner span {
-            display: inline-block;
-            animation: slideIn 6s infinite;
-        }
-        @keyframes slideIn {
-            0% { transform: translateX(-100%); opacity: 0; }
-            50% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(100%); opacity: 0; }
-        }
-        .services {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-        }
-        .service {
-            background-color: white;
-            border-radius: 10px;
-            margin: 10px;
-            padding: 20px;
-            width: 280px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .service:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
-        .service img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-        .service h2 {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            color: #007bff;
-        }
-        .service button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        .service button:hover {
-            background-color: #0056b3;
-        }
-        .contact {
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .contact p {
-            margin: 5px 0;
-            font-size: 1rem;
-        }
+  <!-- Google Analytics (keep if you need it) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PWLSS3VE8R');
+  </script>
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            .service { width: 90%; }
-            .services { padding: 10px; }
-        }
-        @media (max-width: 480px) {
-            header { padding: 15px; }
-            header h1 { font-size: 1.8rem; }
-            header p { font-size: 0.9rem; }
-            .contact { padding: 15px; }
-            .contact p { font-size: 0.9rem; }
-        }
-    </style>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1621;
+      --text:#eaf2ff;
+      --muted:#b8c4d9;
+      --line: rgba(255,255,255,.10);
+      --blue:#1f8cff;
+      --orange:#ff8a1f;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; background: radial-gradient(1200px 700px at 15% -10%, rgba(31,140,255,.20), transparent 60%),
+                                         radial-gradient(900px 600px at 110% 10%, rgba(255,138,31,.18), transparent 55%),
+                                         var(--bg);
+               color:var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+
+    .wrap{ width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    /* Top bar */
+    .topbar{
+      position: sticky; top:0; z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.65);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0;
+      gap: 12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 12px; min-width: 220px;
+    }
+    .mark{
+      width: 38px; height:38px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(31,140,255,.95), rgba(255,138,31,.95));
+      box-shadow: 0 8px 30px rgba(0,0,0,.35);
+    }
+    .brand h1{ font-size: 16px; margin:0; letter-spacing: .2px; }
+    .brand p{ margin:0; font-size: 12px; color: var(--muted); }
+
+    .nav{
+      display:flex; align-items:center; gap: 14px; flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      font-weight: 600; font-size: 13px;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18); }
+    .btn.primary{
+      border: none;
+      background: linear-gradient(135deg, rgba(31,140,255,.95), rgba(255,138,31,.95));
+      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+    }
+    .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Hero */
+    .hero{
+      padding: 44px 0 26px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .hero-card{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border-radius: var(--radius2);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .hero-left{
+      padding: 28px;
+      min-height: 380px;
+    }
+    .hero-left .kicker{
+      display:flex; gap: 10px; flex-wrap: wrap; align-items:center;
+      margin-bottom: 14px;
+    }
+    .hero-left h2{
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.8px;
+    }
+    .hero-left p{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 56ch;
+    }
+    .hero-actions{
+      display:flex; gap: 12px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .hero-meta{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .stat{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .stat b{ display:block; font-size: 14px; }
+    .stat span{ display:block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+    .hero-right{
+      position: relative;
+      display:flex;
+      min-height: 380px;
+    }
+    .hero-media{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(11,15,20,.20) 0%, rgba(11,15,20,.70) 80%),
+        url("assets/hero-techpro.jpg") center/cover no-repeat;
+    }
+    .hero-right .overlay{
+      position: relative;
+      display:flex; flex-direction: column;
+      justify-content:flex-end;
+      padding: 18px;
+      width: 100%;
+      gap: 10px;
+    }
+    .glass{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      border-radius: 18px;
+      padding: 14px;
+      backdrop-filter: blur(10px);
+    }
+    .glass .row{
+      display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .glass small{ color: var(--muted); display:block; margin-top: 6px; line-height:1.5; }
+
+    /* Promo */
+    .promo{
+      margin: 18px 0 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      background:
+        radial-gradient(700px 280px at 10% 20%, rgba(31,140,255,.22), transparent 60%),
+        radial-gradient(700px 280px at 90% 20%, rgba(255,138,31,.18), transparent 60%),
+        rgba(255,255,255,.04);
+    }
+    .promo-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 16px 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .promo strong{ font-size: 14px; }
+    .promo span{ color: var(--muted); font-size: 13px; }
+
+    /* Sections */
+    section{ padding: 22px 0; }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between; gap: 12px; flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .section-head h3{ margin:0; font-size: 18px; letter-spacing: -0.3px; }
+    .section-head p{ margin:0; color: var(--muted); font-size: 13px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      box-shadow: 0 10px 34px rgba(0,0,0,.30);
+    }
+    .card .media{
+      height: 160px;
+      background: rgba(0,0,0,.25);
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .card .body{
+      padding: 14px;
+    }
+    .card h4{ margin:0 0 6px; font-size: 15px; }
+    .card p{ margin:0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .card .actions{ display:flex; gap: 10px; flex-wrap: wrap; }
+
+    /* Services layout */
+    .svc{ grid-column: span 4; }
+    .wide{ grid-column: span 6; }
+
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 10px;
+    }
+    .g{
+      grid-column: span 4;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      position: relative;
+      background: rgba(0,0,0,.25);
+      min-height: 190px;
+    }
+    .g img{ width:100%; height:100%; object-fit: cover; }
+    .g::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.60));
+      pointer-events:none;
+    }
+
+    /* Contact / Location */
+    .info{ grid-column: span 6; }
+    .info .body{ padding: 16px; }
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .kv .line{
+      display:flex; justify-content:space-between; gap: 10px; flex-wrap: wrap;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .kv .line b{ font-size: 13px; }
+    .kv .line span{ color: var(--muted); font-size: 13px; }
+
+    /* FAQ */
+    details{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+    details summary{
+      cursor:pointer;
+      font-weight: 700;
+      font-size: 13px;
+      list-style: none;
+    }
+    details summary::-webkit-details-marker{ display:none; }
+    details p{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer{
+      padding: 26px 0 34px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      margin-top: 18px;
+    }
+    .foot{
+      display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .foot small{ font-size: 12px; }
+
+    /* Mobile */
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-left, .hero-right{ min-height: 360px; }
+      .hero-meta{ grid-template-columns: 1fr; }
+      .svc{ grid-column: span 6; }
+      .g{ grid-column: span 6; }
+      .info{ grid-column: span 12; }
+      .wide{ grid-column: span 12; }
+    }
+    @media (max-width: 520px){
+      .wrap{ width: calc(100% - 28px); }
+      .svc{ grid-column: span 12; }
+      .g{ grid-column: span 12; }
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1>Techpro99</h1>
-        <p>Phone & Electronics Repair</p>
-        <a href="tel:+17736287132" style="background-color: #007bff; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-block;">Call Us</a>
-        <p>Address: 4362 N Elston Ave, Chicago, IL 60641</p>
-        <p>Email: <a href="mailto:info@techpro99.com" style="color: white; text-decoration: underline;">info@techpro99.com</a></p>
-    </header>
-    
-    <div class="banner">
-        <span>🎉 Get 25% OFF on all services for New Year! 🎉</span>
+  <!-- Config -->
+  <script>
+    const PHONE_DISPLAY = "(773) 628-7132";
+    const PHONE_TEL = "+17736287132";
+    const MAPS_URL = "https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic";
+  </script>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <h1>TecPro99</h1>
+          <p>Chicago • Local device solutions</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="btn" href="#services">Services</a>
+        <a class="btn" href="#gallery">Gallery</a>
+        <a class="btn" href="#location">Location</a>
+
+        <a class="btn" id="btnMapsTop" target="_blank" rel="noopener">Directions</a>
+        <a class="btn primary" id="btnCallTop">Call <span id="phoneTop"></span></a>
+      </nav>
     </div>
-    
-    <section class="services">
-        <div class="service">
-            <img src="backglass.jpg" alt="Back Glass Repair">
-            <h2>Back Glass Repair</h2>
-            <a href="tel:+17736287132"><button>Learn More</button></a>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div class="hero-grid">
+        <div class="hero-card hero-left">
+          <div class="kicker">
+            <span class="pill">Fast • Clean • Reliable</span>
+            <span class="pill">Walk-in friendly</span>
+            <span class="pill">Chicago, IL</span>
+          </div>
+
+          <h2>Premium device care with a modern, local touch.</h2>
+          <p>
+            TecPro99 helps customers get back to normal quickly — with clear communication,
+            quality parts, and professional handling. Tap below to reach us instantly.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" id="btnCallHero">Call Now <span id="phoneHero"></span></a>
+            <a class="btn" id="btnMapsHero" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn" href="#services">See Options</a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="stat">
+              <b>Same-day options</b>
+              <span>For many common fixes</span>
+            </div>
+            <div class="stat">
+              <b>Clear pricing</b>
+              <span>Ask for a quick quote</span>
+            </div>
+            <div class="stat">
+              <b>Local support</b>
+              <span>Real shop, real people</span>
+            </div>
+          </div>
         </div>
-        <div class="service">
-            <img src="batt.jpg" alt="Battery Replacement">
-            <h2>Battery Replacement</h2>
-            <a href="tel:+17736287132"><button>Learn More</button></a>
+
+        <div class="hero-card hero-right" aria-label="Hero image">
+          <div class="hero-media"></div>
+          <div class="overlay">
+            <div class="glass">
+              <div class="row">
+                <div>
+                  <strong>Visit TecPro99</strong>
+                  <small>4362 N Elston Ave, Chicago, IL</small>
+                </div>
+                <a class="btn primary" id="btnCallCard">Call</a>
+              </div>
+              <small>
+                Prefer text? Add WhatsApp button if you use it.
+                (Optional) You can replace this line anytime.
+              </small>
+            </div>
+            <div class="glass">
+              <div class="row">
+                <strong>Need help today?</strong>
+                <a class="btn" id="btnMapsCard" target="_blank" rel="noopener">Directions</a>
+              </div>
+              <small>Tap Directions to open Google Maps.</small>
+            </div>
+          </div>
         </div>
-        <div class="service">
-            <img src="screen.jpg" alt="Screen Replacement">
-            <h2>Screen Replacement</h2>
-            <a href="mailto:info@techpro99.com"><button>Learn More</button></a>
+      </div>
+
+      <div class="promo" role="note" aria-label="Promo">
+        <div class="promo-inner">
+          <div>
+            <strong>🎉 40% OFF for first-time in-store customers</strong>
+            <div><span>Available for walk-in visits — ask us when you arrive.</span></div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" id="btnCallPromo">Claim by calling</a>
+            <a class="btn" href="#location">See hours</a>
+          </div>
         </div>
-        <div class="service">
-            <img src="mother.jpg" alt="Motherboard Repair">
-            <h2>Motherboard Repair</h2>
-            <a href="mailto:info@techpro99.com"><button>Learn More</button></a>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h3>Common Fixes</h3>
+            <p>Choose what you need — we’ll tell you the best option.</p>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn" id="btnMapsServices" target="_blank" rel="noopener">Directions</a>
+            <a class="btn primary" id="btnCallServices">Call <span id="phoneServices"></span></a>
+          </div>
         </div>
-        <div class="service">
-            <img src="ps4.jpg" alt="HDMI Port Repair">
-            <h2>HDMI Port Repair</h2>
-            <a href="tel:+17736287132"><button>Learn More</button></a>
+
+        <div class="grid">
+          <article class="card svc">
+            <div class="media" style="background-image:url('assets/service-screen.jpg');"></div>
+            <div class="body">
+              <h4>Screen</h4>
+              <p>Clean look, smooth touch, solid fit. Ask for options by model.</p>
+              <div class="actions">
+                <a class="btn primary" id="call1">Call</a>
+                <a class="btn" id="maps1" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card svc">
+            <div class="media" style="background-image:url('assets/service-battery.jpg');"></div>
+            <div class="body">
+              <h4>Battery</h4>
+              <p>Power that lasts. We can check health and recommend the best move.</p>
+              <div class="actions">
+                <a class="btn primary" id="call2">Call</a>
+                <a class="btn" id="maps2" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card svc">
+            <div class="media" style="background-image:url('assets/service-backglass.jpg');"></div>
+            <div class="body">
+              <h4>Back Glass</h4>
+              <p>Restore the look and feel. Ask about turnaround for your model.</p>
+              <div class="actions">
+                <a class="btn primary" id="call3">Call</a>
+                <a class="btn" id="maps3" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card svc">
+            <div class="media" style="background-image:url('assets/service-hdmi.jpg');"></div>
+            <div class="body">
+              <h4>HDMI / Console</h4>
+              <p>No signal? Loose port? Bring it in and we’ll inspect it.</p>
+              <div class="actions">
+                <a class="btn primary" id="call4">Call</a>
+                <a class="btn" id="maps4" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card svc">
+            <div class="media" style="background-image:url('assets/service-board.jpg');"></div>
+            <div class="body">
+              <h4>Board / Advanced</h4>
+              <p>For complex cases — we can run diagnostics and explain next steps.</p>
+              <div class="actions">
+                <a class="btn primary" id="call5">Call</a>
+                <a class="btn" id="maps5" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card svc">
+            <div class="media" style="background-image:url('assets/service-water.jpg');"></div>
+            <div class="body">
+              <h4>Liquid / Damage</h4>
+              <p>Time matters. Bring it fast — we’ll advise what to do immediately.</p>
+              <div class="actions">
+                <a class="btn primary" id="call6">Call</a>
+                <a class="btn" id="maps6" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="service">
-            <img src="water.jpg" alt="Water Damage Repair">
-            <h2>Water Damage Repair</h2>
-            <a href="mailto:info@techpro99.com"><button>Learn More</button></a>
-        </div>
+      </div>
     </section>
-    
-    <footer class="contact">
-        <p><strong>Call us: (773)6287132</strong></p>
-        <p>Address: 4362 N Elston Ave, Chicago, IL 60641</p>
-        <p>Email: <a href="mailto:info@techpro99.com" style="color: white; text-decoration: underline;">info@techpro99.com</a></p>
-        <p>&copy; 2025 Techpro99</p>
-    </footer>
+
+    <!-- Gallery -->
+    <section id="gallery">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h3>Work Gallery</h3>
+            <p>Real examples from the shop.</p>
+          </div>
+          <a class="btn primary" id="btnCallGallery">Call <span id="phoneGallery"></span></a>
+        </div>
+
+        <div class="gallery">
+          <div class="g"><img src="assets/gallery-1.jpg" alt="Gallery image 1"></div>
+          <div class="g"><img src="assets/gallery-2.jpg" alt="Gallery image 2"></div>
+          <div class="g"><img src="assets/gallery-3.jpg" alt="Gallery image 3"></div>
+          <div class="g"><img src="assets/gallery-4.jpg" alt="Gallery image 4"></div>
+          <div class="g"><img src="assets/gallery-5.jpg" alt="Gallery image 5"></div>
+          <div class="g"><img src="assets/gallery-6.jpg" alt="Gallery image 6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location / Contact -->
+    <section id="location">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h3>Location & Contact</h3>
+            <p>Fast way to reach us: call or open directions.</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card info">
+            <div class="body">
+              <h4>Contact</h4>
+              <p>Tap to call — number is always visible and clickable.</p>
+              <div class="actions">
+                <a class="btn primary" id="btnCallContact">Call <span id="phoneContact"></span></a>
+                <a class="btn" id="btnMapsContact" target="_blank" rel="noopener">Directions</a>
+              </div>
+
+              <div class="kv">
+                <div class="line">
+                  <b>Phone</b>
+                  <span id="phoneLine"></span>
+                </div>
+                <div class="line">
+                  <b>Address</b>
+                  <span>4362 N Elston Ave, Chicago, IL</span>
+                </div>
+                <div class="line">
+                  <b>Hours</b>
+                  <span>Update this in code (recommended)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card info">
+            <div class="body">
+              <h4>FAQ</h4>
+              <div style="display:grid; gap:10px;">
+                <details>
+                  <summary>Do you offer same-day service?</summary>
+                  <p>For many common fixes, yes — call first and tell us your model and issue.</p>
+                </details>
+                <details>
+                  <summary>Can I get a quick quote?</summary>
+                  <p>Yes. Call us and we’ll give you the best option based on your device and condition.</p>
+                </details>
+                <details>
+                  <summary>How do I find you?</summary>
+                  <p>Tap “Directions” and Google Maps will open directly to the shop location.</p>
+                </details>
+              </div>
+
+              <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" id="btnCallFAQ">Call Now</a>
+                <a class="btn" id="btnMapsFAQ" target="_blank" rel="noopener">Directions</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card wide">
+            <div class="media" style="height:220px; background-image:
+              linear-gradient(180deg, rgba(11,15,20,.15), rgba(11,15,20,.75)),
+              url('assets/hero-techpro.jpg');"></div>
+            <div class="body">
+              <h4>Quick Actions</h4>
+              <p>One tap and you’re connected.</p>
+              <div class="actions">
+                <a class="btn primary" id="btnCallBottom">Call <span id="phoneBottom"></span></a>
+                <a class="btn" id="btnMapsBottom" target="_blank" rel="noopener">Directions</a>
+                <a class="btn" href="#services">Back to services</a>
+              </div>
+              <p style="margin-top:12px; font-size:12px;">
+                Tip: If you want WhatsApp, tell me رقم واتساب/الرابط وبضيفه بزر رسمي.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <small>© <span id="year"></span> TecPro99. All rights reserved.</small>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="#services">Services</a>
+        <a class="btn" href="#gallery">Gallery</a>
+        <a class="btn primary" id="btnCallFooter">Call</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fill dynamic links everywhere
+    const telHref = "tel:" + PHONE_TEL;
+
+    function setCall(elId){
+      const el = document.getElementById(elId);
+      if(!el) return;
+      el.setAttribute("href", telHref);
+    }
+    function setMaps(elId){
+      const el = document.getElementById(elId);
+      if(!el) return;
+      el.setAttribute("href", MAPS_URL);
+    }
+    function setPhoneText(elId){
+      const el = document.getElementById(elId);
+      if(!el) return;
+      el.textContent = PHONE_DISPLAY;
+    }
+
+    // Phone texts
+    ["phoneTop","phoneHero","phoneServices","phoneGallery","phoneContact","phoneLine","phoneBottom"]
+      .forEach(setPhoneText);
+
+    // Call buttons
+    ["btnCallTop","btnCallHero","btnCallCard","btnCallPromo","btnCallServices","btnCallGallery",
+     "btnCallContact","btnCallFAQ","btnCallBottom","btnCallFooter",
+     "call1","call2","call3","call4","call5","call6"]
+      .forEach(setCall);
+
+    // Maps buttons
+    ["btnMapsTop","btnMapsHero","btnMapsCard","btnMapsServices","btnMapsContact","btnMapsFAQ",
+     "btnMapsBottom","maps1","maps2","maps3","maps4","maps5","maps6"]
+      .forEach(setMaps);
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
