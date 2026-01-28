@@ -1,16 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TecPro99</title>
 
-  <!-- Optional: modern font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Google Analytics (keep if you need it) -->
+  <!-- Optional: Google Analytics (keep if you want) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,679 +17,663 @@
   <style>
     :root{
       --bg:#0b0f14;
-      --panel:#0f1621;
-      --text:#eaf2ff;
-      --muted:#b8c4d9;
-      --line: rgba(255,255,255,.10);
-      --blue:#1f8cff;
-      --orange:#ff8a1f;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --line: rgba(255,255,255,.16);
+
+      --orange:#f59a23;
+      --blue:#1f86d8;
+
       --radius: 18px;
-      --radius2: 26px;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+
       --max: 1120px;
     }
 
     *{ box-sizing:border-box; }
-    html,body{ margin:0; padding:0; background: radial-gradient(1200px 700px at 15% -10%, rgba(31,140,255,.20), transparent 60%),
-                                         radial-gradient(900px 600px at 110% 10%, rgba(255,138,31,.18), transparent 55%),
-                                         var(--bg);
-               color:var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    a{ color:inherit; text-decoration:none; }
-    img{ max-width:100%; display:block; }
-
-    .wrap{ width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
-
-    /* Top bar */
-    .topbar{
-      position: sticky; top:0; z-index: 20;
-      backdrop-filter: blur(10px);
-      background: rgba(11,15,20,.65);
-      border-bottom: 1px solid var(--line);
-    }
-    .topbar-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
-      gap: 12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap: 12px; min-width: 220px;
-    }
-    .mark{
-      width: 38px; height:38px; border-radius: 12px;
-      background: linear-gradient(135deg, rgba(31,140,255,.95), rgba(255,138,31,.95));
-      box-shadow: 0 8px 30px rgba(0,0,0,.35);
-    }
-    .brand h1{ font-size: 16px; margin:0; letter-spacing: .2px; }
-    .brand p{ margin:0; font-size: 12px; color: var(--muted); }
-
-    .nav{
-      display:flex; align-items:center; gap: 14px; flex-wrap: wrap; justify-content: flex-end;
-    }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
-      cursor: pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      font-weight: 600; font-size: 13px;
-      user-select:none;
+      overflow-x:hidden;
     }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18); }
+
+    /* ===== Animated background slideshow ===== */
+    .bg{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      overflow:hidden;
+      background:#000;
+    }
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(31,134,216,.22), transparent 60%),
+        radial-gradient(1000px 600px at 80% 0%, rgba(245,154,35,.18), transparent 55%),
+        radial-gradient(900px 650px at 50% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.70));
+      z-index:2;
+      pointer-events:none;
+    }
+    .bg img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      transform: scale(1.05);
+      transition: opacity 1.2s ease, transform 6s ease;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .bg img.active{
+      opacity:1;
+      transform: scale(1.0);
+    }
+
+    /* ===== Layout helpers ===== */
+    .wrap{
+      width: min(var(--max), calc(100% - 36px));
+      margin:0 auto;
+    }
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+
+    /* ===== Top banner ===== */
+    .topbar{
+      margin-top:18px;
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(245,154,35,.16);
+      border: 1px solid rgba(245,154,35,.25);
+      font-weight:700;
+      font-size:14px;
+    }
+    .mini{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .cta-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      text-decoration:none;
+      color: var(--text);
+      font-weight:800;
+      padding:11px 14px;
+      border-radius:12px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.18);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.14); }
     .btn.primary{
-      border: none;
-      background: linear-gradient(135deg, rgba(31,140,255,.95), rgba(255,138,31,.95));
-      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+      background: linear-gradient(90deg, rgba(31,134,216,.95), rgba(245,154,35,.92));
+      border-color: rgba(255,255,255,.22);
     }
     .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
 
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
+    /* ===== Header / nav ===== */
+    header{
+      margin-top:14px;
+      padding:16px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+    .brand img{
+      width: 54px;
+      height: 54px;
+      border-radius:14px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+      background: rgba(255,255,255,.08);
+    }
+    .brand .name{
+      line-height:1.1;
+    }
+    .brand .name strong{
+      display:block;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .brand .name span{
+      display:block;
+      font-size:13px;
       color: var(--muted);
-      font-size: 12px;
+      margin-top:4px;
     }
 
-    /* Hero */
+    nav{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    nav a{
+      color: var(--muted);
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+      letter-spacing:.3px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+    nav a:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* ===== Hero ===== */
     .hero{
-      padding: 44px 0 26px;
+      margin-top:16px;
+      padding:22px;
+      position:relative;
+      overflow:hidden;
     }
     .hero-grid{
       display:grid;
       grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-      align-items: stretch;
+      gap:18px;
+      align-items:stretch;
     }
-    .hero-card{
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      border-radius: var(--radius2);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      position: relative;
+    .hero h1{
+      margin:0;
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing:.2px;
     }
-    .hero-left{
-      padding: 28px;
-      min-height: 380px;
-    }
-    .hero-left .kicker{
-      display:flex; gap: 10px; flex-wrap: wrap; align-items:center;
-      margin-bottom: 14px;
-    }
-    .hero-left h2{
-      margin: 0 0 12px;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.08;
-      letter-spacing: -0.8px;
-    }
-    .hero-left p{
-      margin: 0 0 18px;
+    .hero p{
+      margin:10px 0 0;
       color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
+      line-height:1.55;
+      font-size:15px;
       max-width: 56ch;
     }
-    .hero-actions{
-      display:flex; gap: 12px; flex-wrap: wrap; margin-top: 10px;
+    .hero .hero-actions{
+      margin-top:16px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
     }
-    .hero-meta{
+    .hero-card{
+      height:100%;
+      padding:18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.30);
+      box-shadow: var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .hero-card .line{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: var(--muted);
+      font-size:14px;
+      line-height:1.4;
+    }
+    .hero-card .line b{ color: var(--text); }
+    .hero-card .line a{
+      color: var(--text);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(255,255,255,.35);
+    }
+    .hero-card .line a:hover{ border-bottom-style:solid; }
+
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.12);
+      margin: 14px 0;
+    }
+
+    /* ===== Section titles ===== */
+    .section{
+      margin-top:18px;
+    }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      margin: 18px 0 10px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.3px;
+    }
+    .section-head p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ===== Services ===== */
+    .cards{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
+      gap:14px;
     }
-    .stat{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      border-radius: 16px;
-      padding: 12px;
-    }
-    .stat b{ display:block; font-size: 14px; }
-    .stat span{ display:block; color: var(--muted); font-size: 12px; margin-top: 4px; }
-
-    .hero-right{
-      position: relative;
-      display:flex;
-      min-height: 380px;
-    }
-    .hero-media{
-      position:absolute; inset:0;
-      background:
-        linear-gradient(180deg, rgba(11,15,20,.20) 0%, rgba(11,15,20,.70) 80%),
-        url("assets/hero-techpro.jpg") center/cover no-repeat;
-    }
-    .hero-right .overlay{
-      position: relative;
-      display:flex; flex-direction: column;
-      justify-content:flex-end;
-      padding: 18px;
-      width: 100%;
-      gap: 10px;
-    }
-    .glass{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.35);
-      border-radius: 18px;
-      padding: 14px;
-      backdrop-filter: blur(10px);
-    }
-    .glass .row{
-      display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap;
-    }
-    .glass small{ color: var(--muted); display:block; margin-top: 6px; line-height:1.5; }
-
-    /* Promo */
-    .promo{
-      margin: 18px 0 8px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: var(--radius2);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      background:
-        radial-gradient(700px 280px at 10% 20%, rgba(31,140,255,.22), transparent 60%),
-        radial-gradient(700px 280px at 90% 20%, rgba(255,138,31,.18), transparent 60%),
-        rgba(255,255,255,.04);
-    }
-    .promo-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 16px 18px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .promo strong{ font-size: 14px; }
-    .promo span{ color: var(--muted); font-size: 13px; }
-
-    /* Sections */
-    section{ padding: 22px 0; }
-    .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .section-head h3{ margin:0; font-size: 18px; letter-spacing: -0.3px; }
-    .section-head p{ margin:0; color: var(--muted); font-size: 13px; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-
     .card{
-      border: 1px solid var(--line);
+      padding:14px;
       border-radius: var(--radius);
-      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.26);
+      box-shadow: var(--shadow2);
       overflow:hidden;
-      box-shadow: 0 10px 34px rgba(0,0,0,.30);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height: 270px;
     }
-    .card .media{
-      height: 160px;
-      background: rgba(0,0,0,.25);
-      background-size: cover;
-      background-position: center;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    .card img{
+      width:100%;
+      height:150px;
+      border-radius: 14px;
+      object-fit: cover;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
     }
-    .card .body{
-      padding: 14px;
+    .card h3{
+      margin:2px 0 0;
+      font-size: 16px;
+      letter-spacing:.2px;
     }
-    .card h4{ margin:0 0 6px; font-size: 15px; }
-    .card p{ margin:0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.55; }
-    .card .actions{ display:flex; gap: 10px; flex-wrap: wrap; }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.5;
+    }
+    .card .actions{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn.sm{ padding:10px 12px; border-radius:12px; font-size:13px; }
 
-    /* Services layout */
-    .svc{ grid-column: span 4; }
-    .wide{ grid-column: span 6; }
-
-    /* Gallery */
+    /* ===== Gallery ===== */
     .gallery{
       display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(6, 1fr);
+      gap:10px;
     }
-    .g{
-      grid-column: span 4;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      position: relative;
-      background: rgba(0,0,0,.25);
-      min-height: 190px;
-    }
-    .g img{ width:100%; height:100%; object-fit: cover; }
-    .g::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.60));
-      pointer-events:none;
-    }
-
-    /* Contact / Location */
-    .info{ grid-column: span 6; }
-    .info .body{ padding: 16px; }
-    .kv{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .kv .line{
-      display:flex; justify-content:space-between; gap: 10px; flex-wrap: wrap;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-    }
-    .kv .line b{ font-size: 13px; }
-    .kv .line span{ color: var(--muted); font-size: 13px; }
-
-    /* FAQ */
-    details{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
+    .gallery img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
       border-radius: 16px;
-      padding: 12px 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: var(--shadow2);
+      transition: transform .18s ease;
     }
-    details summary{
-      cursor:pointer;
-      font-weight: 700;
-      font-size: 13px;
-      list-style: none;
-    }
-    details summary::-webkit-details-marker{ display:none; }
-    details p{
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
+    .gallery img:hover{ transform: translateY(-2px); }
 
+    /* ===== Footer ===== */
     footer{
-      padding: 26px 0 34px;
+      margin: 18px 0 26px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
       color: var(--muted);
-      border-top: 1px solid var(--line);
-      margin-top: 18px;
+      font-size: 13px;
     }
-    .foot{
-      display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap;
+    footer a{
+      color: var(--text);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(255,255,255,.35);
     }
-    .foot small{ font-size: 12px; }
+    footer a:hover{ border-bottom-style:solid; }
 
-    /* Mobile */
-    @media (max-width: 920px){
+    /* ===== Mobile adjustments ===== */
+    /* IMPORTANT: fix your issue:
+       - On mobile header should NOT follow you.
+       - So we keep header normal (not fixed/sticky).
+       - Only on large screens we can use sticky if you want (OFF by default). */
+    @media (max-width: 980px){
       .hero-grid{ grid-template-columns: 1fr; }
-      .hero-left, .hero-right{ min-height: 360px; }
-      .hero-meta{ grid-template-columns: 1fr; }
-      .svc{ grid-column: span 6; }
-      .g{ grid-column: span 6; }
-      .info{ grid-column: span 12; }
-      .wide{ grid-column: span 12; }
+      .cards{ grid-template-columns: 1fr; }
+      .gallery{ grid-template-columns: repeat(2, 1fr); }
+      nav{ justify-content:flex-start; }
+      header{ flex-direction:column; align-items:flex-start; }
+      .brand img{ width:46px; height:46px; }
     }
-    @media (max-width: 520px){
-      .wrap{ width: calc(100% - 28px); }
-      .svc{ grid-column: span 12; }
-      .g{ grid-column: span 12; }
+
+    /* Even smaller */
+    @media (max-width: 480px){
+      .topbar{ padding:12px; }
+      .btn{ width:100%; justify-content:center; }
+      .cta-row{ width:100%; }
+      nav a{ padding:10px 10px; }
+      .hero{ padding:16px; }
+      .hero-card{ padding:14px; }
+      .gallery img{ height:140px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Config -->
-  <script>
-    const PHONE_DISPLAY = "(773) 628-7132";
-    const PHONE_TEL = "+17736287132";
-    const MAPS_URL = "https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic";
-  </script>
+  <!-- Background slideshow (Back-1..Back-10 in assets) -->
+  <div class="bg" aria-hidden="true" id="bg">
+    <!-- JS will inject images -->
+  </div>
 
-  <header class="topbar">
-    <div class="wrap topbar-inner">
+  <div class="wrap">
+
+    <!-- Top bar -->
+    <div class="topbar glass">
+      <div class="left">
+        <span class="badge">🔥 40% OFF — First Visit (In-Store)</span>
+        <span class="mini">Open daily • 9:00 AM – 11:00 PM</span>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn primary" href="tel:+17736287132">📞 (773) 628-7132</a>
+        <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">📍 Directions</a>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass">
       <div class="brand">
-        <div class="mark" aria-hidden="true"></div>
-        <div>
-          <h1>TecPro99</h1>
-          <p>Chicago • Local device solutions</p>
+        <!-- LOGO: make sure it exists in assets/logo.jpg -->
+        <img src="assets/logo.jpg" alt="TecPro99 Logo" />
+        <div class="name">
+          <strong>TecPro99</strong>
+          <span>
+            <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">
+              4362 N Elston Ave, Chicago, IL
+            </a>
+          </span>
         </div>
       </div>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="btn" href="#services">Services</a>
-        <a class="btn" href="#gallery">Gallery</a>
-        <a class="btn" href="#location">Location</a>
-
-        <a class="btn" id="btnMapsTop" target="_blank" rel="noopener">Directions</a>
-        <a class="btn primary" id="btnCallTop">Call <span id="phoneTop"></span></a>
+      <nav aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <main>
-    <div class="wrap hero">
+    <!-- Hero -->
+    <section class="hero glass" id="home">
       <div class="hero-grid">
-        <div class="hero-card hero-left">
-          <div class="kicker">
-            <span class="pill">Fast • Clean • Reliable</span>
-            <span class="pill">Walk-in friendly</span>
-            <span class="pill">Chicago, IL</span>
-          </div>
-
-          <h2>Premium device care with a modern, local touch.</h2>
+        <div>
+          <h1>Premium device care — fast, clean, professional.</h1>
           <p>
-            TecPro99 helps customers get back to normal quickly — with clear communication,
-            quality parts, and professional handling. Tap below to reach us instantly.
+            Visit our shop in Chicago for quick help with your phone, tablet, console, and laptop needs.
+            Call us anytime — we’re open daily from <b>9:00 AM to 11:00 PM</b>.
           </p>
 
           <div class="hero-actions">
-            <a class="btn primary" id="btnCallHero">Call Now <span id="phoneHero"></span></a>
-            <a class="btn" id="btnMapsHero" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn primary" href="tel:+17736287132">Call Now</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Get Directions</a>
             <a class="btn" href="#services">See Options</a>
           </div>
 
-          <div class="hero-meta">
-            <div class="stat">
-              <b>Same-day options</b>
-              <span>For many common fixes</span>
-            </div>
-            <div class="stat">
-              <b>Clear pricing</b>
-              <span>Ask for a quick quote</span>
-            </div>
-            <div class="stat">
-              <b>Local support</b>
-              <span>Real shop, real people</span>
-            </div>
+          <div class="divider"></div>
+
+          <div class="mini">
+            Phone: <a href="tel:+17736287132" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">(773) 628-7132</a>
+            &nbsp; • &nbsp;
+            Hours: 9 AM – 11 PM (Daily)
           </div>
         </div>
 
-        <div class="hero-card hero-right" aria-label="Hero image">
-          <div class="hero-media"></div>
-          <div class="overlay">
-            <div class="glass">
-              <div class="row">
-                <div>
-                  <strong>Visit TecPro99</strong>
-                  <small>4362 N Elston Ave, Chicago, IL</small>
-                </div>
-                <a class="btn primary" id="btnCallCard">Call</a>
-              </div>
-              <small>
-                Prefer text? Add WhatsApp button if you use it.
-                (Optional) You can replace this line anytime.
-              </small>
-            </div>
-            <div class="glass">
-              <div class="row">
-                <strong>Need help today?</strong>
-                <a class="btn" id="btnMapsCard" target="_blank" rel="noopener">Directions</a>
-              </div>
-              <small>Tap Directions to open Google Maps.</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="promo" role="note" aria-label="Promo">
-        <div class="promo-inner">
+        <div class="hero-card">
           <div>
-            <strong>🎉 40% OFF for first-time in-store customers</strong>
-            <div><span>Available for walk-in visits — ask us when you arrive.</span></div>
+            <div class="line"><b>Address:</b> <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">4362 N Elston Ave, Chicago, IL</a></div>
+            <div class="line"><b>Phone:</b> <a href="tel:+17736287132">(773) 628-7132</a></div>
+            <div class="line"><b>Hours:</b> 9:00 AM – 11:00 PM (Daily)</div>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" id="btnCallPromo">Claim by calling</a>
-            <a class="btn" href="#location">See hours</a>
+
+          <div class="divider"></div>
+
+          <div class="line">
+            <b>Special:</b>
+            40% OFF for first-time in-store customers (selected services).
+          </div>
+
+          <div class="hero-actions" style="margin-top:10px">
+            <a class="btn primary" href="tel:+17736287132">📞 Call</a>
+            <a class="btn" href="#contact">Message</a>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Services -->
-    <section id="services">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h3>Common Fixes</h3>
-            <p>Choose what you need — we’ll tell you the best option.</p>
+    <section class="section" id="services">
+      <div class="section-head">
+        <h2>Services</h2>
+        <p>Tap “Call” to get help fast.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <img src="assets/service-screen.jpg" alt="Screen service" />
+          <h3>Screen service</h3>
+          <p>Clean installation and quality checks.</p>
+          <div class="actions">
+            <a class="btn sm primary" href="tel:+17736287132">Call</a>
+            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn" id="btnMapsServices" target="_blank" rel="noopener">Directions</a>
-            <a class="btn primary" id="btnCallServices">Call <span id="phoneServices"></span></a>
+        </article>
+
+        <article class="card">
+          <img src="assets/service-battery.jpg" alt="Battery service" />
+          <h3>Battery service</h3>
+          <p>Performance-focused replacement and testing.</p>
+          <div class="actions">
+            <a class="btn sm primary" href="tel:+17736287132">Call</a>
+            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
           </div>
-        </div>
+        </article>
 
-        <div class="grid">
-          <article class="card svc">
-            <div class="media" style="background-image:url('assets/service-screen.jpg');"></div>
-            <div class="body">
-              <h4>Screen</h4>
-              <p>Clean look, smooth touch, solid fit. Ask for options by model.</p>
-              <div class="actions">
-                <a class="btn primary" id="call1">Call</a>
-                <a class="btn" id="maps1" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </article>
+        <article class="card">
+          <img src="assets/service-backglass.jpg" alt="Back glass service" />
+          <h3>Back glass service</h3>
+          <p>Careful work with clean finishing.</p>
+          <div class="actions">
+            <a class="btn sm primary" href="tel:+17736287132">Call</a>
+            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
+          </div>
+        </article>
 
-          <article class="card svc">
-            <div class="media" style="background-image:url('assets/service-battery.jpg');"></div>
-            <div class="body">
-              <h4>Battery</h4>
-              <p>Power that lasts. We can check health and recommend the best move.</p>
-              <div class="actions">
-                <a class="btn primary" id="call2">Call</a>
-                <a class="btn" id="maps2" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </article>
+        <article class="card">
+          <img src="assets/service-hdmi.jpg" alt="HDMI service" />
+          <h3>HDMI / console service</h3>
+          <p>Port work and stability checks.</p>
+          <div class="actions">
+            <a class="btn sm primary" href="tel:+17736287132">Call</a>
+            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
+          </div>
+        </article>
 
-          <article class="card svc">
-            <div class="media" style="background-image:url('assets/service-backglass.jpg');"></div>
-            <div class="body">
-              <h4>Back Glass</h4>
-              <p>Restore the look and feel. Ask about turnaround for your model.</p>
-              <div class="actions">
-                <a class="btn primary" id="call3">Call</a>
-                <a class="btn" id="maps3" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </article>
+        <article class="card">
+          <img src="assets/service-board.jpg" alt="Board service" />
+          <h3>Board service</h3>
+          <p>Diagnostics & component-level workflow.</p>
+          <div class="actions">
+            <a class="btn sm primary" href="tel:+17736287132">Call</a>
+            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
+          </div>
+        </article>
 
-          <article class="card svc">
-            <div class="media" style="background-image:url('assets/service-hdmi.jpg');"></div>
-            <div class="body">
-              <h4>HDMI / Console</h4>
-              <p>No signal? Loose port? Bring it in and we’ll inspect it.</p>
-              <div class="actions">
-                <a class="btn primary" id="call4">Call</a>
-                <a class="btn" id="maps4" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card svc">
-            <div class="media" style="background-image:url('assets/service-board.jpg');"></div>
-            <div class="body">
-              <h4>Board / Advanced</h4>
-              <p>For complex cases — we can run diagnostics and explain next steps.</p>
-              <div class="actions">
-                <a class="btn primary" id="call5">Call</a>
-                <a class="btn" id="maps5" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card svc">
-            <div class="media" style="background-image:url('assets/service-water.jpg');"></div>
-            <div class="body">
-              <h4>Liquid / Damage</h4>
-              <p>Time matters. Bring it fast — we’ll advise what to do immediately.</p>
-              <div class="actions">
-                <a class="btn primary" id="call6">Call</a>
-                <a class="btn" id="maps6" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </article>
-        </div>
+        <article class="card">
+          <img src="assets/service-water.jpg" alt="Water service" />
+          <h3>Liquid / damage service</h3>
+          <p>Cleaning steps + testing sequence.</p>
+          <div class="actions">
+            <a class="btn sm primary" href="tel:+17736287132">Call</a>
+            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
+          </div>
+        </article>
       </div>
     </section>
 
     <!-- Gallery -->
-    <section id="gallery">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h3>Work Gallery</h3>
-            <p>Real examples from the shop.</p>
-          </div>
-          <a class="btn primary" id="btnCallGallery">Call <span id="phoneGallery"></span></a>
-        </div>
+    <section class="section" id="gallery">
+      <div class="section-head">
+        <h2>Gallery</h2>
+        <p>Real work photos.</p>
+      </div>
 
-        <div class="gallery">
-          <div class="g"><img src="assets/gallery-1.jpg" alt="Gallery image 1"></div>
-          <div class="g"><img src="assets/gallery-2.jpg" alt="Gallery image 2"></div>
-          <div class="g"><img src="assets/gallery-3.jpg" alt="Gallery image 3"></div>
-          <div class="g"><img src="assets/gallery-4.jpg" alt="Gallery image 4"></div>
-          <div class="g"><img src="assets/gallery-5.jpg" alt="Gallery image 5"></div>
-          <div class="g"><img src="assets/gallery-6.jpg" alt="Gallery image 6"></div>
+      <div class="gallery">
+        <img src="assets/gallery-1.jpg" alt="Gallery 1">
+        <img src="assets/gallery-2.jpg" alt="Gallery 2">
+        <img src="assets/gallery-3.jpg" alt="Gallery 3">
+        <img src="assets/gallery-4.jpg" alt="Gallery 4">
+        <img src="assets/gallery-5.jpg" alt="Gallery 5">
+        <img src="assets/gallery-6.jpg" alt="Gallery 6">
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p>Call, visit, or open directions.</p>
+      </div>
+
+      <div class="glass" style="padding:16px;">
+        <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-weight:900; font-size:16px;">TecPro99</div>
+            <div style="color:var(--muted); margin-top:6px;">
+              📞 <a href="tel:+17736287132" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">(773) 628-7132</a>
+              &nbsp; • &nbsp;
+              🕘 9:00 AM – 11:00 PM (Daily)
+              <br/>
+              📍 <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">4362 N Elston Ave, Chicago, IL</a>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="tel:+17736287132">Call Now</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Location / Contact -->
-    <section id="location">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h3>Location & Contact</h3>
-            <p>Fast way to reach us: call or open directions.</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="card info">
-            <div class="body">
-              <h4>Contact</h4>
-              <p>Tap to call — number is always visible and clickable.</p>
-              <div class="actions">
-                <a class="btn primary" id="btnCallContact">Call <span id="phoneContact"></span></a>
-                <a class="btn" id="btnMapsContact" target="_blank" rel="noopener">Directions</a>
-              </div>
-
-              <div class="kv">
-                <div class="line">
-                  <b>Phone</b>
-                  <span id="phoneLine"></span>
-                </div>
-                <div class="line">
-                  <b>Address</b>
-                  <span>4362 N Elston Ave, Chicago, IL</span>
-                </div>
-                <div class="line">
-                  <b>Hours</b>
-                  <span>Update this in code (recommended)</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card info">
-            <div class="body">
-              <h4>FAQ</h4>
-              <div style="display:grid; gap:10px;">
-                <details>
-                  <summary>Do you offer same-day service?</summary>
-                  <p>For many common fixes, yes — call first and tell us your model and issue.</p>
-                </details>
-                <details>
-                  <summary>Can I get a quick quote?</summary>
-                  <p>Yes. Call us and we’ll give you the best option based on your device and condition.</p>
-                </details>
-                <details>
-                  <summary>How do I find you?</summary>
-                  <p>Tap “Directions” and Google Maps will open directly to the shop location.</p>
-                </details>
-              </div>
-
-              <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary" id="btnCallFAQ">Call Now</a>
-                <a class="btn" id="btnMapsFAQ" target="_blank" rel="noopener">Directions</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="card wide">
-            <div class="media" style="height:220px; background-image:
-              linear-gradient(180deg, rgba(11,15,20,.15), rgba(11,15,20,.75)),
-              url('assets/hero-techpro.jpg');"></div>
-            <div class="body">
-              <h4>Quick Actions</h4>
-              <p>One tap and you’re connected.</p>
-              <div class="actions">
-                <a class="btn primary" id="btnCallBottom">Call <span id="phoneBottom"></span></a>
-                <a class="btn" id="btnMapsBottom" target="_blank" rel="noopener">Directions</a>
-                <a class="btn" href="#services">Back to services</a>
-              </div>
-              <p style="margin-top:12px; font-size:12px;">
-                .
-              </p>
-            </div>
-          </div>
-        </div>
-
+    <footer class="glass">
+      <div>© <span id="year"></span> TecPro99 — Chicago</div>
+      <div>
+        <a href="tel:+17736287132">(773) 628-7132</a>
+        &nbsp; • &nbsp;
+        <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
       </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer>
-    <div class="wrap foot">
-      <small>© <span id="year"></span> TecPro99. All rights reserved.</small>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a class="btn" href="#services">Services</a>
-        <a class="btn" href="#gallery">Gallery</a>
-        <a class="btn primary" id="btnCallFooter">Call</a>
-      </div>
-    </div>
-  </footer>
+  </div>
 
   <script>
-    // Fill dynamic links everywhere
-    const telHref = "tel:" + PHONE_TEL;
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    function setCall(elId){
-      const el = document.getElementById(elId);
-      if(!el) return;
-      el.setAttribute("href", telHref);
+    // Background slideshow
+    // Put images in assets as Back-1.jpg ... Back-10.jpg
+    const bgEl = document.getElementById('bg');
+    const maxBack = 10;
+    const imgs = [];
+    for (let i = 1; i <= maxBack; i++) {
+      const img = new Image();
+      img.src = `assets/Back-${i}.jpg`;
+      img.alt = "";
+      img.loading = "eager";
+      img.decoding = "async";
+
+      // if file missing, browser will error, we just won't show it
+      img.addEventListener('error', () => {
+        // silently ignore missing files
+      });
+
+      bgEl.appendChild(img);
+      imgs.push(img);
     }
-    function setMaps(elId){
-      const el = document.getElementById(elId);
-      if(!el) return;
-      el.setAttribute("href", MAPS_URL);
+
+    let index = 0;
+    function showNext() {
+      // filter only loaded images (complete + naturalWidth > 0)
+      const available = imgs.filter(im => im.complete && im.naturalWidth > 0);
+      if (available.length === 0) return;
+
+      // remove active from all
+      available.forEach(im => im.classList.remove('active'));
+
+      index = (index + 1) % available.length;
+      available[index].classList.add('active');
     }
-    function setPhoneText(elId){
-      const el = document.getElementById(elId);
-      if(!el) return;
-      el.textContent = PHONE_DISPLAY;
-    }
 
-    // Phone texts
-    ["phoneTop","phoneHero","phoneServices","phoneGallery","phoneContact","phoneLine","phoneBottom"]
-      .forEach(setPhoneText);
-
-    // Call buttons
-    ["btnCallTop","btnCallHero","btnCallCard","btnCallPromo","btnCallServices","btnCallGallery",
-     "btnCallContact","btnCallFAQ","btnCallBottom","btnCallFooter",
-     "call1","call2","call3","call4","call5","call6"]
-      .forEach(setCall);
-
-    // Maps buttons
-    ["btnMapsTop","btnMapsHero","btnMapsCard","btnMapsServices","btnMapsContact","btnMapsFAQ",
-     "btnMapsBottom","maps1","maps2","maps3","maps4","maps5","maps6"]
-      .forEach(setMaps);
-
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // start: pick first available
+    setTimeout(() => {
+      const available = imgs.filter(im => im.complete && im.naturalWidth > 0);
+      if (available.length) {
+        available[0].classList.add('active');
+        index = 0;
+      }
+      setInterval(showNext, 6000); // change every 6s
+    }, 600);
   </script>
 </body>
 </html>
