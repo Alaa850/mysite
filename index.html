@@ -2,678 +2,895 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TecPro99</title>
 
-  <!-- Optional: Google Analytics (keep if you want) -->
+  <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-PWLSS3VE8R');
   </script>
 
   <style>
     :root{
-      --bg:#0b0f14;
-      --card: rgba(255,255,255,.08);
-      --card2: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --line: rgba(255,255,255,.16);
-
-      --orange:#f59a23;
-      --blue:#1f86d8;
-
-      --radius: 18px;
+      --bg:#0b0f16;
+      --card:#0f1724cc;
+      --stroke:#1b2a42;
+      --text:#eaf0ff;
+      --muted:#a9b7d3;
+      --blue:#1e88e5;
+      --orange:#ff8a00;
       --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --shadow2: 0 10px 30px rgba(0,0,0,.35);
-
-      --max: 1120px;
+      --radius:18px;
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
       background: var(--bg);
-      color: var(--text);
       overflow-x:hidden;
     }
 
-    /* ===== Animated background slideshow ===== */
-    .bg{
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      overflow:hidden;
-      background:#000;
+    /* ===== Animated Background (Back-1..Back-10) ===== */
+    .bg-rotator{
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
     }
-    .bg::after{
+    .bg-rotator::before{
       content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(31,134,216,.22), transparent 60%),
-        radial-gradient(1000px 600px at 80% 0%, rgba(245,154,35,.18), transparent 55%),
-        radial-gradient(900px 650px at 50% 90%, rgba(255,255,255,.06), transparent 60%),
-        linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.70));
-      z-index:2;
-      pointer-events:none;
+      position:absolute; inset:-20px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(.55);
+      transform: scale(1.08);
+      animation: bgSwap 60s infinite;
+      will-change: background-image, opacity, transform;
     }
-    .bg img{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      opacity:0;
-      transform: scale(1.05);
-      transition: opacity 1.2s ease, transform 6s ease;
-      filter: saturate(1.05) contrast(1.05);
-    }
-    .bg img.active{
-      opacity:1;
-      transform: scale(1.0);
+    .bg-rotator::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(900px 500px at 20% 10%, rgba(30,136,229,.20), transparent 60%),
+                  radial-gradient(900px 500px at 80% 90%, rgba(255,138,0,.18), transparent 60%),
+                  linear-gradient(180deg, rgba(3,6,12,.65), rgba(3,6,12,.80));
+      z-index: 1;
     }
 
-    /* ===== Layout helpers ===== */
-    .wrap{
-      width: min(var(--max), calc(100% - 36px));
-      margin:0 auto;
-    }
-    .glass{
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(10px);
+    @keyframes bgSwap{
+      0%   { background-image:url("assets/Back-1.jpg"); }
+      10%  { background-image:url("assets/Back-2.jpg"); }
+      20%  { background-image:url("assets/Back-3.jpg"); }
+      30%  { background-image:url("assets/Back-4.jpg"); }
+      40%  { background-image:url("assets/Back-5.jpg"); }
+      50%  { background-image:url("assets/Back-6.jpg"); }
+      60%  { background-image:url("assets/Back-7.jpg"); }
+      70%  { background-image:url("assets/Back-8.jpg"); }
+      80%  { background-image:url("assets/Back-9.jpg"); }
+      90%  { background-image:url("assets/Back-10.jpg"); }
+      100% { background-image:url("assets/Back-1.jpg"); }
     }
 
-    /* ===== Top banner ===== */
-    .topbar{
-      margin-top:18px;
-      padding:12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .topbar .left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background: rgba(245,154,35,.16);
-      border: 1px solid rgba(245,154,35,.25);
-      font-weight:700;
-      font-size:14px;
-    }
-    .mini{
-      font-size:13px;
-      color:var(--muted);
-    }
-    .cta-row{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .btn{
-      appearance:none;
-      border:0;
-      cursor:pointer;
-      text-decoration:none;
-      color: var(--text);
-      font-weight:800;
-      padding:11px 14px;
-      border-radius:12px;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.14); }
-    .btn.primary{
-      background: linear-gradient(90deg, rgba(31,134,216,.95), rgba(245,154,35,.92));
-      border-color: rgba(255,255,255,.22);
-    }
-    .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
-
-    /* ===== Header / nav ===== */
+    /* ===== Layout ===== */
+    .wrap{ width:min(1150px, 92vw); margin:0 auto; }
     header{
-      margin-top:14px;
-      padding:16px 16px;
+      padding: 22px 0 10px;
+    }
+
+    /* Top bar (NOT sticky) */
+    .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
+      gap:14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(10,15,25,.55);
+      backdrop-filter: blur(14px);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
+      display:flex; align-items:center; gap:12px;
       min-width: 220px;
     }
     .brand img{
-      width: 54px;
-      height: 54px;
-      border-radius:14px;
-      object-fit:cover;
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow: 0 10px 25px rgba(0,0,0,.35);
-      background: rgba(255,255,255,.08);
-    }
-    .brand .name{
-      line-height:1.1;
-    }
-    .brand .name strong{
-      display:block;
-      font-size:18px;
-      letter-spacing:.2px;
-    }
-    .brand .name span{
-      display:block;
-      font-size:13px;
-      color: var(--muted);
-      margin-top:4px;
-    }
-
-    nav{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    nav a{
-      color: var(--muted);
-      text-decoration:none;
-      font-weight:800;
-      font-size:13px;
-      letter-spacing:.3px;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid transparent;
-    }
-    nav a:hover{
-      color: var(--text);
-      border-color: rgba(255,255,255,.14);
+      width: 42px; height: 42px; object-fit:contain;
+      border-radius: 10px;
       background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 6px;
+    }
+    .brand b{ font-size: 16px; letter-spacing:.2px; }
+    .brand small{ display:block; color:var(--muted); margin-top:2px; font-size:12px; }
+
+    .nav-actions{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
     }
 
-    /* ===== Hero ===== */
-    .hero{
-      margin-top:16px;
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    .hero h1{
-      margin:0;
-      font-size: clamp(26px, 4vw, 42px);
-      letter-spacing:.2px;
-    }
-    .hero p{
-      margin:10px 0 0;
-      color: var(--muted);
-      line-height:1.55;
-      font-size:15px;
-      max-width: 56ch;
-    }
-    .hero .hero-actions{
-      margin-top:16px;
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .hero-card{
-      height:100%;
-      padding:18px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.30);
-      box-shadow: var(--shadow2);
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .hero-card .line{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      color: var(--muted);
-      font-size:14px;
-      line-height:1.4;
-    }
-    .hero-card .line b{ color: var(--text); }
-    .hero-card .line a{
+    .btn{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
       color: var(--text);
+      padding: 10px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      font-weight: 650;
       text-decoration:none;
-      border-bottom:1px dashed rgba(255,255,255,.35);
+      display:inline-flex; align-items:center; gap:8px;
+      white-space:nowrap;
     }
-    .hero-card .line a:hover{ border-bottom-style:solid; }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.16); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(30,136,229,.95), rgba(255,138,0,.88));
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 18px 60px rgba(30,136,229,.16);
+    }
+    .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
 
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,.12);
-      margin: 14px 0;
+    .hero{
+      margin-top: 16px;
+      padding: 26px 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(8,12,20,.55);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: center;
     }
 
-    /* ===== Section titles ===== */
-    .section{
-      margin-top:18px;
+    .hero h1{ margin:0 0 10px; font-size: clamp(26px, 4vw, 44px); line-height: 1.06; }
+    .hero p{ margin:0 0 12px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+    .hero-badges{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;
     }
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-      margin: 18px 0 10px;
-    }
-    .section-head h2{
-      margin:0;
-      font-size: 18px;
-      letter-spacing:.3px;
-    }
-    .section-head p{
-      margin:0;
-      color: var(--muted);
+    .badge{
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 650;
       font-size: 13px;
+    }
+
+    .hero-media{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+      position:relative;
+      min-height: 220px;
+    }
+    .hero-media img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.04);
+      filter: contrast(1.05) saturate(1.05);
+    }
+    .hero-media .overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(120deg, rgba(0,0,0,.0), rgba(0,0,0,.25), rgba(0,0,0,.0));
+      pointer-events:none;
     }
 
     /* ===== Services ===== */
-    .cards{
+    .section-title{
+      margin: 26px 0 12px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    }
+    .section-title h2{ margin:0; font-size: 20px; letter-spacing:.2px; }
+    .section-title span{ color: var(--muted); font-size: 13px; }
+
+    .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:14px;
+      gap: 14px;
     }
+
     .card{
-      padding:14px;
       border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.26);
-      box-shadow: var(--shadow2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(12,18,30,.55);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.28);
       overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height: 270px;
+      position:relative;
+      transition: transform .18s ease, border-color .18s ease;
     }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
     .card img{
-      width:100%;
-      height:150px;
-      border-radius: 14px;
-      object-fit: cover;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      width:100%; height: 170px; object-fit: cover; display:block;
+      filter: contrast(1.06) saturate(1.05);
     }
-    .card h3{
-      margin:2px 0 0;
-      font-size: 16px;
+    .card .cbody{ padding: 14px; }
+    .card h3{ margin:0 0 6px; font-size: 16px; }
+    .card p{ margin:0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    .row{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    /* ===== Reviews Showcase ===== */
+    .reviews-wrap{
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(8,12,20,.58);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .reviews-head{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
+      margin-bottom: 14px;
+    }
+    .reviews-head h2{
+      margin:0;
+      font-size: 20px;
       letter-spacing:.2px;
     }
-    .card p{
-      margin:0;
+    .reviews-head .meta{
       color: var(--muted);
       font-size: 13px;
-      line-height:1.5;
+      text-align:right;
+      line-height: 1.35;
     }
-    .card .actions{
-      margin-top:auto;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .btn.sm{ padding:10px 12px; border-radius:12px; font-size:13px; }
+    .reviews-head .meta b{ color: var(--text); }
 
-    /* ===== Gallery ===== */
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap:10px;
+    .reviews-stage{
+      position:relative;
+      height: 220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    .gallery img{
-      width:100%;
-      height:150px;
-      object-fit:cover;
+
+    .review-card{
+      position:absolute;
+      width: min(640px, 92vw);
+      max-width: 640px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(15,23,36,.70);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 22px 80px rgba(0,0,0,.40);
+      padding: 16px;
+      display:flex;
+      gap:14px;
+      opacity:0;
+      transform: translateX(0) translateY(0) scale(.92);
+      transition: transform .75s cubic-bezier(.2,.9,.2,1), opacity .55s ease;
+    }
+
+    .review-card .avatar{
+      width: 62px; height: 62px;
       border-radius: 16px;
-      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.05);
-      box-shadow: var(--shadow2);
-      transition: transform .18s ease;
+      flex: 0 0 auto;
     }
-    .gallery img:hover{ transform: translateY(-2px); }
+    .review-card .avatar img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .review-card .txt{
+      flex:1;
+      min-width:0;
+    }
+    .review-card .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .review-card .name{
+      font-weight: 800;
+      letter-spacing:.2px;
+      font-size: 14px;
+    }
+    .review-card .stars{
+      font-size: 13px;
+      color: #ffd166;
+      white-space:nowrap;
+      font-weight: 800;
+    }
+    .review-card .msg{
+      margin: 0;
+      color: rgba(234,240,255,.90);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .review-card .time{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Positions: left peek, center, right peek, exit */
+    .pos-center{
+      opacity:1;
+      transform: translateX(0) translateY(0) scale(1);
+      z-index: 3;
+    }
+    .pos-left{
+      opacity:.75;
+      transform: translateX(-62%) translateY(16px) scale(.88);
+      z-index: 2;
+    }
+    .pos-right{
+      opacity:.75;
+      transform: translateX(62%) translateY(16px) scale(.88);
+      z-index: 2;
+    }
+    .pos-exit-right{
+      opacity:0;
+      transform: translateX(120%) translateY(40px) scale(.78);
+      z-index: 1;
+    }
+    .pos-enter-left{
+      opacity:0;
+      transform: translateX(-120%) translateY(40px) scale(.78);
+      z-index: 1;
+    }
+
+    .reviews-dots{
+      display:flex; gap:8px; justify-content:center; margin-top: 12px;
+    }
+    .dot{
+      width: 9px; height: 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.12);
+      transition: transform .2s ease, background .2s ease;
+    }
+    .dot.active{
+      background: linear-gradient(135deg, rgba(30,136,229,.95), rgba(255,138,0,.88));
+      transform: scale(1.25);
+      border-color: rgba(255,255,255,.18);
+    }
 
     /* ===== Footer ===== */
     footer{
-      margin: 18px 0 26px;
-      padding:16px;
+      margin: 26px 0 40px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    /* ===== Popup ===== */
+    .modal{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.55);
+      padding: 18px;
+    }
+    .modal.show{ display:flex; }
+
+    .modal-card{
+      width: min(520px, 92vw);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,15,25,.72);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 30px 120px rgba(0,0,0,.6);
+      overflow:hidden;
+      transform: translateY(10px) scale(.98);
+      animation: popIn .45s cubic-bezier(.2,.9,.2,1) forwards;
+    }
+    @keyframes popIn{
+      to{ transform: translateY(0) scale(1); }
+    }
+    .modal-banner{
+      position:relative;
+      height: 160px;
+      overflow:hidden;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .modal-banner img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      filter: contrast(1.05) saturate(1.05);
+    }
+    .modal-banner::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(0,0,0,.0), rgba(0,0,0,.35));
+    }
+    .modal-body{
+      padding: 16px;
+    }
+    .modal-body h3{
+      margin:0 0 8px;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .modal-body p{
+      margin:0 0 10px;
+      color: rgba(234,240,255,.92);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .promo{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.06);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
+      margin: 10px 0 12px;
+      font-weight: 800;
+    }
+    .promo code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: #ffd166;
+      font-size: 14px;
+    }
+    .fineprint{
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(169,183,211,.9);
+      line-height: 1.35;
+    }
+    .modal-actions{
+      display:flex;
+      gap:10px;
       flex-wrap:wrap;
-      color: var(--muted);
-      font-size: 13px;
+      margin-top: 12px;
     }
-    footer a{
-      color: var(--text);
-      text-decoration:none;
-      border-bottom:1px dashed rgba(255,255,255,.35);
-    }
-    footer a:hover{ border-bottom-style:solid; }
-
-    /* ===== Mobile adjustments ===== */
-    /* IMPORTANT: fix your issue:
-       - On mobile header should NOT follow you.
-       - So we keep header normal (not fixed/sticky).
-       - Only on large screens we can use sticky if you want (OFF by default). */
-    @media (max-width: 980px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .cards{ grid-template-columns: 1fr; }
-      .gallery{ grid-template-columns: repeat(2, 1fr); }
-      nav{ justify-content:flex-start; }
-      header{ flex-direction:column; align-items:flex-start; }
-      .brand img{ width:46px; height:46px; }
+    .btn.ghost{
+      background: rgba(255,255,255,.05);
     }
 
-    /* Even smaller */
-    @media (max-width: 480px){
-      .topbar{ padding:12px; }
-      .btn{ width:100%; justify-content:center; }
-      .cta-row{ width:100%; }
-      nav a{ padding:10px 10px; }
-      .hero{ padding:16px; }
-      .hero-card{ padding:14px; }
-      .gallery img{ height:140px; }
+    /* ===== Responsive ===== */
+    @media (max-width: 940px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px){
+      .brand{ min-width: unset; }
+      .grid{ grid-template-columns: 1fr; }
+      .topbar{ padding: 12px; }
+      .brand img{ width: 38px; height: 38px; }
+      .review-card{ padding: 14px; }
+      .review-card .avatar{ width: 56px; height: 56px; border-radius: 14px; }
+      .pos-left{ transform: translateX(-74%) translateY(18px) scale(.86); }
+      .pos-right{ transform: translateX(74%) translateY(18px) scale(.86); }
     }
   </style>
 </head>
 
 <body>
-  <!-- Background slideshow (Back-1..Back-10 in assets) -->
-  <div class="bg" aria-hidden="true" id="bg">
-    <!-- JS will inject images -->
-  </div>
+  <div class="bg-rotator" aria-hidden="true"></div>
 
   <div class="wrap">
+    <header>
+      <div class="topbar">
+        <div class="brand">
+          <!-- LOGO: تأكد أنه موجود داخل assets باسم logo.jpg -->
+          <img src="assets/logo.jpg" alt="TecPro99 Logo" />
+          <div>
+            <b>TecPro99</b>
+            <small>(773) 628-7132 • Chicago, IL</small>
+          </div>
+        </div>
 
-    <!-- Top bar -->
-    <div class="topbar glass">
-      <div class="left">
-        <span class="badge">🔥 40% OFF — First Visit (In-Store)</span>
-        <span class="mini">Open daily • 9:00 AM – 11:00 PM</span>
-      </div>
+        <div class="nav-actions">
+          <!-- Directions -->
+          <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic"
+             target="_blank" rel="noopener"
+             onclick="trackDirections('topbar_directions')">
+            📍 Directions
+          </a>
 
-      <div class="cta-row">
-        <a class="btn primary" href="tel:+17736287132">📞 (773) 628-7132</a>
-        <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">📍 Directions</a>
-      </div>
-    </div>
-
-    <!-- Header -->
-    <header class="glass">
-      <div class="brand">
-        <!-- LOGO: make sure it exists in assets/logo.jpg -->
-        <img src="assets/logo.jpg" alt="TecPro99 Logo" />
-        <div class="name">
-          <strong>TecPro99</strong>
-          <span>
-            <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">
-              4362 N Elston Ave, Chicago, IL
-            </a>
-          </span>
+          <!-- Call -->
+          <a class="btn primary" href="tel:+17736287132"
+             onclick="trackCall('topbar_call')">
+            📞 Call Now
+          </a>
         </div>
       </div>
 
-      <nav aria-label="Primary">
-        <a href="#services">Services</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero glass" id="home">
-      <div class="hero-grid">
+      <section class="hero">
         <div>
-          <h1>Premium device care — fast, clean, professional.</h1>
+          <h1>Premium Device Care, Done Right.</h1>
           <p>
-            Visit our shop in Chicago for quick help with your phone, tablet, console, and laptop needs.
-            Call us anytime — we’re open daily from <b>9:00 AM to 11:00 PM</b>.
+            Fast, clean, and professional service — trusted by our local community.
+            Visit us in Chicago or call to reserve your spot.
           </p>
 
-          <div class="hero-actions">
-            <a class="btn primary" href="tel:+17736287132">Call Now</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Get Directions</a>
-            <a class="btn" href="#services">See Options</a>
+          <div class="hero-badges">
+            <span class="badge">Open Daily • 9 AM – 11 PM</span>
+            <span class="badge">Same-Day Options</span>
+            <span class="badge">Friendly Support</span>
           </div>
 
-          <div class="divider"></div>
-
-          <div class="mini">
-            Phone: <a href="tel:+17736287132" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">(773) 628-7132</a>
-            &nbsp; • &nbsp;
-            Hours: 9 AM – 11 PM (Daily)
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <div>
-            <div class="line"><b>Address:</b> <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">4362 N Elston Ave, Chicago, IL</a></div>
-            <div class="line"><b>Phone:</b> <a href="tel:+17736287132">(773) 628-7132</a></div>
-            <div class="line"><b>Hours:</b> 9:00 AM – 11:00 PM (Daily)</div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="line">
-            <b>Special:</b>
-            40% OFF for first-time in-store customers (selected services).
-          </div>
-
-          <div class="hero-actions" style="margin-top:10px">
-            <a class="btn primary" href="tel:+17736287132">📞 Call</a>
-            <a class="btn" href="#contact">Message</a>
+          <div class="row" style="margin-top:14px;">
+            <a class="btn primary" href="tel:+17736287132"
+               onclick="trackBook('hero_book')">
+              ✅ Book Now
+            </a>
+            <a class="btn" href="tel:+17736287132"
+               onclick="trackCall('hero_call')">
+              📞 Call
+            </a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic"
+               target="_blank" rel="noopener"
+               onclick="trackDirections('hero_directions')">
+              📍 Get Directions
+            </a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Services -->
-    <section class="section" id="services">
-      <div class="section-head">
-        <h2>Services</h2>
-        <p>Tap “Call” to get help fast.</p>
-      </div>
+        <div class="hero-media">
+          <!-- صورة هيرو -->
+          <img src="assets/hero-techpro.jpg" alt="TecPro99" />
+          <div class="overlay"></div>
+        </div>
+      </section>
+    </header>
 
-      <div class="cards">
-        <article class="card">
-          <img src="assets/service-screen.jpg" alt="Screen service" />
-          <h3>Screen service</h3>
-          <p>Clean installation and quality checks.</p>
-          <div class="actions">
-            <a class="btn sm primary" href="tel:+17736287132">Call</a>
-            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
-          </div>
-        </article>
+    <!-- ===== Services (كما هي) ===== -->
+    <div class="section-title">
+      <h2>Popular Services</h2>
+      <span>Tap any service to contact us instantly</span>
+    </div>
 
-        <article class="card">
-          <img src="assets/service-battery.jpg" alt="Battery service" />
-          <h3>Battery service</h3>
-          <p>Performance-focused replacement and testing.</p>
-          <div class="actions">
-            <a class="btn sm primary" href="tel:+17736287132">Call</a>
-            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/service-backglass.jpg" alt="Back glass service" />
-          <h3>Back glass service</h3>
-          <p>Careful work with clean finishing.</p>
-          <div class="actions">
-            <a class="btn sm primary" href="tel:+17736287132">Call</a>
-            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/service-hdmi.jpg" alt="HDMI service" />
-          <h3>HDMI / console service</h3>
-          <p>Port work and stability checks.</p>
-          <div class="actions">
-            <a class="btn sm primary" href="tel:+17736287132">Call</a>
-            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/service-board.jpg" alt="Board service" />
-          <h3>Board service</h3>
-          <p>Diagnostics & component-level workflow.</p>
-          <div class="actions">
-            <a class="btn sm primary" href="tel:+17736287132">Call</a>
-            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/service-water.jpg" alt="Water service" />
-          <h3>Liquid / damage service</h3>
-          <p>Cleaning steps + testing sequence.</p>
-          <div class="actions">
-            <a class="btn sm primary" href="tel:+17736287132">Call</a>
-            <a class="btn sm" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Gallery -->
-    <section class="section" id="gallery">
-      <div class="section-head">
-        <h2>Gallery</h2>
-        <p>Real work photos.</p>
-      </div>
-
-      <div class="gallery">
-        <img src="assets/gallery-1.jpg" alt="Gallery 1">
-        <img src="assets/gallery-2.jpg" alt="Gallery 2">
-        <img src="assets/gallery-3.jpg" alt="Gallery 3">
-        <img src="assets/gallery-4.jpg" alt="Gallery 4">
-        <img src="assets/gallery-5.jpg" alt="Gallery 5">
-        <img src="assets/gallery-6.jpg" alt="Gallery 6">
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section class="section" id="contact">
-      <div class="section-head">
-        <h2>Contact</h2>
-        <p>Call, visit, or open directions.</p>
-      </div>
-
-      <div class="glass" style="padding:16px;">
-        <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;">
-          <div>
-            <div style="font-weight:900; font-size:16px;">TecPro99</div>
-            <div style="color:var(--muted); margin-top:6px;">
-              📞 <a href="tel:+17736287132" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">(773) 628-7132</a>
-              &nbsp; • &nbsp;
-              🕘 9:00 AM – 11:00 PM (Daily)
-              <br/>
-              📍 <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)">4362 N Elston Ave, Chicago, IL</a>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" href="tel:+17736287132">Call Now</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Directions</a>
+    <section class="grid">
+      <article class="card">
+        <img src="assets/service-backglass.jpg" alt="Back Glass" />
+        <div class="cbody">
+          <h3>Back Glass</h3>
+          <p>Clean finish • Professional installation</p>
+          <div class="row">
+            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_backglass_call')">📞 Call</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_backglass_directions')">📍 Directions</a>
           </div>
         </div>
-      </div>
+      </article>
+
+      <article class="card">
+        <img src="assets/service-battery.jpg" alt="Battery" />
+        <div class="cbody">
+          <h3>Battery</h3>
+          <p>Better performance • Quick turnaround</p>
+          <div class="row">
+            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_battery_call')">📞 Call</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_battery_directions')">📍 Directions</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="assets/service-screen.jpg" alt="Screen" />
+        <div class="cbody">
+          <h3>Screen</h3>
+          <p>Sharp display • Smooth touch response</p>
+          <div class="row">
+            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_screen_call')">📞 Call</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_screen_directions')">📍 Directions</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="assets/service-board.jpg" alt="Board" />
+        <div class="cbody">
+          <h3>Board / Diagnostics</h3>
+          <p>Accurate checks • Reliable results</p>
+          <div class="row">
+            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_board_call')">📞 Call</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_board_directions')">📍 Directions</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="assets/service-hdmi.jpg" alt="HDMI" />
+        <div class="cbody">
+          <h3>HDMI / Console</h3>
+          <p>Stable signal • Clean port replacement</p>
+          <div class="row">
+            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_hdmi_call')">📞 Call</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_hdmi_directions')">📍 Directions</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="assets/service-water.jpg" alt="Water" />
+        <div class="cbody">
+          <h3>Water / Deep Clean</h3>
+          <p>Careful cleaning • Best effort recovery</p>
+          <div class="row">
+            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_water_call')">📞 Call</a>
+            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_water_directions')">📍 Directions</a>
+          </div>
+        </div>
+      </article>
     </section>
 
-    <footer class="glass">
-      <div>© <span id="year"></span> TecPro99 — Chicago</div>
-      <div>
-        <a href="tel:+17736287132">(773) 628-7132</a>
-        &nbsp; • &nbsp;
-        <a href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+    <!-- ===== Reviews Section (NEW) ===== -->
+    <section class="reviews-wrap" id="reviews">
+      <div class="reviews-head">
+        <div>
+          <h2>What Customers Say</h2>
+          <div style="color:var(--muted); font-size:13px; margin-top:6px;">
+            <b style="color:var(--text);">1,000+ happy customers</b> • Trusted local service
+          </div>
+        </div>
+        <div class="meta">
+          Overall Google rating: <b>4.8+ ★</b><br/>
+          Verified community feedback
+        </div>
       </div>
+
+      <div class="reviews-stage" aria-live="polite">
+        <!-- 3 visible cards rendered by JS -->
+        <div class="review-card" id="revLeft"></div>
+        <div class="review-card" id="revCenter"></div>
+        <div class="review-card" id="revRight"></div>
+      </div>
+
+      <div class="reviews-dots" id="reviewDots"></div>
+    </section>
+
+    <footer>
+      <div style="margin-top:18px;">
+        <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener"
+           onclick="trackDirections('footer_directions')">📍 Get Directions</a>
+        <a class="btn primary" style="margin-left:10px;" href="tel:+17736287132"
+           onclick="trackCall('footer_call')">📞 Call Now</a>
+      </div>
+      <div style="margin-top:14px;">© <span id="year"></span> TecPro99</div>
     </footer>
+  </div>
 
+  <!-- ===== Popup after 15s (NEW) ===== -->
+  <div class="modal" id="promoModal" role="dialog" aria-modal="true" aria-label="Special Offer">
+    <div class="modal-card">
+      <div class="modal-banner">
+        <!-- استخدم أي صورة من assets -->
+        <img src="assets/hero-techpro.jpg" alt="TecPro99 Offer"/>
+      </div>
+      <div class="modal-body">
+        <h3>Book Now & Get Exclusive Deals</h3>
+        <p>
+          Reserve your spot today and enjoy <b>25% OFF</b> + free extras.
+          Also get <b>70% OFF</b> screen protection with promo code below.
+        </p>
+
+        <div class="promo">
+          <span>Promo Code</span>
+          <code>ZEPI2026</code>
+        </div>
+
+        <div class="modal-actions">
+          <a class="btn primary" href="tel:+17736287132" onclick="trackBook('popup_book')">
+            ✅ Book Now
+          </a>
+          <button class="btn ghost" onclick="closePromo()">Not Now</button>
+        </div>
+
+        <div class="fineprint">
+          * 25% off applies to service booking. 70% off applies to screen protection only.
+          Offers may be limited. Contact us to confirm availability.
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Footer year
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Background slideshow
-    // Put images in assets as Back-1.jpg ... Back-10.jpg
-    const bgEl = document.getElementById('bg');
-    const maxBack = 10;
-    const imgs = [];
-    for (let i = 1; i <= maxBack; i++) {
-      const img = new Image();
-      img.src = `assets/Back-${i}.jpg`;
-      img.alt = "";
-      img.loading = "eager";
-      img.decoding = "async";
-
-      // if file missing, browser will error, we just won't show it
-      img.addEventListener('error', () => {
-        // silently ignore missing files
-      });
-
-      bgEl.appendChild(img);
-      imgs.push(img);
+    // =========================
+    // Tracking (ALL buttons centralized)
+    // =========================
+    function trackCall(source){
+      try{
+        gtag('event', 'call_click', {
+          event_category: 'engagement',
+          event_label: source
+        });
+      }catch(e){}
     }
 
-    let index = 0;
-    function showNext() {
-      // filter only loaded images (complete + naturalWidth > 0)
-      const available = imgs.filter(im => im.complete && im.naturalWidth > 0);
-      if (available.length === 0) return;
-
-      // remove active from all
-      available.forEach(im => im.classList.remove('active'));
-
-      index = (index + 1) % available.length;
-      available[index].classList.add('active');
+    function trackDirections(source){
+      try{
+        gtag('event', 'directions_click', {
+          event_category: 'engagement',
+          event_label: source
+        });
+      }catch(e){}
     }
 
-    // start: pick first available
-    setTimeout(() => {
-      const available = imgs.filter(im => im.complete && im.naturalWidth > 0);
-      if (available.length) {
-        available[0].classList.add('active');
-        index = 0;
+    function trackBook(source){
+      try{
+        gtag('event', 'book_now_click', {
+          event_category: 'conversion',
+          event_label: source
+        });
+      }catch(e){}
+      // Book now is a call action in your flow
+      trackCall(source + '_as_call');
+    }
+
+    // =========================
+    // Reviews Carousel (10 reviews + ad1..ad10 images)
+    // =========================
+    const reviews = [
+      { img:'assets/ad1.jpg',  name:'Michael R.', stars:5, text:'Super clean work and fast service. My device feels brand new.', time:'1 week ago' },
+      { img:'assets/ad2.jpg',  name:'Sarah K.',   stars:5, text:'Friendly staff and honest advice. Great experience overall!', time:'2 weeks ago' },
+      { img:'assets/ad3.jpg',  name:'Daniel P.',  stars:5, text:'Quick turnaround and professional results. Highly recommended.', time:'3 weeks ago' },
+      { img:'assets/ad4.jpg',  name:'Nina L.',    stars:5, text:'They explained everything clearly and the result was perfect.', time:'1 month ago' },
+      { img:'assets/ad5.jpg',  name:'Alex G.',    stars:5, text:'Great quality and fair pricing. I’ll be back for sure.', time:'1 month ago' },
+      { img:'assets/ad6.jpg',  name:'Omar S.',    stars:5, text:'Very smooth process from start to finish. Excellent work.', time:'2 months ago' },
+      { img:'assets/ad7.jpg',  name:'Jessica M.', stars:5, text:'Best local place. Fast, clean, and respectful service.', time:'2 months ago' },
+      { img:'assets/ad8.jpg',  name:'Chris T.',   stars:5, text:'They saved my day. Looks great and works perfectly now.', time:'3 months ago' },
+      { img:'assets/ad9.jpg',  name:'Anthony V.', stars:5, text:'Top-notch service. Strongly recommend TecPro99!', time:'3 months ago' },
+      { img:'assets/ad10.jpg', name:'Lina H.',    stars:5, text:'Amazing service and great communication. Thank you!', time:'4 months ago' }
+    ];
+
+    const revLeft   = document.getElementById('revLeft');
+    const revCenter = document.getElementById('revCenter');
+    const revRight  = document.getElementById('revRight');
+    const dotsWrap  = document.getElementById('reviewDots');
+
+    let idx = 0;
+
+    function starString(n){
+      return '★'.repeat(n) + '☆'.repeat(Math.max(0, 5-n));
+    }
+
+    function cardHTML(r){
+      return `
+        <div class="avatar"><img src="${r.img}" alt="Customer"/></div>
+        <div class="txt">
+          <div class="top">
+            <div class="name">${r.name}</div>
+            <div class="stars">${starString(r.stars)}</div>
+          </div>
+          <p class="msg">${r.text}</p>
+          <div class="time">${r.time}</div>
+        </div>
+      `;
+    }
+
+    function buildDots(){
+      dotsWrap.innerHTML = '';
+      for(let i=0;i<reviews.length;i++){
+        const d = document.createElement('div');
+        d.className = 'dot' + (i===idx ? ' active' : '');
+        d.addEventListener('click', ()=> jumpTo(i));
+        dotsWrap.appendChild(d);
       }
-      setInterval(showNext, 6000); // change every 6s
-    }, 600);
+    }
+
+    function setPos(el, cls){
+      el.className = 'review-card ' + cls;
+    }
+
+    function render(){
+      const leftIndex   = (idx - 1 + reviews.length) % reviews.length;
+      const centerIndex = idx;
+      const rightIndex  = (idx + 1) % reviews.length;
+
+      revLeft.innerHTML   = cardHTML(reviews[leftIndex]);
+      revCenter.innerHTML = cardHTML(reviews[centerIndex]);
+      revRight.innerHTML  = cardHTML(reviews[rightIndex]);
+
+      setPos(revLeft, 'pos-left');
+      setPos(revCenter, 'pos-center');
+      setPos(revRight, 'pos-right');
+
+      // dots
+      [...dotsWrap.children].forEach((dot, i)=>{
+        dot.classList.toggle('active', i===idx);
+      });
+    }
+
+    let isAnimating = false;
+    function nextReview(){
+      if(isAnimating) return;
+      isAnimating = true;
+
+      // Exit center -> right down, right -> exit, left -> center
+      setPos(revCenter, 'pos-exit-right');
+      setPos(revRight, 'pos-exit-right');
+
+      // Prepare a new left entering
+      const newLeftIndex = (idx - 2 + reviews.length) % reviews.length;
+      revLeft.innerHTML = cardHTML(reviews[newLeftIndex]);
+      setPos(revLeft, 'pos-enter-left');
+
+      // after short tick, slide into positions
+      setTimeout(()=>{
+        idx = (idx + 1) % reviews.length;
+
+        // rebuild content for new trio
+        const leftIndex   = (idx - 1 + reviews.length) % reviews.length;
+        const centerIndex = idx;
+        const rightIndex  = (idx + 1) % reviews.length;
+
+        revLeft.innerHTML   = cardHTML(reviews[leftIndex]);
+        revCenter.innerHTML = cardHTML(reviews[centerIndex]);
+        revRight.innerHTML  = cardHTML(reviews[rightIndex]);
+
+        setPos(revLeft, 'pos-left');
+        setPos(revCenter, 'pos-center');
+        setPos(revRight, 'pos-right');
+
+        // dots
+        [...dotsWrap.children].forEach((dot, i)=>{
+          dot.classList.toggle('active', i===idx);
+        });
+
+        setTimeout(()=>{ isAnimating = false; }, 850);
+      }, 120);
+    }
+
+    function jumpTo(i){
+      idx = i;
+      render();
+      buildDots();
+    }
+
+    buildDots();
+    render();
+    setInterval(nextReview, 5000);
+
+    // =========================
+    // Promo popup after 15s
+    // =========================
+    const promoModal = document.getElementById('promoModal');
+
+    function closePromo(){
+      promoModal.classList.remove('show');
+    }
+
+    // Close on background click
+    promoModal.addEventListener('click', (e)=>{
+      if(e.target === promoModal) closePromo();
+    });
+
+    // Show after 15s (once per session)
+    setTimeout(()=>{
+      try{
+        if(!sessionStorage.getItem('promo_shown')){
+          promoModal.classList.add('show');
+          sessionStorage.setItem('promo_shown', '1');
+          // Track popup view
+          gtag('event','promo_popup_view', {event_category:'engagement', event_label:'15s_timer'});
+        }
+      }catch(e){
+        promoModal.classList.add('show');
+      }
+    }, 15000);
   </script>
 </body>
 </html>
