@@ -1,11 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TecPro99</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TecPro99 provides phone, tablet, console, and electronics repair in Chicago, Illinois.">
+  <meta name="theme-color" content="#f7f4ee">
+  <link rel="canonical" href="https://techpro99.com/">
+  <meta property="og:title" content="TecPro99 | Device Repair in Chicago">
+  <meta property="og:description" content="Clear repair quotes, careful work, and a simple way to book your service.">
+  <meta property="og:image" content="https://techpro99.com/assets/hero-techpro.jpg">
+  <meta property="og:type" content="website">
+  <title>TecPro99 | Phone, Tablet &amp; Console Repair in Chicago</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "TecPro99",
+      "url": "https://techpro99.com/",
+      "telephone": "+1-773-628-7132",
+      "priceRange": "$39+",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4362 N Elston Ave",
+        "addressLocality": "Chicago",
+        "addressRegion": "IL",
+        "postalCode": "60641",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"], "opens": "09:00", "closes": "23:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "09:00", "closes": "11:30" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "13:30", "closes": "23:00" }
+      ]
+    }
+  </script>
 
-  <!-- GA4 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,882 +49,756 @@
   </script>
 
   <style>
-    :root{
-      --bg:#0b0f16;
-      --card:#0f1724cc;
-      --stroke:#1b2a42;
-      --text:#eaf0ff;
-      --muted:#a9b7d3;
-      --blue:#1e88e5;
-      --orange:#ff8a00;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius:18px;
+    :root {
+      --ink: #181815;
+      --ink-soft: #504f49;
+      --paper: #f7f4ee;
+      --paper-deep: #ebe6dc;
+      --line: #d8d2c7;
+      --acid: #d6f354;
+      --blue: #2d63ee;
+      --coral: #f4774f;
+      --white: #fffdf9;
+      --max: 1180px;
+      --radius: 8px;
+      --shadow: 0 22px 52px rgba(36, 31, 19, .12);
     }
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      color:var(--text);
-      background: var(--bg);
-      overflow-x:hidden;
-    }
-
-    /* ===== Animated Background (Back-1..Back-10) ===== */
-    .bg-rotator{
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      overflow: hidden;
-    }
-    .bg-rotator::before{
-      content:"";
-      position:absolute; inset:-20px;
-      background-size: cover;
-      background-position: center;
-      filter: blur(6px) brightness(.90);
-      transform: scale(1.08);
-      animation: bgSwap 60s infinite;
-      will-change: background-image, opacity, transform;
-    }
-    .bg-rotator::after{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(900px 500px at 20% 10%, rgba(30,136,229,.20), transparent 60%),
-                  radial-gradient(900px 500px at 80% 90%, rgba(255,138,0,.18), transparent 60%),
-                  linear-gradient(180deg, rgba(3,6,12,.25), rgba(3,6,12,.45));
-      z-index: 1;
-    }
-
-    @keyframes bgSwap{
-      0%   { background-image:url("assets/Back-1.jpg"); }
-      10%  { background-image:url("assets/Back-2.jpg"); }
-      20%  { background-image:url("assets/Back-3.jpg"); }
-      30%  { background-image:url("assets/Back-4.jpg"); }
-      40%  { background-image:url("assets/Back-5.jpg"); }
-      50%  { background-image:url("assets/Back-6.jpg"); }
-      60%  { background-image:url("assets/Back-7.jpg"); }
-      70%  { background-image:url("assets/Back-8.jpg"); }
-      80%  { background-image:url("assets/Back-9.jpg"); }
-      90%  { background-image:url("assets/Back-10.jpg"); }
-      100% { background-image:url("assets/Back-1.jpg"); }
-    }
-
-    /* ===== Layout ===== */
-    .wrap{ width:min(1150px, 92vw); margin:0 auto; }
-    header{
-      padding: 22px 0 10px;
-    }
-
-    /* Top bar (NOT sticky) */
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding: 14px 16px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(10,15,25,.55);
-      backdrop-filter: blur(14px);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 220px;
-    }
-    .brand img{
-      width: 42px; height: 42px; object-fit:contain;
-      border-radius: 10px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 6px;
-    }
-    .brand b{ font-size: 16px; letter-spacing:.2px; }
-    .brand small{ display:block; color:var(--muted); margin-top:2px; font-size:12px; }
-
-    .nav-actions{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
-    }
-
-    .btn{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 14px;
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      font-weight: 650;
-      text-decoration:none;
-      display:inline-flex; align-items:center; gap:8px;
-      white-space:nowrap;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.16); }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(30,136,229,.95), rgba(255,138,0,.88));
-      border-color: rgba(255,255,255,.18);
-      box-shadow: 0 18px 60px rgba(30,136,229,.16);
-    }
-    .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
-
-    .hero{
-      margin-top: 16px;
-      padding: 26px 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(8,12,20,.55);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .hero h1{ margin:0 0 10px; font-size: clamp(26px, 4vw, 44px); line-height: 1.06; }
-    .hero p{ margin:0 0 12px; color: var(--muted); font-size: 15px; line-height: 1.6; }
-
-    .hero-badges{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;
-    }
-    .badge{
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      font-weight: 650;
-      font-size: 13px;
-    }
-
-    .hero-media{
-      border-radius: 18px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 20px 70px rgba(0,0,0,.35);
-      position:relative;
-      min-height: 220px;
-    }
-    .hero-media img{
-      width:100%; height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.04);
-      filter: contrast(1.05) saturate(1.05);
-    }
-    .hero-media .overlay{
-      position:absolute; inset:0;
-      background: linear-gradient(120deg, rgba(0,0,0,.0), rgba(0,0,0,.25), rgba(0,0,0,.0));
-      pointer-events:none;
-    }
-
-    /* ===== Services ===== */
-    .section-title{
-      margin: 26px 0 12px;
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-    }
-    .section-title h2{ margin:0; font-size: 20px; letter-spacing:.2px; }
-    .section-title span{ color: var(--muted); font-size: 13px; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .card{
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(12,18,30,.55);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 18px 60px rgba(0,0,0,.28);
-      overflow:hidden;
-      position:relative;
-      transition: transform .18s ease, border-color .18s ease;
-    }
-    .card:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
-    .card img{
-      width:100%; height: 170px; object-fit: cover; display:block;
-      filter: contrast(1.06) saturate(1.05);
-    }
-    .card .cbody{ padding: 14px; }
-    .card h3{ margin:0 0 6px; font-size: 16px; }
-    .card p{ margin:0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-
-    .row{
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-
-    /* ===== Reviews Showcase ===== */
-    .reviews-wrap{
-      margin-top: 24px;
-      padding: 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(8,12,20,.58);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .reviews-head{
-      display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
-      margin-bottom: 14px;
-    }
-    .reviews-head h2{
-      margin:0;
-      font-size: 20px;
-      letter-spacing:.2px;
-    }
-    .reviews-head .meta{
-      color: var(--muted);
-      font-size: 13px;
-      text-align:right;
-      line-height: 1.35;
-    }
-    .reviews-head .meta b{ color: var(--text); }
-
-    .reviews-stage{
-      position:relative;
-      height: 220px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .review-card{
-      position:absolute;
-      width: min(640px, 92vw);
-      max-width: 640px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(15,23,36,.70);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 22px 80px rgba(0,0,0,.40);
-      padding: 16px;
-      display:flex;
-      gap:14px;
-      opacity:0;
-      transform: translateX(0) translateY(0) scale(.92);
-      transition: transform .75s cubic-bezier(.2,.9,.2,1), opacity .55s ease;
-    }
-
-    .review-card .avatar{
-      width: 62px; height: 62px;
-      border-radius: 16px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      flex: 0 0 auto;
-    }
-    .review-card .avatar img{
-      width:100%; height:100%;
-      object-fit: cover;
-      display:block;
-    }
-    .review-card .txt{
-      flex:1;
-      min-width:0;
-    }
-    .review-card .top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-    .review-card .name{
-      font-weight: 800;
-      letter-spacing:.2px;
-      font-size: 14px;
-    }
-    .review-card .stars{
-      font-size: 13px;
-      color: #ffd166;
-      white-space:nowrap;
-      font-weight: 800;
-    }
-    .review-card .msg{
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
       margin: 0;
-      color: rgba(234,240,255,.90);
-      font-size: 14px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Manrope", Arial, sans-serif;
       line-height: 1.5;
     }
-    .review-card .time{
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 12px;
+    body.modal-open { overflow: hidden; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 14px;
+      color: var(--ink-soft);
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      width: 9px;
+      height: 9px;
+      content: "";
+      background: var(--coral);
+      border-radius: 50%;
+    }
+    .eyebrow.light { color: rgba(255,255,255,.68); }
+    .eyebrow.light::before { background: var(--acid); }
+    .section-heading {
+      max-width: 670px;
+      margin: 0;
+      font-size: clamp(30px, 4vw, 53px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+    .section-copy {
+      max-width: 520px;
+      margin: 18px 0 0;
+      color: var(--ink-soft);
+      font-size: 16px;
     }
 
-    /* Positions: left peek, center, right peek, exit */
-    .pos-center{
-      opacity:1;
-      transform: translateX(0) translateY(0) scale(1);
-      z-index: 3;
+    .site-header {
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      width: 100%;
+      color: var(--white);
     }
-    .pos-left{
-      opacity:.75;
-      transform: translateX(-62%) translateY(16px) scale(.88);
-      z-index: 2;
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 86px;
+      gap: 22px;
+      border-bottom: 1px solid rgba(255,255,255,.22);
     }
-    .pos-right{
-      opacity:.75;
-      transform: translateX(62%) translateY(16px) scale(.88);
-      z-index: 2;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: .02em;
     }
-    .pos-exit-right{
-      opacity:0;
-      transform: translateX(120%) translateY(40px) scale(.78);
-      z-index: 1;
-    }
-    .pos-enter-left{
-      opacity:0;
-      transform: translateX(-120%) translateY(40px) scale(.78);
-      z-index: 1;
-    }
-
-    .reviews-dots{
-      display:flex; gap:8px; justify-content:center; margin-top: 12px;
-    }
-    .dot{
-      width: 9px; height: 9px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.12);
-      transition: transform .2s ease, background .2s ease;
-    }
-    .dot.active{
-      background: linear-gradient(135deg, rgba(30,136,229,.95), rgba(255,138,0,.88));
-      transform: scale(1.25);
-      border-color: rgba(255,255,255,.18);
-    }
-
-    /* ===== Footer ===== */
-    footer{
-      margin: 26px 0 40px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align:center;
-    }
-
-    /* ===== Popup ===== */
-    .modal{
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      background: rgba(0,0,0,.55);
-      padding: 18px;
-    }
-    .modal.show{ display:flex; }
-
-    .modal-card{
-      width: min(520px, 92vw);
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(10,15,25,.72);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 30px 120px rgba(0,0,0,.6);
-      overflow:hidden;
-      transform: translateY(10px) scale(.98);
-      animation: popIn .45s cubic-bezier(.2,.9,.2,1) forwards;
-    }
-    @keyframes popIn{
-      to{ transform: translateY(0) scale(1); }
-    }
-    .modal-banner{
-      position:relative;
-      height: 160px;
-      overflow:hidden;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
-    .modal-banner img{
-      width:100%; height:100%;
+    .brand img {
+      width: 35px;
+      height: 35px;
       object-fit: cover;
-      display:block;
-      filter: contrast(1.05) saturate(1.05);
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 50%;
     }
-    .modal-banner::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(0,0,0,.0), rgba(0,0,0,.35));
+    .brand-name { font-size: 17px; }
+    .brand-name span { color: var(--acid); }
+    .primary-nav { display: flex; align-items: center; gap: 25px; }
+    .primary-nav a {
+      color: rgba(255,255,255,.86);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
     }
-    .modal-body{
-      padding: 16px;
+    .primary-nav a:hover { color: var(--acid); }
+    .header-phone {
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .modal-body h3{
-      margin:0 0 8px;
-      font-size: 18px;
-      letter-spacing:.2px;
+
+    .hero {
+      position: relative;
+      min-height: min(755px, 89svh);
+      overflow: hidden;
+      color: var(--white);
+      background: #171716;
+      isolation: isolate;
     }
-    .modal-body p{
-      margin:0 0 10px;
-      color: rgba(234,240,255,.92);
-      line-height: 1.55;
-      font-size: 14px;
+    .hero::before {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      content: "";
+      background: url("assets/hero-techpro.jpg") center/cover no-repeat;
+      transform: scale(1.015);
     }
-    .promo{
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px dashed rgba(255,255,255,.22);
-      background: rgba(255,255,255,.06);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin: 10px 0 12px;
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      content: "";
+      background: linear-gradient(90deg, rgba(10,10,8,.9) 0%, rgba(10,10,8,.68) 47%, rgba(10,10,8,.24) 100%), linear-gradient(0deg, rgba(10,10,8,.66) 0%, transparent 38%);
+    }
+    .hero-layout {
+      display: flex;
+      min-height: min(755px, 89svh);
+      padding: 168px 0 38px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hero-content { max-width: 780px; }
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: .98;
+    }
+    .hero h1 em { color: var(--acid); font-style: normal; }
+    .hero-copy {
+      max-width: 560px;
+      margin: 22px 0 0;
+      color: rgba(255,255,255,.85);
+      font-size: clamp(16px, 2vw, 18px);
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 31px; }
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 17px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .01em;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .button svg { width: 17px; height: 17px; stroke-width: 2.2; }
+    .button:hover { transform: translateY(-2px); }
+    .button-acid { color: var(--ink); background: var(--acid); }
+    .button-acid:hover { background: #e2ff68; }
+    .button-light { color: var(--white); border-color: rgba(255,255,255,.55); background: transparent; }
+    .button-light:hover { background: rgba(255,255,255,.12); }
+    .button-dark { color: var(--white); background: var(--ink); }
+    .button-dark:hover { background: #32312c; }
+    .button-outline { color: var(--ink); border-color: var(--ink); background: transparent; }
+    .button-outline:hover { color: var(--white); background: var(--ink); }
+    .button-small { min-height: 40px; padding: 8px 12px; font-size: 12px; }
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1.7fr repeat(3, 1fr);
+      border-top: 1px solid rgba(255,255,255,.28);
+    }
+    .hero-note, .hero-stat { padding: 18px 18px 0 0; }
+    .hero-stat { padding-left: 18px; border-left: 1px solid rgba(255,255,255,.28); }
+    .hero-note { color: rgba(255,255,255,.76); font-size: 13px; }
+    .hero-stat strong { display: block; color: var(--acid); font-family: "DM Mono", monospace; font-size: 14px; }
+    .hero-stat span { display: block; margin-top: 4px; color: rgba(255,255,255,.76); font-size: 12px; }
+
+    .benefits { border-bottom: 1px solid var(--line); background: var(--white); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .benefit { display: flex; align-items: center; gap: 13px; min-height: 95px; padding: 18px 24px; border-right: 1px solid var(--line); }
+    .benefit:first-child { border-left: 1px solid var(--line); }
+    .benefit-icon { display: grid; width: 37px; height: 37px; flex: 0 0 auto; place-items: center; color: var(--blue); background: #e9edff; border-radius: 50%; }
+    .benefit-icon svg { width: 18px; }
+    .benefit strong { display: block; font-size: 13px; }
+    .benefit span { display: block; margin-top: 2px; color: var(--ink-soft); font-size: 12px; }
+
+    .services { padding: 112px 0 118px; }
+    .section-intro { display: flex; align-items: end; justify-content: space-between; gap: 34px; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 46px; }
+    .service-card { overflow: hidden; border: 1px solid var(--line); background: var(--white); border-radius: var(--radius); }
+    .service-card img { width: 100%; height: 210px; object-fit: cover; }
+    .service-card-body { padding: 20px; }
+    .service-card-number { color: var(--blue); font-family: "DM Mono", monospace; font-size: 11px; }
+    .service-card h3 { margin: 7px 0 7px; font-size: 20px; line-height: 1.1; }
+    .service-card p { min-height: 43px; margin: 0; color: var(--ink-soft); font-size: 13px; }
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 17px;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 12px;
       font-weight: 800;
     }
-    .promo code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      color: #ffd166;
-      font-size: 14px;
-    }
-    .fineprint{
-      margin-top: 10px;
-      font-size: 11px;
-      color: rgba(169,183,211,.9);
-      line-height: 1.35;
-    }
-    .modal-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 12px;
-    }
-    .btn.ghost{
-      background: rgba(255,255,255,.05);
-    }
+    .service-link svg { width: 16px; height: 16px; }
+    .service-link:hover { color: var(--blue); }
 
-    /* ===== Responsive ===== */
-    @media (max-width: 940px){
-      .hero{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: repeat(2, 1fr); }
+    .estimate { background: var(--ink); color: var(--white); }
+    .estimate-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 74px; padding: 110px 0; }
+    .estimate .section-copy { color: rgba(255,255,255,.7); }
+    .estimate-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.25); }
+    .estimate-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 19px 0; border-bottom: 1px solid rgba(255,255,255,.25); }
+    .estimate-list strong { display: block; font-size: 16px; }
+    .estimate-list span { display: block; margin-top: 3px; color: rgba(255,255,255,.62); font-size: 12px; }
+    .estimate-list button { color: var(--acid); border: 0; background: transparent; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .estimate-list button:hover { color: var(--white); }
+
+    .process { padding: 115px 0 108px; background: var(--paper-deep); }
+    .process-head { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; }
+    .process-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 60px; counter-reset: steps; }
+    .process-item { padding-top: 18px; border-top: 2px solid var(--ink); }
+    .process-item::before { display: block; content: "0" counter(steps); counter-increment: steps; color: var(--coral); font-family: "DM Mono", monospace; font-size: 13px; }
+    .process-item h3 { margin: 28px 0 8px; font-size: 20px; }
+    .process-item p { margin: 0; color: var(--ink-soft); font-size: 14px; }
+
+    .standards { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; color: var(--white); background: var(--ink); }
+    .standards-image { min-height: 420px; background: url("assets/gallery-2.jpg") center/cover no-repeat; }
+    .standards-content { display: flex; justify-content: center; flex-direction: column; padding: 70px clamp(30px, 8vw, 125px); }
+    .standards .section-heading { font-size: clamp(31px, 4vw, 51px); }
+    .standard-list { display: grid; gap: 0; margin: 31px 0 0; padding: 0; list-style: none; }
+    .standard-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.22); }
+    .standard-list span { color: rgba(255,255,255,.77); font-size: 14px; }
+    .standard-list svg { width: 18px; flex: 0 0 auto; color: var(--acid); }
+
+    .reviews { padding: 116px 0; background: var(--white); }
+    .reviews-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 90px; }
+    .review-rating { display: flex; align-items: end; gap: 17px; margin-top: 38px; }
+    .review-rating strong { color: var(--blue); font-family: "DM Mono", monospace; font-size: clamp(56px, 7vw, 88px); font-weight: 500; line-height: .8; }
+    .review-rating-copy { padding-bottom: 4px; }
+    .review-stars { display: flex; gap: 3px; color: var(--coral); }
+    .review-stars svg { width: 16px; fill: currentColor; }
+    .review-rating-copy span { display: block; margin-top: 7px; color: var(--ink-soft); font-size: 13px; }
+    .review-proof { display: inline-flex; align-items: center; gap: 8px; margin-top: 31px; color: var(--ink); font-size: 13px; font-weight: 800; }
+    .review-proof > span { display: grid; width: 31px; height: 31px; place-items: center; color: var(--blue); background: #e9edff; border-radius: 50%; }
+    .review-proof svg { width: 16px; }
+    .review-list { border-top: 1px solid var(--line); }
+    .review-card { padding: 26px 0; border-bottom: 1px solid var(--line); }
+    .review-card .review-stars { margin-bottom: 13px; }
+    .review-card blockquote { margin: 0; font-size: clamp(17px, 2vw, 21px); font-weight: 700; line-height: 1.35; }
+    .review-card cite { display: block; margin-top: 13px; color: var(--ink-soft); font-size: 12px; font-style: normal; }
+
+    .visit { padding: 116px 0; }
+    .visit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .visit-card { min-height: 470px; padding: 48px; border: 1px solid var(--line); background: var(--white); border-radius: var(--radius); }
+    .visit-card.map-card { position: relative; overflow: hidden; color: var(--white); background: url("assets/gallery-5.jpg") center/cover no-repeat; }
+    .visit-card.map-card::before { position: absolute; inset: 0; content: ""; background: linear-gradient(0deg, rgba(8,8,7,.85), rgba(8,8,7,.18)); }
+    .visit-card.map-card > * { position: relative; }
+    .visit-card h2 { max-width: 430px; margin: 0; font-size: clamp(29px, 3.3vw, 44px); line-height: 1.05; }
+    .visit-card p { max-width: 420px; margin: 20px 0 0; color: var(--ink-soft); font-size: 15px; }
+    .visit-card.map-card p { color: rgba(255,255,255,.82); }
+    .contact-details { display: grid; gap: 18px; margin: 44px 0 0; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 12px; }
+    .contact-detail svg { width: 19px; height: 19px; flex: 0 0 auto; color: var(--blue); }
+    .contact-detail strong { display: block; font-size: 13px; }
+    .contact-detail a, .contact-detail span { display: block; margin-top: 2px; color: var(--ink-soft); font-size: 13px; text-decoration: none; }
+    .contact-detail a:hover { color: var(--blue); }
+    .visit-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 42px; }
+    .map-card .button { position: absolute; bottom: 47px; left: 48px; }
+
+    .faq { padding: 100px 0 114px; border-top: 1px solid var(--line); background: var(--white); }
+    .faq-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 80px; }
+    .faq-list { border-top: 1px solid var(--line); }
+    details { border-bottom: 1px solid var(--line); }
+    summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 19px 0; list-style: none; font-size: 15px; font-weight: 800; cursor: pointer; }
+    summary::-webkit-details-marker { display: none; }
+    summary svg { width: 18px; flex: 0 0 auto; transition: transform .18s ease; }
+    details[open] summary svg { transform: rotate(45deg); }
+    details p { max-width: 580px; margin: 0; padding: 0 30px 21px 0; color: var(--ink-soft); font-size: 14px; }
+
+    .cta { color: var(--white); background: var(--blue); }
+    .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 34px; padding: 78px 0; }
+    .cta h2 { max-width: 710px; margin: 0; font-size: clamp(33px, 4.3vw, 59px); line-height: 1; }
+    .cta p { margin: 16px 0 0; color: rgba(255,255,255,.8); font-size: 15px; }
+    .cta .button { flex: 0 0 auto; }
+
+    footer { color: var(--white); background: #11110f; }
+    .footer-top { display: flex; justify-content: space-between; gap: 40px; padding: 45px 0 31px; }
+    .footer-top .brand img { border-color: rgba(255,255,255,.3); }
+    .footer-meta { display: flex; gap: 32px; color: rgba(255,255,255,.65); font-size: 12px; }
+    .footer-meta a { color: inherit; text-decoration: none; }
+    .footer-meta a:hover { color: var(--acid); }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 24px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.48); font-family: "DM Mono", monospace; font-size: 10px; }
+    .floating-call { position: fixed; z-index: 25; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); display: inline-flex; min-height: 53px; align-items: center; gap: 10px; padding: 12px 17px; border-radius: 7px; color: var(--white); background: var(--coral); box-shadow: 0 17px 35px rgba(116,40,20,.33); font-size: 13px; font-weight: 800; text-decoration: none; animation: call-float 2.7s ease-in-out infinite; }
+    .floating-call::before { position: absolute; z-index: -1; inset: -7px; content: ""; border: 1px solid rgba(244,119,79,.55); border-radius: 11px; animation: call-pulse 2.7s ease-out infinite; }
+    .floating-call:hover { color: var(--ink); background: var(--acid); animation-play-state: paused; }
+    .floating-call svg { width: 18px; height: 18px; }
+    @keyframes call-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes call-pulse { 0%, 55% { opacity: .72; transform: scale(.93); } 100% { opacity: 0; transform: scale(1.22); } }
+
+    .modal-close { position: absolute; top: 14px; right: 14px; display: grid; width: 38px; height: 38px; padding: 0; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: var(--white); }
+    .modal-close:hover { color: var(--white); background: var(--ink); }
+    .modal-close svg { width: 18px; }
+
+    .promo-modal { position: fixed; z-index: 40; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(10,10,8,.72); }
+    .promo-modal.is-open { display: flex; }
+    .promo-dialog { position: relative; display: grid; width: min(780px, 100%); grid-template-columns: .82fr 1.18fr; overflow: hidden; border-radius: var(--radius); color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
+    .promo-image { min-height: 420px; background: url("assets/gallery-1.jpg") center/cover no-repeat; }
+    .promo-content { padding: 53px 48px 44px; }
+    .promo-content h2 { max-width: 450px; margin: 0; font-size: clamp(31px, 4vw, 48px); line-height: 1.01; }
+    .promo-content > p { max-width: 440px; margin: 16px 0 0; color: var(--ink-soft); font-size: 15px; }
+    .promo-value { display: inline-flex; margin-top: 27px; padding: 8px 11px; color: var(--blue); border: 1px solid #b9c9ff; background: #e9edff; font-family: "DM Mono", monospace; font-size: 13px; font-weight: 500; }
+    .promo-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 27px; }
+    .promo-fineprint { margin-top: 17px !important; color: #77736c !important; font-size: 11px !important; }
+
+    @media (max-width: 850px) {
+      .primary-nav { display: none; }
+      .hero-bottom { grid-template-columns: 1.25fr repeat(3, 1fr); }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .estimate-grid, .process-head, .faq-grid { grid-template-columns: 1fr; gap: 34px; }
+      .standards { grid-template-columns: 1fr; }
+      .standards-image { min-height: 370px; }
+      .reviews-grid { grid-template-columns: 1fr; gap: 48px; }
+      .visit-grid { grid-template-columns: 1fr; }
+      .faq-grid { gap: 40px; }
     }
-    @media (max-width: 560px){
-      .brand{ min-width: unset; }
-      .grid{ grid-template-columns: 1fr; }
-      .topbar{ padding: 12px; }
-      .brand img{ width: 38px; height: 38px; }
-      .review-card{ padding: 14px; }
-      .review-card .avatar{ width: 56px; height: 56px; border-radius: 14px; }
-      .pos-left{ transform: translateX(-74%) translateY(18px) scale(.86); }
-      .pos-right{ transform: translateX(74%) translateY(18px) scale(.86); }
+    @media (max-width: 600px) {
+      .container { width: min(calc(100% - 28px), var(--max)); }
+      .header-inner { min-height: 69px; }
+      .header-phone { display: none; }
+      .hero { min-height: 740px; }
+      .hero::before { background-image: url("assets/gallery-1.jpg"); background-position: center 40%; transform: none; }
+      .hero::after { background: linear-gradient(180deg, rgba(10,10,8,.83) 0%, rgba(10,10,8,.64) 57%, rgba(10,10,8,.9) 100%); }
+      .hero-layout { min-height: 740px; padding: 122px 0 24px; }
+      .hero h1 { font-size: clamp(43px, 13vw, 60px); }
+      .hero-actions .button { width: 100%; }
+      .hero-bottom { grid-template-columns: 1fr 1fr; gap: 0; }
+      .hero-note { grid-column: 1 / -1; padding-bottom: 14px; }
+      .hero-stat { padding: 12px 10px 0; }
+      .hero-stat:first-of-type { padding-left: 0; border-left: 0; }
+      .hero-stat:last-child { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .benefit, .benefit:first-child { min-height: 76px; border-right: 0; border-left: 0; border-bottom: 1px solid var(--line); }
+      .benefit:last-child { border-bottom: 0; }
+      .services, .process, .reviews, .visit { padding: 76px 0; }
+      .section-intro { display: block; }
+      .service-grid { grid-template-columns: 1fr; margin-top: 35px; }
+      .service-card img { height: 220px; }
+      .estimate-grid { gap: 42px; padding: 76px 0; }
+      .process-list { grid-template-columns: 1fr; gap: 30px; margin-top: 43px; }
+      .standards-content { padding: 63px 28px; }
+      .visit-card { min-height: 445px; padding: 33px 27px; }
+      .map-card .button { bottom: 31px; left: 27px; }
+      .faq { padding: 75px 0; }
+      .cta-inner { display: block; padding: 68px 0; }
+      .cta .button { width: 100%; margin-top: 27px; }
+      .footer-top, .footer-bottom { display: block; }
+      .footer-meta { gap: 15px; flex-wrap: wrap; margin-top: 25px; }
+      .footer-bottom span + span { display: inline-block; margin-top: 8px; }
+      .floating-call { width: 52px; min-height: 52px; height: 52px; justify-content: center; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); padding: 0; border-radius: 50%; }
+      .floating-call::before { border-radius: 50%; }
+      .floating-call span { display: none; }
+      .promo-dialog { grid-template-columns: 1fr; }
+      .promo-image { display: none; }
+      .promo-content { padding: 47px 24px 25px; }
+      .promo-actions .button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .floating-call, .floating-call::before { animation: none; }
     }
   </style>
 </head>
-
 <body>
-  <div class="bg-rotator" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="TecPro99 home">
+        <img src="assets/logo.jpg" alt="">
+        <span class="brand-name">TEC<span>PRO</span>99</span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#visit">Visit us</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="header-phone" href="tel:+17736287132" data-track="header_call">(773) 628-7132</a>
+    </div>
+  </header>
 
-  <div class="wrap">
-    <header>
-      <div class="topbar">
-        <div class="brand">
-          <!-- LOGO: تأكد أنه موجود داخل assets باسم logo.jpg -->
-          <img src="assets/logo.jpg" alt="TecPro99 Logo" />
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-layout">
+        <div class="hero-content">
+          <p class="eyebrow light">Chicago device repair</p>
+          <h1 id="hero-title">Your tech has a <em>life to get back to.</em></h1>
+          <p class="hero-copy">From a cracked screen to a console that will not power on, TecPro99 gives you a clear repair path and careful service for the devices you use every day.</p>
+          <div class="hero-actions">
+            <button class="button button-acid" type="button" data-telegram-booking data-service="general" data-track="hero_telegram">
+              <i data-lucide="send" aria-hidden="true"></i>
+              Book in Telegram
+            </button>
+            <a class="button button-light" href="tel:+17736287132" data-track="hero_call">
+              <i data-lucide="phone-call" aria-hidden="true"></i>
+              Call TecPro99
+            </a>
+          </div>
+        </div>
+        <div class="hero-bottom" aria-label="TecPro99 services">
+          <div class="hero-note">Bring the device in, tell us what changed, and we will help you figure out the next right step.</div>
+          <div class="hero-stat"><strong>Phones</strong><span>Screen, battery, charging</span></div>
+          <div class="hero-stat"><strong>Consoles</strong><span>HDMI and board repair</span></div>
+          <div class="hero-stat"><strong>More tech</strong><span>Tablets and electronics</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits" aria-label="Service benefits">
+      <div class="container benefits-grid">
+        <div class="benefit">
+          <span class="benefit-icon"><i data-lucide="timer" aria-hidden="true"></i></span>
+          <div><strong>Quick repairs from $39</strong><span>Select repairs while you wait in as little as 20 minutes.</span></div>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon"><i data-lucide="search-check" aria-hidden="true"></i></span>
+          <div><strong>Free diagnostics</strong><span>Get a clear look at the issue first.</span></div>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon"><i data-lucide="wrench" aria-hidden="true"></i></span>
+          <div><strong>Professional technicians</strong><span>Careful service for the devices you depend on.</span></div>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon"><i data-lucide="component" aria-hidden="true"></i></span>
+          <div><strong>Original-quality parts</strong><span>Quality components for compatible repairs.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services container" id="services" aria-labelledby="services-title">
+      <div class="section-intro">
+        <div>
+          <p class="eyebrow">What we repair</p>
+          <h2 class="section-heading" id="services-title">The fixes your day cannot wait for.</h2>
+        </div>
+        <p class="section-copy">Select the repair you need to start a quote request. We will use the device model and symptom to point you in the right direction.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <img src="assets/service-screen.jpg" alt="Phone screen repair">
+          <div class="service-card-body">
+            <span class="service-card-number">01 / PHONE</span>
+            <h3>Screen repair</h3>
+            <p>For cracks, display problems, touch issues, and broken glass.</p>
+            <button class="service-link" type="button" data-telegram-booking data-service="Screen repair"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+        </article>
+        <article class="service-card">
+          <img src="assets/service-battery.jpg" alt="Phone battery replacement">
+          <div class="service-card-body">
+            <span class="service-card-number">02 / PHONE</span>
+            <h3>Battery replacement</h3>
+            <p>When your phone drains too fast, overheats, or will not hold a charge.</p>
+            <button class="service-link" type="button" data-telegram-booking data-service="Battery replacement"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+        </article>
+        <article class="service-card">
+          <img src="assets/service-backglass.jpg" alt="Phone back glass repair">
+          <div class="service-card-body">
+            <span class="service-card-number">03 / PHONE</span>
+            <h3>Back glass repair</h3>
+            <p>Replace damaged back glass and get your device looking whole again.</p>
+            <button class="service-link" type="button" data-telegram-booking data-service="Back glass repair"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+        </article>
+        <article class="service-card">
+          <img src="assets/service-hdmi.jpg" alt="Console HDMI repair">
+          <div class="service-card-body">
+            <span class="service-card-number">04 / CONSOLE</span>
+            <h3>HDMI &amp; console repair</h3>
+            <p>For loose ports, no signal, damaged connectors, and display faults.</p>
+            <button class="service-link" type="button" data-telegram-booking data-service="Console HDMI repair"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+        </article>
+        <article class="service-card">
+          <img src="assets/service-board.jpg" alt="Device diagnostics and board repair">
+          <div class="service-card-body">
+            <span class="service-card-number">05 / DIAGNOSTICS</span>
+            <h3>Board repair &amp; diagnostics</h3>
+            <p>For issues that need a closer look beyond a simple part replacement.</p>
+            <button class="service-link" type="button" data-telegram-booking data-service="Board repair and diagnostics"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+        </article>
+        <article class="service-card">
+          <img src="assets/service-water.jpg" alt="Water damaged phone repair">
+          <div class="service-card-body">
+            <span class="service-card-number">06 / RECOVERY</span>
+            <h3>Water damage recovery</h3>
+            <p>Bring it in quickly so we can assess moisture damage and recovery options.</p>
+            <button class="service-link" type="button" data-telegram-booking data-service="Water damage recovery"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="estimate" aria-labelledby="estimate-title">
+      <div class="container estimate-grid">
+        <div>
+          <p class="eyebrow light">Start with a clear quote</p>
+          <h2 class="section-heading" id="estimate-title">Get your price in Telegram.</h2>
+          <p class="section-copy">The Telegram assistant will ask about the model and issue, then show the relevant repair prices and help reserve a convenient time.</p>
+          <button class="button button-acid" type="button" data-telegram-booking data-service="general" data-track="estimate_telegram"><i data-lucide="send" aria-hidden="true"></i> Get price in Telegram</button>
+        </div>
+        <ul class="estimate-list" aria-label="Popular estimate requests">
+          <li><div><strong>Cracked or black screen</strong><span>Phones, tablets, and selected laptops</span></div><button type="button" data-telegram-booking data-service="Screen repair">Get price</button></li>
+          <li><div><strong>Battery will not last</strong><span>Fast drain, swelling, power issues</span></div><button type="button" data-telegram-booking data-service="Battery replacement">Get price</button></li>
+          <li><div><strong>Phone will not charge</strong><span>Port damage, cable connection, charging faults</span></div><button type="button" data-telegram-booking data-service="Charging issue">Get price</button></li>
+          <li><div><strong>Console has no display</strong><span>HDMI, port, board, and power diagnosis</span></div><button type="button" data-telegram-booking data-service="Console repair">Get price</button></li>
+          <li><div><strong>Something else happened</strong><span>Describe it and we will help sort it out</span></div><button type="button" data-telegram-booking data-service="Other repair">Get price</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="process" id="how-it-works" aria-labelledby="process-title">
+      <div class="container">
+        <div class="process-head">
           <div>
-            <b>TecPro99</b>
-            <small>(773) 628-7132 • Chicago, IL</small>
+            <p class="eyebrow">How it works</p>
+            <h2 class="section-heading" id="process-title">A repair process built to stay simple.</h2>
           </div>
+          <p class="section-copy">No giant catalog to decode. A few good details from you make it easier to choose the right repair and a convenient time.</p>
         </div>
-
-        <div class="nav-actions">
-          <!-- Directions -->
-          <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic"
-             target="_blank" rel="noopener"
-             onclick="trackDirections('topbar_directions')">
-            📍 Directions
-          </a>
-
-          <!-- Call -->
-          <a class="btn primary" href="tel:+17736287132"
-             onclick="trackCall('topbar_call')">
-            📞 Call Now
-          </a>
+        <div class="process-list">
+          <article class="process-item"><h3>Describe the issue</h3><p>Pick a repair type and add your device model or the symptom you are seeing.</p></article>
+          <article class="process-item"><h3>Confirm the plan</h3><p>We will use those details to help you understand the repair path and estimate.</p></article>
+          <article class="process-item"><h3>Reserve in Telegram</h3><p>The Telegram assistant will collect the repair details, show prices, and guide you to a visit time.</p></article>
         </div>
       </div>
+    </section>
 
-      <section class="hero">
+    <section class="standards" aria-labelledby="standards-title">
+      <div class="standards-image" role="img" aria-label="Technician working on a device"></div>
+      <div class="standards-content">
+        <p class="eyebrow light">Care, not guesswork</p>
+        <h2 class="section-heading" id="standards-title">Good repair starts with paying attention.</h2>
+        <ul class="standard-list">
+          <li><span>A repair path that fits the actual device and issue</span><i data-lucide="check" aria-hidden="true"></i></li>
+          <li><span>Clear communication before work begins</span><i data-lucide="check" aria-hidden="true"></i></li>
+          <li><span>Careful handling of the devices you depend on</span><i data-lucide="check" aria-hidden="true"></i></li>
+          <li><span>One local team in Chicago</span><i data-lucide="check" aria-hidden="true"></i></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="reviews" aria-labelledby="reviews-title">
+      <div class="container reviews-grid">
         <div>
-          <h1>Premium Device Care, Done Right.</h1>
-          <p>
-            Fast, clean, and professional service — trusted by our local community.
-            Visit us in Chicago or call to reserve your spot.
-          </p>
-
-          <div class="hero-badges">
-            <span class="badge">Open Daily • 9 AM – 11 PM</span>
-            <span class="badge">Same-Day Options</span>
-            <span class="badge">Friendly Support</span>
+          <p class="eyebrow">Customer reviews</p>
+          <h2 class="section-heading" id="reviews-title">More than 500 reasons Chicago trusts TecPro99.</h2>
+          <p class="section-copy">Customers come to us for clear communication, careful repair work, and a faster way back to the devices they use every day.</p>
+          <div class="review-rating" aria-label="4.8 out of 5 average customer rating">
+            <strong>4.8</strong>
+            <div class="review-rating-copy"><div class="review-stars" aria-hidden="true"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><span>Average customer rating</span></div>
           </div>
+          <a class="review-proof" href="https://www.google.com/maps/search/?api=1&amp;query=4362%20N%20Elston%20Ave%2C%20Chicago%2C%20IL%2060641" target="_blank" rel="noopener" data-track="reviews_directions"><span><i data-lucide="messages-square" aria-hidden="true"></i></span> 500+ customer reviews</a>
+        </div>
+        <div class="review-list" aria-label="Customer feedback">
+          <article class="review-card"><div class="review-stars" aria-label="5 out of 5 stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><blockquote>"Fast repair, friendly service, and everything was explained clearly before work started."</blockquote><cite>TecPro99 customer feedback</cite></article>
+          <article class="review-card"><div class="review-stars" aria-label="5 out of 5 stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><blockquote>"The team made the process easy. I knew what was happening with my device at every step."</blockquote><cite>TecPro99 customer feedback</cite></article>
+          <article class="review-card"><div class="review-stars" aria-label="5 out of 5 stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><blockquote>"Professional work and a quick turnaround. My device was back in my hands without the stress."</blockquote><cite>TecPro99 customer feedback</cite></article>
+        </div>
+      </div>
+    </section>
 
-          <div class="row" style="margin-top:14px;">
-            <a class="btn primary" href="tel:+17736287132"
-               onclick="trackBook('hero_book')">
-              ✅ Book Now
-            </a>
-            <a class="btn" href="tel:+17736287132"
-               onclick="trackCall('hero_call')">
-              📞 Call
-            </a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic"
-               target="_blank" rel="noopener"
-               onclick="trackDirections('hero_directions')">
-              📍 Get Directions
-            </a>
+    <section class="visit container" id="visit" aria-labelledby="visit-title">
+      <div class="visit-grid">
+        <div class="visit-card">
+          <p class="eyebrow">Chicago, Illinois</p>
+          <h2 id="visit-title">Need to get there fast? We made that part easy.</h2>
+          <p>Call TecPro99 with your device issue, or use the map for directions. We will help you choose the right next step before you head out.</p>
+          <div class="contact-details">
+            <div class="contact-detail"><i data-lucide="phone" aria-hidden="true"></i><div><strong>Call TecPro99</strong><a href="tel:+17736287132" data-track="visit_call">(773) 628-7132</a></div></div>
+            <div class="contact-detail"><i data-lucide="map-pin" aria-hidden="true"></i><div><strong>Service location</strong><a href="https://www.google.com/maps/search/?api=1&amp;query=4362%20N%20Elston%20Ave%2C%20Chicago%2C%20IL%2060641" target="_blank" rel="noopener" data-track="visit_directions">4362 N Elston Ave, Chicago, IL 60641</a></div></div>
+            <div class="contact-detail"><i data-lucide="clock-3" aria-hidden="true"></i><div><strong>Hours</strong><span>Sun-Thu &amp; Sat: 9 AM-11 PM<br>Fri: 9-11:30 AM, 1:30-11 PM</span></div></div>
+          </div>
+          <div class="visit-actions">
+            <button class="button button-dark" type="button" data-telegram-booking data-service="general"><i data-lucide="send" aria-hidden="true"></i> Book in Telegram</button>
           </div>
         </div>
-
-        <div class="hero-media">
-          <!-- صورة هيرو -->
-          <img src="assets/hero-techpro.jpg" alt="TecPro99" />
-          <div class="overlay"></div>
+        <div class="visit-card map-card">
+          <p class="eyebrow light">Make your visit count</p>
+          <h2>Start the repair request before you leave.</h2>
+          <p>Send the device and problem first so the repair conversation starts with the right details.</p>
+          <a class="button button-acid" href="https://www.google.com/maps/search/?api=1&amp;query=4362%20N%20Elston%20Ave%2C%20Chicago%2C%20IL%2060641" target="_blank" rel="noopener" data-track="map_directions"><i data-lucide="navigation" aria-hidden="true"></i> Get directions</a>
         </div>
-      </section>
-    </header>
+      </div>
+    </section>
 
-    <!-- ===== Services (كما هي) ===== -->
-    <div class="section-title">
-      <h2>Popular Services</h2>
-      <span>Tap any service to contact us instantly</span>
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div class="container faq-grid">
+        <div>
+          <p class="eyebrow">Good to know</p>
+          <h2 class="section-heading" id="faq-title">A few common questions.</h2>
+          <p class="section-copy">The fastest way to get a precise answer is to call with your device model, but these are good places to begin.</p>
+        </div>
+        <div class="faq-list">
+          <details><summary>Can I get an estimate before I come in?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Yes. Send the device type, model, and what happened. We can then help you understand the likely repair path and what details matter for a quote.</p></details>
+          <details><summary>What devices do you work on?<i data-lucide="plus" aria-hidden="true"></i></summary><p>TecPro99 handles many common phone, tablet, console, and electronics issues. If your device is not listed above, call and tell us what it is.</p></details>
+          <details><summary>What should I bring with my device?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Bring the device and any essential information about the issue. For charging problems, bringing the cable or accessory involved can also be helpful.</p></details>
+          <details><summary>How does Telegram booking work?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Telegram handles the complete booking conversation. It will ask for the device and issue, show applicable prices, collect contact details, and guide the customer toward a confirmed visit time.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <div><h2 id="cta-title">Your next step is one Telegram message away.</h2><p>Tell the Telegram assistant about your device and issue to see pricing and reserve your visit.</p></div>
+        <button class="button button-acid" type="button" data-telegram-booking data-service="general" data-track="final_telegram"><i data-lucide="send" aria-hidden="true"></i> Book in Telegram</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-top">
+      <a class="brand" href="#top" aria-label="Back to top"><img src="assets/logo.jpg" alt=""><span class="brand-name">TEC<span>PRO</span>99</span></a>
+      <div class="footer-meta"><a href="#services">Services</a><a href="#visit">Chicago directions</a><a href="tel:+17736287132">(773) 628-7132</a></div>
     </div>
+    <div class="container footer-bottom"><span>&copy; <span id="year"></span> TecPro99. Chicago, IL.</span><span>Phone, tablet, console &amp; electronics repair.</span></div>
+  </footer>
 
-    <section class="grid">
-      <article class="card">
-        <img src="assets/service-backglass.jpg" alt="Back Glass" />
-        <div class="cbody">
-          <h3>Back Glass</h3>
-          <p>Clean finish • Professional installation</p>
-          <div class="row">
-            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_backglass_call')">📞 Call</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_backglass_directions')">📍 Directions</a>
-          </div>
+  <a class="floating-call" href="tel:+17736287132" aria-label="Call TecPro99 at 773-628-7132" data-track="floating_call"><i data-lucide="phone-call" aria-hidden="true"></i><span>Call now</span></a>
+
+  <div class="promo-modal" id="promoModal" role="dialog" aria-modal="true" aria-labelledby="promo-title" aria-hidden="true">
+    <div class="promo-dialog">
+      <div class="promo-image" role="img" aria-label="TecPro99 device repair"></div>
+      <div class="promo-content">
+        <button class="modal-close" type="button" data-close-promo aria-label="Close special offer"><i data-lucide="x" aria-hidden="true"></i></button>
+        <p class="eyebrow">Limited booking offer</p>
+        <h2 id="promo-title">Book your repair today and get 20% off.</h2>
+        <p>Reserve your spot with TecPro99 now and take 20% off your repair service.</p>
+        <span class="promo-value">20% OFF REPAIR SERVICE</span>
+        <div class="promo-actions">
+          <button class="button button-dark" id="claimPromo" type="button"><i data-lucide="calendar-plus" aria-hidden="true"></i> Claim 20% off</button>
+          <button class="button button-outline" type="button" data-close-promo>Not now</button>
         </div>
-      </article>
-
-      <article class="card">
-        <img src="assets/service-battery.jpg" alt="Battery" />
-        <div class="cbody">
-          <h3>Battery</h3>
-          <p>Better performance • Quick turnaround</p>
-          <div class="row">
-            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_battery_call')">📞 Call</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_battery_directions')">📍 Directions</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="assets/service-screen.jpg" alt="Screen" />
-        <div class="cbody">
-          <h3>Screen</h3>
-          <p>Sharp display • Smooth touch response</p>
-          <div class="row">
-            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_screen_call')">📞 Call</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_screen_directions')">📍 Directions</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="assets/service-board.jpg" alt="Board" />
-        <div class="cbody">
-          <h3>Board / Diagnostics</h3>
-          <p>Accurate checks • Reliable results</p>
-          <div class="row">
-            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_board_call')">📞 Call</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_board_directions')">📍 Directions</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="assets/service-hdmi.jpg" alt="HDMI" />
-        <div class="cbody">
-          <h3>HDMI / Console</h3>
-          <p>Stable signal • Clean port replacement</p>
-          <div class="row">
-            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_hdmi_call')">📞 Call</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_hdmi_directions')">📍 Directions</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="assets/service-water.jpg" alt="Water" />
-        <div class="cbody">
-          <h3>Water / Deep Clean</h3>
-          <p>Careful cleaning • Best effort recovery</p>
-          <div class="row">
-            <a class="btn primary" href="tel:+17736287132" onclick="trackCall('svc_water_call')">📞 Call</a>
-            <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener" onclick="trackDirections('svc_water_directions')">📍 Directions</a>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- ===== Reviews Section (NEW) ===== -->
-    <section class="reviews-wrap" id="reviews">
-      <div class="reviews-head">
-        <div>
-          <h2>What Customers Say</h2>
-          <div style="color:var(--muted); font-size:13px; margin-top:6px;">
-            <b style="color:var(--text);">1,000+ happy customers</b> • Trusted local service
-          </div>
-        </div>
-        <div class="meta">
-          Overall Google rating: <b>4.8+ ★</b><br/>
-          Verified community feedback
-        </div>
-      </div>
-
-      <div class="reviews-stage" aria-live="polite">
-        <!-- 3 visible cards rendered by JS -->
-        <div class="review-card" id="revLeft"></div>
-        <div class="review-card" id="revCenter"></div>
-        <div class="review-card" id="revRight"></div>
-      </div>
-
-      <div class="reviews-dots" id="reviewDots"></div>
-    </section>
-
-    <footer>
-      <div style="margin-top:18px;">
-        <a class="btn" href="https://maps.app.goo.gl/KZmK7n13og7ApGpcA?g_st=ic" target="_blank" rel="noopener"
-           onclick="trackDirections('footer_directions')">📍 Get Directions</a>
-        <a class="btn primary" style="margin-left:10px;" href="tel:+17736287132"
-           onclick="trackCall('footer_call')">📞 Call Now</a>
-      </div>
-      <div style="margin-top:14px;">© <span id="year"></span> TecPro99</div>
-    </footer>
-  </div>
-
-  <!-- ===== Popup after 15s (NEW) ===== -->
-  <div class="modal" id="promoModal" role="dialog" aria-modal="true" aria-label="Special Offer">
-    <div class="modal-card">
-      <div class="modal-banner">
-        <!-- استخدم أي صورة من assets -->
-        <img src="assets/hero-techpro.jpg" alt="TecPro99 Offer"/>
-      </div>
-      <div class="modal-body">
-        <h3>Book Now & Get Exclusive Deals</h3>
-        <p>
-          Reserve your spot today and enjoy <b>25% OFF</b> + free extras.
-          Also get <b>70% OFF</b> screen protection with promo code below.
-        </p>
-
-        <div class="promo">
-          <span>Promo Code</span>
-          <code>sosal2026</code>
-        </div>
-
-        <div class="modal-actions">
-          <a class="btn primary" href="tel:+17736287132" onclick="trackBook('popup_book')">
-            ✅ Book Now
-          </a>
-          <button class="btn ghost" onclick="closePromo()">Not Now</button>
-        </div>
-
-        <div class="fineprint">
-          * 25% off applies to service booking. 70% off applies to screen protection only.
-          Offers may be limited. Contact us to confirm availability.
-        </div>
+        <p class="promo-fineprint">Offer availability and eligibility may vary. Confirm offer details before repair begins.</p>
       </div>
     </div>
   </div>
 
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Add the exact t.me link after the Telegram bot is created.
+    const TELEGRAM_BOT_URL = '';
+    const telegramBookers = document.querySelectorAll('[data-telegram-booking]');
+    const promoModal = document.getElementById('promoModal');
+    const promoClosers = document.querySelectorAll('[data-close-promo]');
+    const claimPromo = document.getElementById('claimPromo');
 
-    // =========================
-    // Tracking (ALL buttons centralized)
-    // =========================
-    function trackCall(source){
-      try{
-        gtag('event', 'call_click', {
-          event_category: 'engagement',
-          event_label: source
-        });
-      }catch(e){}
-    }
-
-    function trackDirections(source){
-      try{
-        gtag('event', 'directions_click', {
-          event_category: 'engagement',
-          event_label: source
-        });
-      }catch(e){}
-    }
-
-    function trackBook(source){
-      try{
-        gtag('event', 'book_now_click', {
-          event_category: 'conversion',
-          event_label: source
-        });
-      }catch(e){}
-      // Book now is a call action in your flow
-      trackCall(source + '_as_call');
-    }
-
-    // =========================
-    // Reviews Carousel (10 reviews + ad1..ad10 images)
-    // =========================
-    const reviews = [
-      { img:'assets/ad1.jpg',  name:'Michael R.', stars:5, text:'Super clean work and fast service. My device feels brand new.', time:'1 week ago' },
-      { img:'assets/ad2.jpg',  name:'Sarah K.',   stars:5, text:'Friendly staff and honest advice. Great experience overall!', time:'2 weeks ago' },
-      { img:'assets/ad3.jpg',  name:'Daniel P.',  stars:5, text:'Quick turnaround and professional results. Highly recommended.', time:'3 weeks ago' },
-      { img:'assets/ad4.jpg',  name:'Nina L.',    stars:5, text:'They explained everything clearly and the result was perfect.', time:'1 month ago' },
-      { img:'assets/ad5.jpg',  name:'Alex G.',    stars:5, text:'Great quality and fair pricing. I’ll be back for sure.', time:'1 month ago' },
-      { img:'assets/ad6.jpg',  name:'Omar S.',    stars:5, text:'Very smooth process from start to finish. Excellent work.', time:'2 months ago' },
-      { img:'assets/ad7.jpg',  name:'Jessica M.', stars:5, text:'Best local place. Fast, clean, and respectful service.', time:'2 months ago' },
-      { img:'assets/ad8.jpg',  name:'Chris T.',   stars:5, text:'They saved my day. Looks great and works perfectly now.', time:'3 months ago' },
-      { img:'assets/ad9.jpg',  name:'Anthony V.', stars:5, text:'Top-notch service. Strongly recommend TecPro99!', time:'3 months ago' },
-      { img:'assets/ad10.jpg', name:'Lina H.',    stars:5, text:'Amazing service and great communication. Thank you!', time:'4 months ago' }
-    ];
-
-    const revLeft   = document.getElementById('revLeft');
-    const revCenter = document.getElementById('revCenter');
-    const revRight  = document.getElementById('revRight');
-    const dotsWrap  = document.getElementById('reviewDots');
-
-    let idx = 0;
-
-    function starString(n){
-      return '★'.repeat(n) + '☆'.repeat(Math.max(0, 5-n));
-    }
-
-    function cardHTML(r){
-      return `
-        <div class="avatar"><img src="${r.img}" alt="Customer"/></div>
-        <div class="txt">
-          <div class="top">
-            <div class="name">${r.name}</div>
-            <div class="stars">${starString(r.stars)}</div>
-          </div>
-          <p class="msg">${r.text}</p>
-          <div class="time">${r.time}</div>
-        </div>
-      `;
-    }
-
-    function buildDots(){
-      dotsWrap.innerHTML = '';
-      for(let i=0;i<reviews.length;i++){
-        const d = document.createElement('div');
-        d.className = 'dot' + (i===idx ? ' active' : '');
-        d.addEventListener('click', ()=> jumpTo(i));
-        dotsWrap.appendChild(d);
+    function trackEvent(name, label) {
+      try {
+        gtag('event', name, { event_category: 'engagement', event_label: label });
+      } catch (error) {
+        // Analytics must never interrupt a repair request.
       }
     }
 
-    function setPos(el, cls){
-      el.className = 'review-card ' + cls;
+    function getTelegramBookingUrl(service) {
+      if (!TELEGRAM_BOT_URL) return null;
+      const url = new URL(TELEGRAM_BOT_URL);
+      const startPayload = (service || 'general').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+      url.searchParams.set('start', startPayload);
+      return url.toString();
     }
 
-    function render(){
-      const leftIndex   = (idx - 1 + reviews.length) % reviews.length;
-      const centerIndex = idx;
-      const rightIndex  = (idx + 1) % reviews.length;
-
-      revLeft.innerHTML   = cardHTML(reviews[leftIndex]);
-      revCenter.innerHTML = cardHTML(reviews[centerIndex]);
-      revRight.innerHTML  = cardHTML(reviews[rightIndex]);
-
-      setPos(revLeft, 'pos-left');
-      setPos(revCenter, 'pos-center');
-      setPos(revRight, 'pos-right');
-
-      // dots
-      [...dotsWrap.children].forEach((dot, i)=>{
-        dot.classList.toggle('active', i===idx);
-      });
+    function openTelegramBooking(service) {
+      const telegramUrl = getTelegramBookingUrl(service);
+      trackEvent('telegram_booking_open', service || 'general');
+      window.location.assign(telegramUrl || 'tel:+17736287132');
     }
 
-    let isAnimating = false;
-    function nextReview(){
-      if(isAnimating) return;
-      isAnimating = true;
-
-      // Exit center -> right down, right -> exit, left -> center
-      setPos(revCenter, 'pos-exit-right');
-      setPos(revRight, 'pos-exit-right');
-
-      // Prepare a new left entering
-      const newLeftIndex = (idx - 2 + reviews.length) % reviews.length;
-      revLeft.innerHTML = cardHTML(reviews[newLeftIndex]);
-      setPos(revLeft, 'pos-enter-left');
-
-      // after short tick, slide into positions
-      setTimeout(()=>{
-        idx = (idx + 1) % reviews.length;
-
-        // rebuild content for new trio
-        const leftIndex   = (idx - 1 + reviews.length) % reviews.length;
-        const centerIndex = idx;
-        const rightIndex  = (idx + 1) % reviews.length;
-
-        revLeft.innerHTML   = cardHTML(reviews[leftIndex]);
-        revCenter.innerHTML = cardHTML(reviews[centerIndex]);
-        revRight.innerHTML  = cardHTML(reviews[rightIndex]);
-
-        setPos(revLeft, 'pos-left');
-        setPos(revCenter, 'pos-center');
-        setPos(revRight, 'pos-right');
-
-        // dots
-        [...dotsWrap.children].forEach((dot, i)=>{
-          dot.classList.toggle('active', i===idx);
-        });
-
-        setTimeout(()=>{ isAnimating = false; }, 850);
-      }, 120);
+    function openPromo() {
+      promoModal.classList.add('is-open');
+      promoModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      trackEvent('promo_view', '20_percent_offer');
     }
 
-    function jumpTo(i){
-      idx = i;
-      render();
-      buildDots();
+    function closePromo() {
+      promoModal.classList.remove('is-open');
+      promoModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
     }
 
-    buildDots();
-    render();
-    setInterval(nextReview, 5000);
-
-    // =========================
-    // Promo popup after 15s
-    // =========================
-    const promoModal = document.getElementById('promoModal');
-
-    function closePromo(){
-      promoModal.classList.remove('show');
-    }
-
-    // Close on background click
-    promoModal.addEventListener('click', (e)=>{
-      if(e.target === promoModal) closePromo();
+    telegramBookers.forEach((button) => {
+      button.addEventListener('click', () => openTelegramBooking(button.dataset.service));
+    });
+    promoClosers.forEach((button) => button.addEventListener('click', closePromo));
+    promoModal.addEventListener('click', (event) => {
+      if (event.target === promoModal) closePromo();
+    });
+    claimPromo.addEventListener('click', () => {
+      closePromo();
+      trackEvent('promo_claim', '20_percent_offer');
+      openTelegramBooking('promo_offer');
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (promoModal.classList.contains('is-open')) {
+        closePromo();
+      }
     });
 
-    // Show after 15s (once per session)
-    setTimeout(()=>{
-      try{
-        if(!sessionStorage.getItem('promo_shown')){
-          promoModal.classList.add('show');
-          sessionStorage.setItem('promo_shown', '1');
-          // Track popup view
-          gtag('event','promo_popup_view', {event_category:'engagement', event_label:'15s_timer'});
+    document.querySelectorAll('[data-track]').forEach((link) => {
+      link.addEventListener('click', () => trackEvent('contact_click', link.dataset.track));
+    });
+    window.setTimeout(() => {
+      try {
+        if (!sessionStorage.getItem('tecpro99_promo_seen')) {
+          sessionStorage.setItem('tecpro99_promo_seen', '1');
+          openPromo();
         }
-      }catch(e){
-        promoModal.classList.add('show');
+      } catch (error) {
+        openPromo();
       }
-    }, 15000);
+    }, 12000);
+    document.getElementById('year').textContent = new Date().getFullYear();
+    lucide.createIcons();
   </script>
 </body>
 </html>
