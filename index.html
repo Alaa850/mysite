@@ -162,6 +162,8 @@
       text-decoration: none;
       white-space: nowrap;
     }
+    .header-actions { display: flex; align-items: center; gap: 13px; }
+    .header-request { min-height: 38px; padding: 8px 12px; font-size: 11px; }
 
     .hero {
       position: relative;
@@ -387,6 +389,81 @@
     .promo-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 27px; }
     .promo-fineprint { margin-top: 17px !important; color: #77736c !important; font-size: 11px !important; }
 
+    .request-modal { position: fixed; z-index: 45; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(10,10,8,.72); }
+    .request-modal.is-open { display: flex; }
+    .request-dialog { position: relative; width: min(720px, 100%); max-height: min(90svh, 900px); overflow-y: auto; border-radius: var(--radius); color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
+    .request-content { padding: 48px; }
+    .request-content h2 { max-width: 540px; margin: 0; font-size: clamp(31px, 4vw, 45px); line-height: 1.01; }
+    .request-intro { max-width: 545px; margin: 14px 0 0; color: var(--ink-soft); font-size: 14px; }
+    .request-service-hint { margin: 11px 0 0; color: var(--blue); font-family: "DM Mono", monospace; font-size: 11px; }
+    .request-service-hint:empty { display: none; }
+    .repair-form { margin-top: 28px; }
+    .primary-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; align-items: start; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+    .form-field { display: grid; align-content: start; gap: 7px; }
+    .form-field.full-width { grid-column: 1 / -1; }
+    .form-field label, .contact-method legend { color: var(--ink-soft); font-family: "DM Mono", monospace; font-size: 10px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; }
+    .required-mark { color: var(--coral); }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      outline: none;
+      color: var(--ink);
+      background: var(--white);
+      font-size: 14px;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .form-field input, .form-field select { min-height: 46px; padding: 10px 12px; }
+    .form-field textarea { min-height: 104px; padding: 11px 12px; resize: vertical; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(45,99,238,.12); }
+    .form-field input[aria-invalid="true"], .form-field select[aria-invalid="true"], .form-field textarea[aria-invalid="true"] { border-color: var(--coral); }
+    .field-help { margin: 0; color: #77736c; font-size: 10px; }
+    .optional-toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 18px; margin-top: 19px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: var(--white); text-align: left; transition: border-color .18s ease, background .18s ease; }
+    .optional-toggle:hover { border-color: #aaa398; background: #fbfaf6; }
+    .optional-toggle.is-open { border-radius: 5px 5px 0 0; border-bottom-color: transparent; }
+    .optional-toggle-copy { display: grid; gap: 2px; }
+    .optional-toggle-copy strong { font-size: 13px; }
+    .optional-toggle-copy span { color: var(--ink-soft); font-size: 11px; }
+    .optional-toggle svg { width: 18px; height: 18px; flex: 0 0 auto; color: var(--blue); transition: transform .18s ease; }
+    .optional-toggle.is-open svg { transform: rotate(180deg); }
+    .optional-details { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .22s ease, opacity .18s ease; }
+    .optional-details.is-open { grid-template-rows: 1fr; opacity: 1; }
+    .optional-details-inner { min-height: 0; overflow: hidden; }
+    .optional-fields { padding: 18px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 5px 5px; background: var(--white); }
+    .contact-method { min-width: 0; margin: 0; padding: 0; border: 0; }
+    .contact-method legend { padding: 0; }
+    .contact-method select { margin-top: 7px; }
+    .consent-field { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; color: var(--ink-soft); font-size: 12px; line-height: 1.45; }
+    .consent-field input { width: 17px; height: 17px; flex: 0 0 auto; margin: 1px 0 0; accent-color: var(--blue); }
+    .captcha-shell { display: none; min-height: 65px; margin-top: 19px; }
+    .captcha-shell.is-active { display: block; }
+    .form-status { display: none; margin: 17px 0 0; padding: 10px 12px; border: 1px solid #efc1b2; border-radius: 5px; color: #8c321d; background: #fff0eb; font-size: 12px; }
+    .form-status.is-visible { display: block; }
+    .form-status.is-success { border-color: #b9c9ff; color: #214ebc; background: #e9edff; }
+    .form-actions { display: flex; align-items: center; gap: 12px; margin-top: 22px; }
+    .form-actions .button[disabled] { cursor: wait; opacity: .62; transform: none; }
+    .request-fineprint { margin: 15px 0 0; color: #77736c; font-size: 11px; }
+    .form-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+    .phone-confirmation { display: none; margin-top: 30px; padding-top: 27px; border-top: 1px solid var(--line); }
+    .phone-confirmation.is-visible { display: block; }
+    .confirmation-heading { display: flex; align-items: flex-start; gap: 14px; }
+    .confirmation-icon { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; color: var(--blue); background: #e9edff; border-radius: 50%; }
+    .confirmation-icon svg { width: 20px; height: 20px; }
+    .phone-confirmation h3 { margin: 0; font-size: 23px; line-height: 1.15; }
+    .phone-confirmation p { margin: 7px 0 0; color: var(--ink-soft); font-size: 13px; }
+    .phone-number-review { display: block; margin: 24px 0 0; padding: 16px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); font-family: "DM Mono", monospace; font-size: clamp(23px, 4vw, 30px); font-weight: 500; text-align: center; }
+    .confirmation-note { color: #77736c !important; font-size: 11px !important; text-align: center; }
+    .confirmation-actions { display: flex; gap: 10px; margin-top: 21px; }
+    .confirmation-actions .button { flex: 1; }
+    .request-success { display: none; margin-top: 30px; padding: 24px; border: 1px solid #b9c9ff; border-radius: 5px; background: #e9edff; }
+    .request-success.is-visible { display: block; }
+    .request-success h3 { margin: 0; font-size: 23px; line-height: 1.1; }
+    .request-success p { margin: 10px 0 0; color: var(--ink-soft); font-size: 14px; }
+    .request-reference { display: inline-flex; margin-top: 18px; padding: 7px 9px; color: var(--blue); border: 1px solid #b9c9ff; background: var(--white); font-family: "DM Mono", monospace; font-size: 12px; }
+    .footer-request { padding: 0; border: 0; color: inherit; background: transparent; font-size: inherit; }
+    .footer-request:hover { color: var(--acid); }
+
     @media (max-width: 850px) {
       .primary-nav { display: none; }
       .hero-bottom { grid-template-columns: 1.25fr repeat(3, 1fr); }
@@ -439,6 +516,14 @@
       .promo-image { display: none; }
       .promo-content { padding: 47px 24px 25px; }
       .promo-actions .button { width: 100%; }
+      .request-content { padding: 46px 24px 25px; }
+      .primary-field-grid, .form-grid { grid-template-columns: 1fr; }
+      .form-field.full-width { grid-column: auto; }
+      .form-actions { display: block; }
+      .form-actions .button { width: 100%; }
+      .optional-fields { padding: 15px; }
+      .confirmation-actions { display: grid; }
+      .request-dialog { max-height: calc(100svh - 28px); }
     }
     @media (prefers-reduced-motion: reduce) {
       .floating-call, .floating-call::before { animation: none; }
@@ -458,7 +543,10 @@
         <a href="#visit">Visit us</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="header-phone" href="tel:+17736287132" data-track="header_call">(773) 628-7132</a>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:+17736287132" data-track="header_call">(773) 628-7132</a>
+        <button class="button button-acid header-request" type="button" data-repair-request data-service="general" data-track="header_repair_request">Request a Repair</button>
+      </div>
     </div>
   </header>
 
@@ -470,9 +558,9 @@
           <h1 id="hero-title">Your tech has a <em>life to get back to.</em></h1>
           <p class="hero-copy">From a cracked screen to a console that will not power on, TecPro99 gives you a clear repair path and careful service for the devices you use every day.</p>
           <div class="hero-actions">
-            <button class="button button-acid" type="button" data-telegram-booking data-service="general" data-track="hero_telegram">
-              <i data-lucide="send" aria-hidden="true"></i>
-              Book in Telegram
+            <button class="button button-acid" type="button" data-repair-request data-service="general" data-track="hero_repair_request">
+              <i data-lucide="clipboard-list" aria-hidden="true"></i>
+              Request a Repair
             </button>
             <a class="button button-light" href="tel:+17736287132" data-track="hero_call">
               <i data-lucide="phone-call" aria-hidden="true"></i>
@@ -525,7 +613,7 @@
             <span class="service-card-number">01 / PHONE</span>
             <h3>Screen repair</h3>
             <p>For cracks, display problems, touch issues, and broken glass.</p>
-            <button class="service-link" type="button" data-telegram-booking data-service="Screen repair"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button class="service-link" type="button" data-repair-request data-service="Screen repair"><span>Request a Repair</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
           </div>
         </article>
         <article class="service-card">
@@ -534,7 +622,7 @@
             <span class="service-card-number">02 / PHONE</span>
             <h3>Battery replacement</h3>
             <p>When your phone drains too fast, overheats, or will not hold a charge.</p>
-            <button class="service-link" type="button" data-telegram-booking data-service="Battery replacement"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button class="service-link" type="button" data-repair-request data-service="Battery replacement"><span>Request a Repair</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
           </div>
         </article>
         <article class="service-card">
@@ -543,7 +631,7 @@
             <span class="service-card-number">03 / PHONE</span>
             <h3>Back glass repair</h3>
             <p>Replace damaged back glass and get your device looking whole again.</p>
-            <button class="service-link" type="button" data-telegram-booking data-service="Back glass repair"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button class="service-link" type="button" data-repair-request data-service="Back glass repair"><span>Request a Repair</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
           </div>
         </article>
         <article class="service-card">
@@ -552,7 +640,7 @@
             <span class="service-card-number">04 / CONSOLE</span>
             <h3>HDMI &amp; console repair</h3>
             <p>For loose ports, no signal, damaged connectors, and display faults.</p>
-            <button class="service-link" type="button" data-telegram-booking data-service="Console HDMI repair"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button class="service-link" type="button" data-repair-request data-service="Console HDMI repair"><span>Request a Repair</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
           </div>
         </article>
         <article class="service-card">
@@ -561,7 +649,7 @@
             <span class="service-card-number">05 / DIAGNOSTICS</span>
             <h3>Board repair &amp; diagnostics</h3>
             <p>For issues that need a closer look beyond a simple part replacement.</p>
-            <button class="service-link" type="button" data-telegram-booking data-service="Board repair and diagnostics"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button class="service-link" type="button" data-repair-request data-service="Board repair and diagnostics"><span>Request a Repair</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
           </div>
         </article>
         <article class="service-card">
@@ -570,7 +658,7 @@
             <span class="service-card-number">06 / RECOVERY</span>
             <h3>Water damage recovery</h3>
             <p>Bring it in quickly so we can assess moisture damage and recovery options.</p>
-            <button class="service-link" type="button" data-telegram-booking data-service="Water damage recovery"><span>Book in Telegram</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button class="service-link" type="button" data-repair-request data-service="Water damage recovery"><span>Request a Repair</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
           </div>
         </article>
       </div>
@@ -580,16 +668,16 @@
       <div class="container estimate-grid">
         <div>
           <p class="eyebrow light">Start with a clear quote</p>
-          <h2 class="section-heading" id="estimate-title">Get your price in Telegram.</h2>
-          <p class="section-copy">The Telegram assistant will ask about the model and issue, then show the relevant repair prices and help reserve a convenient time.</p>
-          <button class="button button-acid" type="button" data-telegram-booking data-service="general" data-track="estimate_telegram"><i data-lucide="send" aria-hidden="true"></i> Get price in Telegram</button>
+          <h2 class="section-heading" id="estimate-title">Start with a repair request.</h2>
+          <p class="section-copy">Tell us about the model and issue. TecPro99 will review the details, follow up with pricing, and help you choose a convenient time.</p>
+          <button class="button button-acid" type="button" data-repair-request data-service="general" data-track="estimate_repair_request"><i data-lucide="clipboard-list" aria-hidden="true"></i> Request a Repair</button>
         </div>
         <ul class="estimate-list" aria-label="Popular estimate requests">
-          <li><div><strong>Cracked or black screen</strong><span>Phones, tablets, and selected laptops</span></div><button type="button" data-telegram-booking data-service="Screen repair">Get price</button></li>
-          <li><div><strong>Battery will not last</strong><span>Fast drain, swelling, power issues</span></div><button type="button" data-telegram-booking data-service="Battery replacement">Get price</button></li>
-          <li><div><strong>Phone will not charge</strong><span>Port damage, cable connection, charging faults</span></div><button type="button" data-telegram-booking data-service="Charging issue">Get price</button></li>
-          <li><div><strong>Console has no display</strong><span>HDMI, port, board, and power diagnosis</span></div><button type="button" data-telegram-booking data-service="Console repair">Get price</button></li>
-          <li><div><strong>Something else happened</strong><span>Describe it and we will help sort it out</span></div><button type="button" data-telegram-booking data-service="Other repair">Get price</button></li>
+          <li><div><strong>Cracked or black screen</strong><span>Phones, tablets, and selected laptops</span></div><button type="button" data-repair-request data-service="Screen repair">Request repair</button></li>
+          <li><div><strong>Battery will not last</strong><span>Fast drain, swelling, power issues</span></div><button type="button" data-repair-request data-service="Battery replacement">Request repair</button></li>
+          <li><div><strong>Phone will not charge</strong><span>Port damage, cable connection, charging faults</span></div><button type="button" data-repair-request data-service="Charging issue">Request repair</button></li>
+          <li><div><strong>Console has no display</strong><span>HDMI, port, board, and power diagnosis</span></div><button type="button" data-repair-request data-service="Console repair">Request repair</button></li>
+          <li><div><strong>Something else happened</strong><span>Describe it and we will help sort it out</span></div><button type="button" data-repair-request data-service="Other repair">Request repair</button></li>
         </ul>
       </div>
     </section>
@@ -606,7 +694,7 @@
         <div class="process-list">
           <article class="process-item"><h3>Describe the issue</h3><p>Pick a repair type and add your device model or the symptom you are seeing.</p></article>
           <article class="process-item"><h3>Confirm the plan</h3><p>We will use those details to help you understand the repair path and estimate.</p></article>
-          <article class="process-item"><h3>Reserve in Telegram</h3><p>The Telegram assistant will collect the repair details, show prices, and guide you to a visit time.</p></article>
+          <article class="process-item"><h3>Request a repair</h3><p>Send your details and TecPro99 will follow up with the right repair path, pricing, and visit options.</p></article>
         </div>
       </div>
     </section>
@@ -657,7 +745,7 @@
             <div class="contact-detail"><i data-lucide="clock-3" aria-hidden="true"></i><div><strong>Hours</strong><span>Sun-Thu &amp; Sat: 9 AM-11 PM<br>Fri: 9-11:30 AM, 1:30-11 PM</span></div></div>
           </div>
           <div class="visit-actions">
-            <button class="button button-dark" type="button" data-telegram-booking data-service="general"><i data-lucide="send" aria-hidden="true"></i> Book in Telegram</button>
+            <button class="button button-dark" type="button" data-repair-request data-service="general" data-track="visit_repair_request"><i data-lucide="clipboard-list" aria-hidden="true"></i> Request a Repair</button>
           </div>
         </div>
         <div class="visit-card map-card">
@@ -680,15 +768,15 @@
           <details><summary>Can I get an estimate before I come in?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Yes. Send the device type, model, and what happened. We can then help you understand the likely repair path and what details matter for a quote.</p></details>
           <details><summary>What devices do you work on?<i data-lucide="plus" aria-hidden="true"></i></summary><p>TecPro99 handles many common phone, tablet, console, and electronics issues. If your device is not listed above, call and tell us what it is.</p></details>
           <details><summary>What should I bring with my device?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Bring the device and any essential information about the issue. For charging problems, bringing the cable or accessory involved can also be helpful.</p></details>
-          <details><summary>How does Telegram booking work?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Telegram handles the complete booking conversation. It will ask for the device and issue, show applicable prices, collect contact details, and guide the customer toward a confirmed visit time.</p></details>
+          <details><summary>What happens after I request a repair?<i data-lucide="plus" aria-hidden="true"></i></summary><p>TecPro99 receives your details, reviews the device and issue, then contacts you with the next steps, pricing information, and available visit options.</p></details>
         </div>
       </div>
     </section>
 
     <section class="cta" aria-labelledby="cta-title">
       <div class="container cta-inner">
-        <div><h2 id="cta-title">Your next step is one Telegram message away.</h2><p>Tell the Telegram assistant about your device and issue to see pricing and reserve your visit.</p></div>
-        <button class="button button-acid" type="button" data-telegram-booking data-service="general" data-track="final_telegram"><i data-lucide="send" aria-hidden="true"></i> Book in Telegram</button>
+        <div><h2 id="cta-title">Your next step starts with a repair request.</h2><p>Tell TecPro99 about your device and issue, and we will follow up with the right next step.</p></div>
+        <button class="button button-acid" type="button" data-repair-request data-service="general" data-track="final_repair_request"><i data-lucide="clipboard-list" aria-hidden="true"></i> Request a Repair</button>
       </div>
     </section>
   </main>
@@ -696,7 +784,7 @@
   <footer>
     <div class="container footer-top">
       <a class="brand" href="#top" aria-label="Back to top"><img src="assets/logo.jpg" alt=""><span class="brand-name">TEC<span>PRO</span>99</span></a>
-      <div class="footer-meta"><a href="#services">Services</a><a href="#visit">Chicago directions</a><a href="tel:+17736287132">(773) 628-7132</a></div>
+      <div class="footer-meta"><a href="#services">Services</a><a href="#visit">Chicago directions</a><button class="footer-request" type="button" data-repair-request data-service="general">Request a repair</button><a href="tel:+17736287132">(773) 628-7132</a></div>
     </div>
     <div class="container footer-bottom"><span>&copy; <span id="year"></span> TecPro99. Chicago, IL.</span><span>Phone, tablet, console &amp; electronics repair.</span></div>
   </footer>
@@ -709,11 +797,11 @@
       <div class="promo-content">
         <button class="modal-close" type="button" data-close-promo aria-label="Close special offer"><i data-lucide="x" aria-hidden="true"></i></button>
         <p class="eyebrow">Limited booking offer</p>
-        <h2 id="promo-title">Book your repair today and get 20% off.</h2>
-        <p>Reserve your spot with TecPro99 now and take 20% off your repair service.</p>
+        <h2 id="promo-title">Request your repair today and get 20% off.</h2>
+        <p>Send TecPro99 your repair details now and take 20% off your repair service.</p>
         <span class="promo-value">20% OFF REPAIR SERVICE</span>
         <div class="promo-actions">
-          <button class="button button-dark" id="claimPromo" type="button"><i data-lucide="calendar-plus" aria-hidden="true"></i> Claim 20% off</button>
+          <button class="button button-dark" id="claimPromo" type="button"><i data-lucide="calendar-plus" aria-hidden="true"></i> Request 20% off</button>
           <button class="button button-outline" type="button" data-close-promo>Not now</button>
         </div>
         <p class="promo-fineprint">Offer availability and eligibility may vary. Confirm offer details before repair begins.</p>
@@ -721,14 +809,158 @@
     </div>
   </div>
 
+  <div class="request-modal" id="repairRequestModal" role="dialog" aria-modal="true" aria-labelledby="repair-request-title" aria-hidden="true">
+    <div class="request-dialog" role="document">
+      <div class="request-content">
+        <button class="modal-close" type="button" data-close-repair-request aria-label="Close repair request"><i data-lucide="x" aria-hidden="true"></i></button>
+        <p class="eyebrow">TecPro99 repair request</p>
+        <h2 id="repair-request-title">Request a repair.</h2>
+        <p class="request-intro">Share the essentials and TecPro99 will contact you shortly. Fields marked with an asterisk are required.</p>
+        <p class="request-service-hint" id="requestServiceHint" aria-live="polite"></p>
+
+        <form class="repair-form" id="repairRequestForm" novalidate>
+          <div class="primary-field-grid">
+            <div class="form-field">
+              <label for="repairCustomerName">Full Name <span class="required-mark">*</span></label>
+              <input id="repairCustomerName" name="customerName" type="text" autocomplete="name" maxlength="100" required>
+            </div>
+            <div class="form-field">
+              <label for="repairPhoneNumber">Phone Number <span class="required-mark">*</span></label>
+              <input id="repairPhoneNumber" name="phoneNumber" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" required aria-describedby="repairPhoneHelp">
+              <span id="repairPhoneHelp" class="field-help">US phone numbers only.</span>
+            </div>
+          </div>
+
+          <button class="optional-toggle" id="optionalDetailsToggle" type="button" aria-expanded="false" aria-controls="optionalRepairDetails">
+            <span class="optional-toggle-copy"><strong>Add optional details</strong><span>Device, issue, email, and contact preference</span></span>
+            <i data-lucide="chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="optional-details" id="optionalRepairDetails" aria-hidden="true" inert>
+            <div class="optional-details-inner">
+              <div class="optional-fields">
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="repairEmail">Email Address</label>
+                    <input id="repairEmail" name="email" type="email" autocomplete="email" maxlength="160">
+                  </div>
+                  <div class="form-field">
+                    <label for="repairDeviceType">Device Type</label>
+                    <select id="repairDeviceType" name="deviceType">
+                      <option value="">Select a device</option>
+                      <option value="Phone">Phone</option>
+                      <option value="Tablet">Tablet</option>
+                      <option value="Laptop">Laptop</option>
+                      <option value="Console">Console</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label for="repairBrand">Brand</label>
+                    <input id="repairBrand" name="brand" type="text" autocomplete="off" maxlength="80" placeholder="Apple, Samsung, Sony...">
+                  </div>
+                  <div class="form-field">
+                    <label for="repairModel">Model</label>
+                    <input id="repairModel" name="model" type="text" autocomplete="off" maxlength="100" placeholder="iPhone 15 Pro, PS5...">
+                  </div>
+                  <div class="form-field full-width">
+                    <label for="repairProblemDescription">Problem Description</label>
+                    <textarea id="repairProblemDescription" name="problemDescription" maxlength="1500" placeholder="What is happening with the device?"></textarea>
+                  </div>
+                  <fieldset class="contact-method form-field full-width">
+                    <legend>Preferred Contact Method</legend>
+                    <select id="repairPreferredContactMethod" name="preferredContactMethod">
+                      <option value="">No preference</option>
+                      <option value="Phone Call">Phone Call</option>
+                      <option value="Text Message">Text Message</option>
+                      <option value="Email">Email</option>
+                    </select>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="repairCompanyWebsite">Company Website</label>
+            <input id="repairCompanyWebsite" name="companyWebsite" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <label class="consent-field" for="repairConsent">
+            <input id="repairConsent" name="consent" type="checkbox" required>
+            <span>I agree that TecPro99 may contact me about this repair request. <span class="required-mark">*</span></span>
+          </label>
+
+          <div class="captcha-shell" id="repairCaptchaShell" aria-live="polite">
+            <div id="repairCaptcha"></div>
+          </div>
+          <p class="form-status" id="repairFormStatus" role="alert" aria-live="assertive"></p>
+          <div class="form-actions">
+            <button class="button button-dark" id="repairSubmitButton" type="submit"><i data-lucide="clipboard-check" aria-hidden="true"></i><span>Submit Request</span></button>
+          </div>
+          <p class="request-fineprint">Do not include a device passcode, payment information, or other sensitive account details.</p>
+        </form>
+
+        <div class="phone-confirmation" id="repairPhoneConfirmation" aria-hidden="true">
+          <div class="confirmation-heading">
+            <span class="confirmation-icon"><i data-lucide="phone-call" aria-hidden="true"></i></span>
+            <div>
+              <h3>Are you sure this is your phone number?</h3>
+              <p>TecPro99 will use this number to contact you about the repair.</p>
+            </div>
+          </div>
+          <strong class="phone-number-review" id="repairPhoneReview"></strong>
+          <p class="confirmation-note">Please check every digit before sending your request.</p>
+          <p class="form-status" id="repairConfirmationStatus" role="alert" aria-live="assertive"></p>
+          <div class="confirmation-actions">
+            <button class="button button-dark" id="confirmRepairSubmit" type="button"><i data-lucide="check" aria-hidden="true"></i><span>Yes, submit request</span></button>
+            <button class="button button-outline" id="editRepairPhone" type="button"><i data-lucide="pencil" aria-hidden="true"></i>Edit number</button>
+          </div>
+        </div>
+
+        <div class="request-success" id="repairRequestSuccess" role="status" aria-live="polite">
+          <h3>Thank you. TecPro99 received your repair request. We will contact you shortly.</h3>
+          <p class="request-reference" id="repairReference"></p>
+          <div class="form-actions"><button class="button button-dark" type="button" data-close-repair-request>Close</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script>
-    // Add the exact t.me link after the Telegram bot is created.
-    const TELEGRAM_BOT_URL = '';
-    const telegramBookers = document.querySelectorAll('[data-telegram-booking]');
     const promoModal = document.getElementById('promoModal');
     const promoClosers = document.querySelectorAll('[data-close-promo]');
     const claimPromo = document.getElementById('claimPromo');
+    const repairRequestModal = document.getElementById('repairRequestModal');
+    const repairRequestForm = document.getElementById('repairRequestForm');
+    const repairRequestButtons = document.querySelectorAll('[data-repair-request]');
+    const repairRequestClosers = document.querySelectorAll('[data-close-repair-request]');
+    const repairSubmitButton = document.getElementById('repairSubmitButton');
+    const repairFormStatus = document.getElementById('repairFormStatus');
+    const repairRequestSuccess = document.getElementById('repairRequestSuccess');
+    const repairReference = document.getElementById('repairReference');
+    const requestServiceHint = document.getElementById('requestServiceHint');
+    const repairCaptchaShell = document.getElementById('repairCaptchaShell');
+    const optionalDetailsToggle = document.getElementById('optionalDetailsToggle');
+    const optionalRepairDetails = document.getElementById('optionalRepairDetails');
+    const repairPhoneConfirmation = document.getElementById('repairPhoneConfirmation');
+    const repairPhoneReview = document.getElementById('repairPhoneReview');
+    const repairConfirmationStatus = document.getElementById('repairConfirmationStatus');
+    const confirmRepairSubmit = document.getElementById('confirmRepairSubmit');
+    const editRepairPhone = document.getElementById('editRepairPhone');
+    const repairRequestEndpoint = window.TECPRO99_REPAIR_REQUEST_ENDPOINT || '/api/repair-request';
+    const repairRequestConfigEndpoint = window.TECPRO99_REPAIR_REQUEST_CONFIG_ENDPOINT || '/api/repair-request-config';
+    const submissionFailureMessage = "We couldn't submit your request right now. Please try again or call TecPro99 at (773) 628-7132.";
+    const repairRequestCooldownKey = 'tecpro99_last_repair_request_at';
+    const repairRequestCooldownMs = 10 * 60 * 1000;
+    let repairRequestConfig;
+    let repairRequestConfigPromise;
+    let turnstileScriptPromise;
+    let turnstileWidgetId;
+    let captchaToken = '';
+    let isSubmitting = false;
+    let requestId = createRequestId();
+    let lastFocusedElement;
 
     function trackEvent(name, label) {
       try {
@@ -738,21 +970,252 @@
       }
     }
 
-    function getTelegramBookingUrl(service) {
-      if (!TELEGRAM_BOT_URL) return null;
-      const url = new URL(TELEGRAM_BOT_URL);
-      const startPayload = (service || 'general').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-      url.searchParams.set('start', startPayload);
-      return url.toString();
+    function createRequestId() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+      return `web-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
     }
 
-    function openTelegramBooking(service) {
-      const telegramUrl = getTelegramBookingUrl(service);
-      trackEvent('telegram_booking_open', service || 'general');
-      window.location.assign(telegramUrl || 'tel:+17736287132');
+    function normalizeUSPhone(value) {
+      let digits = String(value || '').replace(/\D/g, '');
+      if (digits.length === 11 && digits.startsWith('1')) digits = digits.slice(1);
+      return digits.length === 10 ? digits : '';
+    }
+
+    function formatUSPhone(value) {
+      const digits = normalizeUSPhone(value);
+      if (!digits) return value;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
+
+    function showFormStatus(message, type) {
+      repairFormStatus.textContent = message;
+      repairFormStatus.className = `form-status is-visible${type === 'success' ? ' is-success' : ''}`;
+    }
+
+    function clearFormStatus() {
+      repairFormStatus.textContent = '';
+      repairFormStatus.className = 'form-status';
+    }
+
+    function showConfirmationStatus(message) {
+      repairConfirmationStatus.textContent = message;
+      repairConfirmationStatus.className = 'form-status is-visible';
+    }
+
+    function clearConfirmationStatus() {
+      repairConfirmationStatus.textContent = '';
+      repairConfirmationStatus.className = 'form-status';
+    }
+
+    function getBrowserCooldownRemaining() {
+      try {
+        const lastRequestAt = Number(localStorage.getItem(repairRequestCooldownKey) || 0);
+        return Math.max(0, repairRequestCooldownMs - (Date.now() - lastRequestAt));
+      } catch (error) {
+        return 0;
+      }
+    }
+
+    function recordBrowserSubmission() {
+      try {
+        localStorage.setItem(repairRequestCooldownKey, String(Date.now()));
+      } catch (error) {
+        // Server-side limits remain active when browser storage is unavailable.
+      }
+    }
+
+    function updateSubmitState(submitting) {
+      isSubmitting = submitting;
+      repairSubmitButton.disabled = submitting;
+      confirmRepairSubmit.disabled = submitting;
+      editRepairPhone.disabled = submitting;
+      repairSubmitButton.querySelector('span').textContent = submitting ? 'Submitting...' : 'Submit Request';
+      confirmRepairSubmit.querySelector('span').textContent = submitting ? 'Submitting...' : 'Yes, submit request';
+    }
+
+    function setOptionalDetails(open) {
+      optionalDetailsToggle.classList.toggle('is-open', open);
+      optionalDetailsToggle.setAttribute('aria-expanded', String(open));
+      optionalRepairDetails.classList.toggle('is-open', open);
+      optionalRepairDetails.setAttribute('aria-hidden', String(!open));
+      optionalRepairDetails.inert = !open;
+    }
+
+    function showPhoneConfirmation() {
+      const formattedPhone = formatUSPhone(repairRequestForm.elements.phoneNumber.value);
+      repairRequestForm.elements.phoneNumber.value = formattedPhone;
+      repairPhoneReview.textContent = formattedPhone;
+      clearConfirmationStatus();
+      repairRequestForm.hidden = true;
+      repairPhoneConfirmation.classList.add('is-visible');
+      repairPhoneConfirmation.setAttribute('aria-hidden', 'false');
+      confirmRepairSubmit.focus();
+    }
+
+    function returnToPhoneField(focusPhone = true) {
+      repairPhoneConfirmation.classList.remove('is-visible');
+      repairPhoneConfirmation.setAttribute('aria-hidden', 'true');
+      repairRequestForm.hidden = false;
+      clearConfirmationStatus();
+      if (focusPhone) {
+        repairRequestForm.elements.phoneNumber.focus();
+        repairRequestForm.elements.phoneNumber.select();
+      }
+    }
+
+    function resetTurnstile() {
+      captchaToken = '';
+      if (typeof window.turnstile !== 'undefined' && turnstileWidgetId !== undefined) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
+    }
+
+    function loadTurnstileScript() {
+      if (window.turnstile) return Promise.resolve();
+      if (turnstileScriptPromise) return turnstileScriptPromise;
+      turnstileScriptPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+      return turnstileScriptPromise;
+    }
+
+    async function renderTurnstile(siteKey) {
+      if (!siteKey || turnstileWidgetId !== undefined) return;
+      repairCaptchaShell.classList.add('is-active');
+      try {
+        await loadTurnstileScript();
+        turnstileWidgetId = window.turnstile.render('#repairCaptcha', {
+          sitekey: siteKey,
+          theme: 'light',
+          size: 'flexible',
+          callback: (token) => {
+            captchaToken = token;
+            clearFormStatus();
+          },
+          'expired-callback': () => { captchaToken = ''; },
+          'error-callback': () => { captchaToken = ''; }
+        });
+      } catch (error) {
+        showFormStatus('Spam protection is unavailable right now. Please call TecPro99 at (773) 628-7132.', 'error');
+      }
+    }
+
+    async function loadRepairRequestConfig() {
+      if (repairRequestConfigPromise) return repairRequestConfigPromise;
+      repairRequestConfigPromise = fetch(repairRequestConfigEndpoint, { headers: { Accept: 'application/json' } })
+        .then(async (response) => {
+          if (!response.ok) throw new Error('Request configuration unavailable');
+          return response.json();
+        })
+        .then(async (config) => {
+          repairRequestConfig = {
+            mode: config.mode === 'mock' ? 'mock' : 'production',
+            turnstileSiteKey: typeof config.turnstileSiteKey === 'string' ? config.turnstileSiteKey : ''
+          };
+          if (repairRequestConfig.mode === 'production') {
+            await renderTurnstile(repairRequestConfig.turnstileSiteKey);
+          }
+          return repairRequestConfig;
+        })
+        .catch(() => {
+          repairRequestConfig = { mode: 'unavailable', turnstileSiteKey: '' };
+          return repairRequestConfig;
+        });
+      return repairRequestConfigPromise;
+    }
+
+    function clearInvalidFieldState() {
+      repairRequestForm.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute('aria-invalid'));
+    }
+
+    function validateRepairRequest() {
+      clearFormStatus();
+      clearInvalidFieldState();
+      if (!repairRequestForm.checkValidity()) {
+        const firstInvalid = repairRequestForm.querySelector(':invalid');
+        if (firstInvalid) {
+          firstInvalid.setAttribute('aria-invalid', 'true');
+          firstInvalid.focus();
+        }
+        showFormStatus('Please complete the required fields before submitting your request.', 'error');
+        return false;
+      }
+
+      const phoneField = repairRequestForm.elements.phoneNumber;
+      if (!normalizeUSPhone(phoneField.value)) {
+        phoneField.setAttribute('aria-invalid', 'true');
+        phoneField.focus();
+        showFormStatus('Enter a valid 10-digit US phone number so TecPro99 can reach you.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    function getRepairPayload() {
+      const formData = new FormData(repairRequestForm);
+      const selectedService = repairRequestForm.dataset.service || '';
+      const description = String(formData.get('problemDescription') || '').trim();
+      return {
+        customerName: formData.get('customerName'),
+        phoneNumber: normalizeUSPhone(formData.get('phoneNumber')),
+        email: formData.get('email'),
+        deviceType: formData.get('deviceType'),
+        brand: formData.get('brand'),
+        model: formData.get('model'),
+        problemDescription: selectedService && description ? `${selectedService}: ${description}` : description || selectedService,
+        preferredContactMethod: formData.get('preferredContactMethod'),
+        pageUrl: window.location.href,
+        submittedAt: new Date().toISOString(),
+        consent: formData.get('consent') === 'on',
+        companyWebsite: formData.get('companyWebsite'),
+        captchaToken: captchaToken,
+        requestId: requestId
+      };
+    }
+
+    function openRepairRequest(service) {
+      if (promoModal.classList.contains('is-open')) closePromo();
+      lastFocusedElement = document.activeElement;
+      repairRequestForm.dataset.service = service && service !== 'general' ? service : '';
+      requestServiceHint.textContent = repairRequestForm.dataset.service ? `Selected service: ${repairRequestForm.dataset.service}` : '';
+      if (repairRequestSuccess.classList.contains('is-visible')) {
+        repairRequestForm.reset();
+        repairRequestForm.hidden = false;
+        repairRequestSuccess.classList.remove('is-visible');
+        repairPhoneConfirmation.classList.remove('is-visible');
+        repairPhoneConfirmation.setAttribute('aria-hidden', 'true');
+        setOptionalDetails(false);
+        requestId = createRequestId();
+      }
+      clearFormStatus();
+      clearConfirmationStatus();
+      repairRequestModal.classList.add('is-open');
+      repairRequestModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      repairRequestForm.elements.customerName.focus();
+      void loadRepairRequestConfig();
+      trackEvent('repair_request_open', service || 'general');
+    }
+
+    function closeRepairRequest() {
+      if (isSubmitting) return;
+      if (repairPhoneConfirmation.classList.contains('is-visible')) returnToPhoneField(false);
+      repairRequestModal.classList.remove('is-open');
+      repairRequestModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
     }
 
     function openPromo() {
+      if (repairRequestModal.classList.contains('is-open')) return;
       promoModal.classList.add('is-open');
       promoModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
@@ -765,9 +1228,8 @@
       document.body.classList.remove('modal-open');
     }
 
-    telegramBookers.forEach((button) => {
-      button.addEventListener('click', () => openTelegramBooking(button.dataset.service));
-    });
+    repairRequestButtons.forEach((button) => button.addEventListener('click', () => openRepairRequest(button.dataset.service)));
+    repairRequestClosers.forEach((button) => button.addEventListener('click', closeRepairRequest));
     promoClosers.forEach((button) => button.addEventListener('click', closePromo));
     promoModal.addEventListener('click', (event) => {
       if (event.target === promoModal) closePromo();
@@ -775,10 +1237,81 @@
     claimPromo.addEventListener('click', () => {
       closePromo();
       trackEvent('promo_claim', '20_percent_offer');
-      openTelegramBooking('promo_offer');
+      openRepairRequest('promo_offer');
+    });
+    repairRequestModal.addEventListener('click', (event) => {
+      if (event.target === repairRequestModal) closeRepairRequest();
+    });
+    optionalDetailsToggle.addEventListener('click', () => {
+      setOptionalDetails(optionalDetailsToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    editRepairPhone.addEventListener('click', () => returnToPhoneField(true));
+    repairRequestForm.addEventListener('input', (event) => {
+      if (event.target.matches('input, select, textarea')) event.target.removeAttribute('aria-invalid');
+    });
+    repairRequestForm.elements.phoneNumber.addEventListener('blur', (event) => {
+      event.target.value = formatUSPhone(event.target.value);
+    });
+    repairRequestForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (isSubmitting || !validateRepairRequest()) return;
+      const cooldownRemaining = getBrowserCooldownRemaining();
+      if (cooldownRemaining > 0) {
+        const minutesRemaining = Math.max(1, Math.ceil(cooldownRemaining / 60000));
+        showFormStatus(`A repair request was recently submitted from this browser. Please wait ${minutesRemaining} minute${minutesRemaining === 1 ? '' : 's'} or call TecPro99 at (773) 628-7132.`, 'error');
+        return;
+      }
+      showPhoneConfirmation();
+    });
+
+    confirmRepairSubmit.addEventListener('click', async () => {
+      if (isSubmitting) return;
+      updateSubmitState(true);
+      try {
+        const config = await loadRepairRequestConfig();
+        if (config.mode === 'unavailable') {
+          showConfirmationStatus(submissionFailureMessage);
+          return;
+        }
+        if (config.mode === 'production' && !captchaToken) {
+          returnToPhoneField(false);
+          showFormStatus('Please complete spam protection before submitting your request.', 'error');
+          return;
+        }
+
+        const response = await fetch(repairRequestEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(getRepairPayload())
+        });
+        const result = await response.json().catch(() => ({}));
+        if (response.status === 429) {
+          showConfirmationStatus(result.error || submissionFailureMessage);
+          return;
+        }
+        if (!response.ok || !result.success || !result.referenceNumber) throw new Error('Repair request rejected');
+
+        repairPhoneConfirmation.classList.remove('is-visible');
+        repairPhoneConfirmation.setAttribute('aria-hidden', 'true');
+        repairReference.textContent = `Reference: ${result.referenceNumber}`;
+        repairRequestSuccess.classList.add('is-visible');
+        recordBrowserSubmission();
+        clearFormStatus();
+        clearConfirmationStatus();
+        trackEvent('repair_request_submit', repairRequestForm.dataset.service || 'general');
+      } catch (error) {
+        showConfirmationStatus(submissionFailureMessage);
+        if (repairRequestConfig && repairRequestConfig.mode === 'production') resetTurnstile();
+      } finally {
+        updateSubmitState(false);
+      }
     });
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
+      if (repairRequestModal.classList.contains('is-open')) {
+        closeRepairRequest();
+        return;
+      }
       if (promoModal.classList.contains('is-open')) {
         closePromo();
       }

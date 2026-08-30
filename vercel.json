@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/repair-request.mjs": {
+      "maxDuration": 10
+    }
+  }
+}
