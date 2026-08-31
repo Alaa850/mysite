@@ -37,7 +37,7 @@ if (-not (Test-Path -LiteralPath $envFile)) {
 
 if (-not (Test-CommandLineProcess -ProcessName 'node.exe' -CommandFragment 'crm-connector.mjs')) {
   Start-Process -FilePath $nodePath `
-    -ArgumentList @("--env-file=$envFile", $connectorScript) `
+    -ArgumentList @('--env-file=.env.local', 'scripts\crm-connector.mjs') `
     -WorkingDirectory $root `
     -WindowStyle Hidden `
     -RedirectStandardOutput (Join-Path $logDir 'crm-connector.out.log') `
