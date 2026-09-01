@@ -14,7 +14,7 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
     crmHost: '127.0.0.1',
     crmPort: port,
     crmPath: '/api/repair-requests',
-    crmHealthPath: '/api/health'
+    crmHealthPath: '/health/ready'
   };
   try {
     config = { ...config, ...JSON.parse(await readFile(configPath, 'utf8')) };

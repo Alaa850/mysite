@@ -39,6 +39,12 @@ async function close(server) {
 
 function createMockCrm(referenceNumber, received) {
   return createServer(async (request, response) => {
+    if (request.method === 'GET' && request.url === '/health/ready') {
+      response.writeHead(200, { 'Content-Type': 'text/plain' });
+      response.end('Healthy');
+      return;
+    }
+
     const chunks = [];
     for await (const chunk of request) chunks.push(chunk);
     received.push({
@@ -80,7 +86,7 @@ test('connector reloads a changed CRM port without a restart', async () => {
       crmHost: '127.0.0.1',
       crmPort: firstPort,
       crmPath: '/api/repair-requests',
-      crmHealthPath: '/api/health'
+      crmHealthPath: '/health/ready'
     }));
     const firstResponse = await postRepair(connectorPort, repairPayload('First Customer'), 'connector-request-1');
     assert.equal(firstResponse.status, 200);
@@ -90,7 +96,7 @@ test('connector reloads a changed CRM port without a restart', async () => {
       crmHost: '127.0.0.1',
       crmPort: secondPort,
       crmPath: '/api/repair-requests',
-      crmHealthPath: '/api/health'
+      crmHealthPath: '/health/ready'
     }));
     const secondResponse = await postRepair(connectorPort, repairPayload('Second Customer'), 'connector-request-2');
     assert.equal(secondResponse.status, 200);
@@ -137,5 +143,64 @@ test('connector rejects malformed repair payloads before contacting the CRM', as
     assert.deepEqual(await response.json(), { success: false, error: 'Invalid repair request.' });
   } finally {
     await close(connector);
+  }
+});
+
+test('connector health reports ready only when the CRM is ready', async () => {
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), 'tecpro99-health-'));
+  const configPath = path.join(temporaryDirectory, 'connector.json');
+  const crm = createMockCrm('WEB-HEALTH', []);
+  const crmPort = await listen(crm);
+  const connector = createCrmConnector({ configPath, connectorApiKey: connectorKey });
+  const connectorPort = await listen(connector);
+
+  try {
+    await writeFile(configPath, JSON.stringify({
+      crmHost: '127.0.0.1',
+      crmPort,
+      crmPath: '/api/repair-requests',
+      crmHealthPath: '/health/ready'
+    }));
+
+    const response = await fetch(`http://127.0.0.1:${connectorPort}/health`);
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+      status: 'ok',
+      service: 'TecPro99 CRM Connector',
+      crm: 'ready'
+    });
+  } finally {
+    await Promise.all([close(connector), close(crm)]);
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
+});
+
+test('connector health reports unavailable when the CRM is offline', async () => {
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), 'tecpro99-health-'));
+  const configPath = path.join(temporaryDirectory, 'connector.json');
+  const stoppedCrm = createMockCrm('WEB-OFFLINE', []);
+  const stoppedPort = await listen(stoppedCrm);
+  await close(stoppedCrm);
+  const connector = createCrmConnector({ configPath, connectorApiKey: connectorKey });
+  const connectorPort = await listen(connector);
+
+  try {
+    await writeFile(configPath, JSON.stringify({
+      crmHost: '127.0.0.1',
+      crmPort: stoppedPort,
+      crmPath: '/api/repair-requests',
+      crmHealthPath: '/health/ready'
+    }));
+
+    const response = await fetch(`http://127.0.0.1:${connectorPort}/health`);
+    assert.equal(response.status, 503);
+    assert.deepEqual(await response.json(), {
+      status: 'unavailable',
+      service: 'TecPro99 CRM Connector',
+      crm: 'unavailable'
+    });
+  } finally {
+    await close(connector);
+    await rm(temporaryDirectory, { recursive: true, force: true });
   }
 });

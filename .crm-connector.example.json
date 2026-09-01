@@ -2,5 +2,6 @@
   "crmHost": "127.0.0.1",
   "crmPort": 3000,
   "crmPath": "/api/repair-requests",
-  "crmHealthPath": "/api/health"
+  "crmHealthPath": "/health/ready",
+  "crmAppRoot": "%USERPROFILE%\\Documents\\path-to\\TecPro99-English-Version"
 }

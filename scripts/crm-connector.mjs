@@ -6,6 +6,7 @@ import { pathToFileURL } from 'node:url';
 
 const MAX_REQUEST_BYTES = 16 * 1024;
 const FORWARD_TIMEOUT_MS = 10 * 1000;
+const HEALTH_TIMEOUT_MS = 3 * 1000;
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 30;
 const IDEMPOTENCY_TTL_MS = 24 * 60 * 60 * 1000;
@@ -62,7 +63,7 @@ export async function loadConnectorConfig(configPath) {
 
   return {
     crmUrl: new URL(safePath(parsed.crmPath, '/api/repair-requests'), `http://${crmHost}:${crmPort}`),
-    healthUrl: new URL(safePath(parsed.crmHealthPath, '/api/health'), `http://${crmHost}:${crmPort}`)
+    healthUrl: new URL(safePath(parsed.crmHealthPath, '/health/ready'), `http://${crmHost}:${crmPort}`)
   };
 }
 
@@ -140,7 +141,33 @@ export function createCrmConnector(options = {}) {
   return createServer(async (request, response) => {
     const url = new URL(request.url || '/', 'http://connector.local');
     if (request.method === 'GET' && url.pathname === '/health') {
-      jsonResponse(response, 200, { status: 'ok', service: 'TecPro99 CRM Connector' });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), HEALTH_TIMEOUT_MS);
+      try {
+        const { healthUrl } = await loadConnectorConfig(configPath);
+        const crmResponse = await fetchImpl(healthUrl, {
+          method: 'GET',
+          headers: { Accept: 'text/plain' },
+          signal: controller.signal
+        });
+        if (!crmResponse.ok) {
+          throw new Error(`Local CRM readiness check returned HTTP ${crmResponse.status}`);
+        }
+
+        jsonResponse(response, 200, {
+          status: 'ok',
+          service: 'TecPro99 CRM Connector',
+          crm: 'ready'
+        });
+      } catch {
+        jsonResponse(response, 503, {
+          status: 'unavailable',
+          service: 'TecPro99 CRM Connector',
+          crm: 'unavailable'
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
       return;
     }
     if (request.method !== 'POST' || url.pathname !== '/repair-requests') {

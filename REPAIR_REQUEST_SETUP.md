@@ -32,20 +32,25 @@ Start with the values in `.env.example`. `REPAIR_REQUEST_MODE=mock` produces a `
 The connector in `scripts/crm-connector.mjs` binds to localhost only. The HTTPS tunnel provides the public TLS endpoint; do not expose the connector port directly through the router.
 
 1. Copy `.crm-connector.example.json` to `.crm-connector.local.json`. The local file is ignored by Git.
-2. Set the CRM's current port and request path:
+2. Set `crmAppRoot` to the absolute directory containing the English CRM project.
+3. Set the CRM's current port and request path:
 
 ```powershell
 node scripts/set-crm-port.mjs 3000 /api/repair-requests
 ```
 
-3. Set `CRM_CONNECTOR_API_KEY` locally to the exact same long random value stored as `REPAIR_REQUEST_API_KEY` in Vercel.
-4. Start the connector on its permanent local port:
+4. Set `CRM_CONNECTOR_API_KEY` locally to the exact same long random value stored as `REPAIR_REQUEST_API_KEY` in Vercel.
+5. Start the connector on its permanent local port:
 
 ```powershell
 node --env-file-if-exists=.env.local scripts/crm-connector.mjs
 ```
 
-5. Configure the named HTTPS tunnel once so its stable hostname routes to `http://127.0.0.1:4399`. Set Vercel's `REPAIR_REQUEST_API_URL` to that hostname plus `/repair-requests`.
+6. Configure the named HTTPS tunnel once so its stable hostname routes to `http://127.0.0.1:4399`. Set Vercel's `REPAIR_REQUEST_API_URL` to that hostname plus `/repair-requests`.
+
+For the shop computer, keep the **TecPro99 CRM Connector** shortcut in the Windows Startup folder. It runs `scripts/start-production-connector.vbs`, which starts one hidden supervisor. The supervisor checks every 15 seconds and restarts the CRM, connector, or Cloudflare tunnel if one of those processes exits. Its event log is `%LOCALAPPDATA%\TecPro99\logs\stack-supervisor.log`.
+
+`GET http://127.0.0.1:4399/health` is an end-to-end readiness check. It returns `200` only when the connector can reach the CRM's `/health/ready` endpoint and the CRM can reach its database; otherwise it returns `503`.
 
 When the CRM port changes later, run only this command with the new number:
 
@@ -86,5 +91,5 @@ The built-in limits are maintained per active function instance. For production 
 Run the included server tests with a current Node.js runtime:
 
 ```powershell
-node --test tests/repair-request.test.mjs
+node --test tests/crm-connector.test.mjs tests/repair-request.test.mjs
 ```
