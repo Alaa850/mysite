@@ -453,6 +453,9 @@
     .floating-call::before { position: absolute; z-index: -1; inset: -7px; content: ""; border: 1px solid rgba(244,119,79,.55); border-radius: 11px; animation: call-pulse 2.7s ease-out infinite; }
     .floating-call:hover { color: var(--ink); background: var(--acid); animation-play-state: paused; }
     .floating-call svg { width: 18px; height: 18px; }
+    .floating-directions { position: fixed; z-index: 25; right: max(20px, env(safe-area-inset-right)); bottom: calc(max(20px, env(safe-area-inset-bottom)) + 68px); display: inline-flex; min-height: 53px; align-items: center; gap: 10px; padding: 12px 17px; border-radius: 7px; color: var(--white); background: var(--blue); box-shadow: 0 17px 35px rgba(22,58,151,.27); font-size: 13px; font-weight: 800; text-decoration: none; }
+    .floating-directions:hover { color: var(--ink); background: var(--acid); }
+    .floating-directions svg { width: 18px; height: 18px; }
     @keyframes call-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     @keyframes call-pulse { 0%, 55% { opacity: .72; transform: scale(.93); } 100% { opacity: 0; transform: scale(1.22); } }
 
@@ -594,6 +597,8 @@
       .floating-call { width: 52px; min-height: 52px; height: 52px; justify-content: center; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); padding: 0; border-radius: 50%; }
       .floating-call::before { border-radius: 50%; }
       .floating-call span { display: none; }
+      .floating-directions { width: 52px; min-height: 52px; height: 52px; justify-content: center; right: max(14px, env(safe-area-inset-right)); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 64px); padding: 0; border-radius: 50%; }
+      .floating-directions span { display: none; }
       .promo-dialog { grid-template-columns: 1fr; }
       .promo-image { display: none; }
       .promo-content { padding: 47px 24px 25px; }
@@ -871,6 +876,7 @@
     <div class="container footer-bottom"><span>&copy; <span id="year"></span> TecPro99. Chicago, IL.</span><span>Phone, tablet, console &amp; electronics repair.</span></div>
   </footer>
 
+  <a class="floating-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=4362%20N%20Elston%20Ave%2C%20Chicago%2C%20IL%2060641" target="_blank" rel="noopener" aria-label="Get directions to TecPro99 at 4362 North Elston Avenue" data-track="floating_directions"><i data-lucide="navigation" aria-hidden="true"></i><span>Get directions</span></a>
   <a class="floating-call" href="tel:+17736287132" aria-label="Call TecPro99 at 773-628-7132" data-track="floating_call"><i data-lucide="phone-call" aria-hidden="true"></i><span>Call now</span></a>
 
   <div class="promo-modal" id="promoModal" role="dialog" aria-modal="true" aria-labelledby="promo-title" aria-hidden="true">
