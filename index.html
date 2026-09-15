@@ -1057,7 +1057,7 @@
             </div>
             <div class="form-field">
               <label for="repairPhoneNumber">Phone Number <span class="required-mark">*</span></label>
-              <input id="repairPhoneNumber" name="phoneNumber" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" required aria-describedby="repairPhoneHelp">
+              <input id="repairPhoneNumber" name="phoneNumber" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" required aria-describedby="repairPhoneHelp" dir="ltr">
               <span id="repairPhoneHelp" class="field-help">US phone numbers only.</span>
             </div>
           </div>
@@ -1139,7 +1139,7 @@
               <p>TecPro99 will use this number to contact you about the repair.</p>
             </div>
           </div>
-          <strong class="phone-number-review" id="repairPhoneReview"></strong>
+          <strong class="phone-number-review" id="repairPhoneReview" dir="ltr"></strong>
           <p class="confirmation-note">Please check every digit before sending your request.</p>
           <p class="form-status" id="repairConfirmationStatus" role="alert" aria-live="assertive"></p>
           <div class="confirmation-actions">
@@ -1182,6 +1182,13 @@
     const repairRequestEndpoint = window.TECPRO99_REPAIR_REQUEST_ENDPOINT || '/api/repair-request';
     const repairRequestConfigEndpoint = window.TECPRO99_REPAIR_REQUEST_CONFIG_ENDPOINT || '/api/repair-request-config';
     const submissionFailureMessage = "We couldn't submit your request right now. Please try again or call TecPro99 at (773) 628-7132.";
+    const requestErrorMessages = {
+      VALIDATION_FAILED: 'Please check the highlighted information and try again.',
+      CAPTCHA_FAILED: 'Spam protection expired or could not verify the request. Please complete it again.',
+      IP_RATE_LIMITED: 'Too many requests were sent from this network. Please wait 30 minutes or call TecPro99 at (773) 628-7132.',
+      PHONE_RATE_LIMITED: 'This phone number already has recent repair requests. Please wait one hour or call TecPro99 at (773) 628-7132.',
+      SERVICE_UNAVAILABLE: submissionFailureMessage
+    };
     const repairRequestCooldownKey = 'tecpro99_last_repair_request_at';
     const repairRequestCooldownMs = 10 * 60 * 1000;
     let repairRequestConfig;
@@ -1367,6 +1374,21 @@
       repairRequestForm.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute('aria-invalid'));
     }
 
+    function showSubmissionError(result = {}) {
+      const message = requestErrorMessages[result.code] || submissionFailureMessage;
+      if (result.code === 'VALIDATION_FAILED' || result.code === 'CAPTCHA_FAILED') {
+        returnToPhoneField(false);
+        if (result.code === 'CAPTCHA_FAILED') resetTurnstile();
+        const fields = Array.isArray(result.fields) ? result.fields : [];
+        fields.forEach((name) => repairRequestForm.elements[name]?.setAttribute('aria-invalid', 'true'));
+        const firstInvalid = fields.map((name) => repairRequestForm.elements[name]).find(Boolean);
+        if (firstInvalid) firstInvalid.focus();
+        showFormStatus(message, 'error');
+        return;
+      }
+      showConfirmationStatus(message);
+    }
+
     function validateRepairRequest() {
       clearFormStatus();
       clearInvalidFieldState();
@@ -1483,7 +1505,7 @@
     repairRequestForm.elements.phoneNumber.addEventListener('blur', (event) => {
       event.target.value = formatUSPhone(event.target.value);
     });
-    repairRequestForm.addEventListener('submit', (event) => {
+    repairRequestForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (isSubmitting || !validateRepairRequest()) return;
       const cooldownRemaining = getBrowserCooldownRemaining();
@@ -1492,7 +1514,21 @@
         showFormStatus(`A repair request was recently submitted from this browser. Please wait ${minutesRemaining} minute${minutesRemaining === 1 ? '' : 's'} or call TecPro99 at (773) 628-7132.`, 'error');
         return;
       }
-      showPhoneConfirmation();
+      updateSubmitState(true);
+      try {
+        const config = await loadRepairRequestConfig();
+        if (config.mode === 'unavailable') {
+          showFormStatus(submissionFailureMessage, 'error');
+          return;
+        }
+        if (config.mode === 'production' && !captchaToken) {
+          showFormStatus(requestErrorMessages.CAPTCHA_FAILED, 'error');
+          return;
+        }
+        showPhoneConfirmation();
+      } finally {
+        updateSubmitState(false);
+      }
     });
 
     confirmRepairSubmit.addEventListener('click', async () => {
@@ -1516,11 +1552,10 @@
           body: JSON.stringify(getRepairPayload())
         });
         const result = await response.json().catch(() => ({}));
-        if (response.status === 429) {
-          showConfirmationStatus(result.error || submissionFailureMessage);
+        if (!response.ok || !result.success || !result.referenceNumber) {
+          showSubmissionError(result);
           return;
         }
-        if (!response.ok || !result.success || !result.referenceNumber) throw new Error('Repair request rejected');
 
         repairPhoneConfirmation.classList.remove('is-visible');
         repairPhoneConfirmation.setAttribute('aria-hidden', 'true');

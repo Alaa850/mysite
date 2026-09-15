@@ -67,8 +67,31 @@ test('server-side validation rejects missing required data and invalid US phone 
     const body = await response.json();
     assert.equal(response.status, 422);
     assert.equal(body.success, false);
+    assert.equal(body.code, 'VALIDATION_FAILED');
     assert.deepEqual(body.fields.sort(), ['customerName', 'phoneNumber']);
   } finally {
+    restore();
+  }
+});
+
+test('production mode returns a stable code when CAPTCHA verification fails', async () => {
+  const restore = applyEnvironment({
+    REPAIR_REQUEST_MODE: 'production',
+    TURNSTILE_SECRET_KEY: 'turnstile-secret',
+    TURNSTILE_EXPECTED_HOSTNAME: 'techpro99.com',
+    REPAIR_REQUEST_API_URL: 'https://crm.example.test/requests',
+    REPAIR_REQUEST_API_KEY: 'crm-secret'
+  });
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => Response.json({ success: false, hostname: 'techpro99.com' });
+  try {
+    const response = await handler.fetch(buildRequest(validBody({ requestId: 'captcha-failure-1' }), '203.0.113.16'));
+    const body = await response.json();
+    assert.equal(response.status, 422);
+    assert.equal(body.success, false);
+    assert.equal(body.code, 'CAPTCHA_FAILED');
+  } finally {
+    globalThis.fetch = originalFetch;
     restore();
   }
 });

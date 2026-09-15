@@ -254,7 +254,7 @@ export default {
 
     const { errors, requestId, payload } = validatePayload(input);
     if (errors.length) {
-      return jsonResponse({ success: false, error: 'Please check the required information.', fields: errors }, 422);
+      return jsonResponse({ success: false, code: 'VALIDATION_FAILED', error: 'Please check the required information.', fields: errors }, 422);
     }
 
     const clientIp = getClientIp(request);
@@ -278,7 +278,7 @@ export default {
         const captchaToken = typeof input.captchaToken === 'string' ? input.captchaToken.trim() : '';
         const isHuman = await verifyTurnstile(captchaToken, requestId, clientIp);
         if (!isHuman) {
-          return jsonResponse({ success: false, error: 'Spam protection could not verify this request.' }, 422);
+          return jsonResponse({ success: false, code: 'CAPTCHA_FAILED', error: 'Spam protection could not verify this request.' }, 422);
         }
       }
 
@@ -299,7 +299,7 @@ export default {
       return jsonResponse({ success: true, referenceNumber });
     } catch (error) {
       console.error('Repair request submission failed:', error instanceof Error ? error.message : 'Unknown error');
-      return jsonResponse({ success: false, error: 'Repair requests are temporarily unavailable.' }, 503);
+      return jsonResponse({ success: false, code: 'SERVICE_UNAVAILABLE', error: 'Repair requests are temporarily unavailable.' }, 503);
     }
   }
 };
