@@ -51,7 +51,7 @@ const copyRows = [
   ['Device diagnostics and board repair', 'Diagnóstico de dispositivos y reparación de placas', 'فحص الأجهزة وتصليح اللوحات', 'Диагностика устройств и ремонт плат'],
   ['Water damaged phone repair', 'Reparación de celular con daño por agua', 'تصليح هاتف متضرر من الماء', 'Ремонт телефона после попадания воды'],
   ['Technician working on a device', 'Técnico trabajando en un dispositivo', 'فني يعمل على جهاز', 'Мастер ремонтирует устройство'],
-  ['4.8 out of 5 average customer rating', 'Calificación promedio de clientes: 4.8 de 5', 'متوسط تقييم العملاء 4.8 من 5', 'Средняя оценка клиентов: 4,8 из 5'],
+  ['4.7 out of 5 average customer rating', 'Calificación promedio de clientes: 4.7 de 5', 'متوسط تقييم العملاء 4.7 من 5', 'Средняя оценка клиентов: 4,7 из 5'],
   ['5 out of 5 stars', '5 de 5 estrellas', '5 نجوم من 5', '5 звезд из 5'],
   ['Services', 'Servicios', 'الخدمات', 'Услуги'],
   ['iPhone repair Chicago', 'Reparación de iPhone en Chicago', 'تصليح آيفون في شيكاغو', 'Ремонт iPhone в Чикаго'],
