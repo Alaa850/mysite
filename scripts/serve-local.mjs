@@ -16,7 +16,11 @@ const contentTypes = {
   '.jpg': 'image/jpeg',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
-  '.png': 'image/png'
+  '.png': 'image/png',
+  '.svg': 'image/svg+xml',
+  '.txt': 'text/plain; charset=utf-8',
+  '.webp': 'image/webp',
+  '.xml': 'application/xml; charset=utf-8'
 };
 
 async function handleApiRequest(request, response, handler) {
@@ -46,7 +50,10 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  const relativePath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  const requestedPath = pathname.replace(/^\/+/, '');
+  const relativePath = pathname === '/'
+    ? 'index.html'
+    : pathname.endsWith('/') ? path.join(requestedPath, 'index.html') : requestedPath;
   const filePath = path.resolve(root, relativePath);
   if (!filePath.startsWith(`${root}${path.sep}`) && filePath !== path.join(root, 'index.html')) {
     response.writeHead(403).end();
