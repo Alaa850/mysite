@@ -8,25 +8,28 @@ const sourcePath = path.join(projectRoot, 'index.html');
 const localeInfo = {
   es: {
     htmlLang: 'es', languageTag: 'es-US', ogLocale: 'es_US', code: 'ES', dir: 'ltr', path: '/es/',
-    title: 'Reparación de celulares, electrónicos y PS5 en Chicago | TecPro99',
-    description: 'TecPro99 ofrece reparación de iPhone, Samsung, Pixel, Motorola, tabletas, computadoras y consolas PS5 en Chicago: pantallas, baterías, puertos de carga y HDMI.'
+    iphonePath: '/es/reparacion-iphone-chicago/',
+    title: 'Reparación de iPhone en Chicago | Pantallas y baterías | TecPro99',
+    description: 'TecPro99 ofrece reparación de iPhone en Chicago para pantallas rotas, baterías, puertos de carga y vidrio trasero, además de Samsung, Pixel, Motorola, tabletas y PS5.'
   },
   ar: {
     htmlLang: 'ar', languageTag: 'ar-US', ogLocale: 'ar_US', code: 'AR', dir: 'rtl', path: '/ar/',
-    title: 'تصليح الهواتف والإلكترونيات وPS5 في شيكاغو | TecPro99',
-    description: 'تقدم TecPro99 في شيكاغو تصليح iPhone وSamsung وPixel وMotorola والأجهزة اللوحية والكمبيوتر وأجهزة PS5، بما في ذلك الشاشات والبطاريات ومنافذ الشحن وHDMI.'
+    iphonePath: '/ar/iphone-repair-chicago/',
+    title: 'تصليح آيفون في شيكاغو | الشاشات والبطاريات | TecPro99',
+    description: 'تقدم TecPro99 تصليح آيفون في شيكاغو للشاشات المكسورة والبطاريات ومنافذ الشحن والزجاج الخلفي، بالإضافة إلى Samsung وPixel وMotorola والأجهزة اللوحية وPS5.'
   },
   ru: {
     htmlLang: 'ru', languageTag: 'ru-US', ogLocale: 'ru_US', code: 'RU', dir: 'ltr', path: '/ru/',
-    title: 'Ремонт телефонов, электроники и PS5 в Чикаго | TecPro99',
-    description: 'TecPro99 выполняет в Чикаго ремонт iPhone, Samsung, Pixel, Motorola, планшетов, компьютеров и PS5: замена экранов и батарей, ремонт разъемов зарядки и HDMI.'
+    iphonePath: '/ru/remont-iphone-chicago/',
+    title: 'Ремонт iPhone в Чикаго | Экраны и батареи | TecPro99',
+    description: 'TecPro99 выполняет ремонт iPhone в Чикаго: замена разбитых экранов и батарей, ремонт разъемов зарядки и заднего стекла, а также Samsung, Pixel, Motorola, планшетов и PS5.'
   }
 };
 
 // Each entry is English, Spanish, Arabic, Russian. Keeping one source phrase per row
 // makes it difficult for a localized page to quietly drift away from the main site.
 const copyRows = [
-  ['Phone, Electronics & PS5 Repair Chicago | TecPro99', 'Reparación de celulares, electrónicos y PS5 en Chicago | TecPro99', 'تصليح الهواتف والإلكترونيات وPS5 في شيكاغو | TecPro99', 'Ремонт телефонов, электроники и PS5 в Чикаго | TecPro99'],
+  ['iPhone Repair Chicago | Screens, Batteries & More | TecPro99', 'Reparación de iPhone en Chicago | Pantallas y baterías | TecPro99', 'تصليح آيفون في شيكاغو | الشاشات والبطاريات | TecPro99', 'Ремонт iPhone в Чикаго | Экраны и батареи | TecPro99'],
   ['TecPro99 phone, electronics and game console repair in Chicago', 'Reparación de celulares, electrónicos y consolas de TecPro99 en Chicago', 'تصليح الهواتف والإلكترونيات وأجهزة الألعاب لدى TecPro99 في شيكاغو', 'Ремонт телефонов, электроники и игровых консолей в TecPro99 в Чикаго'],
   ['Chicago phone, tablet, electronics and game console repair shop specializing in screens, batteries, charging ports, back glass, HDMI ports, diagnostics and board repair.', 'Taller de reparación en Chicago para celulares, tabletas, electrónicos y consolas, especializado en pantallas, baterías, puertos de carga, vidrio trasero, puertos HDMI, diagnóstico y reparación de placas.', 'متجر تصليح في شيكاغو للهواتف والأجهزة اللوحية والإلكترونيات وأجهزة الألعاب، متخصص في الشاشات والبطاريات ومنافذ الشحن والزجاج الخلفي ومنافذ HDMI والفحص وتصليح اللوحات.', 'Сервисный центр в Чикаго по ремонту телефонов, планшетов, электроники и игровых консолей: экраны, батареи, разъемы зарядки, заднее стекло, HDMI, диагностика и ремонт плат.'],
   ['Chicago phone, tablet, computer, electronics and game console repair from TecPro99.', 'Reparación de celulares, tabletas, computadoras, electrónicos y consolas en Chicago por TecPro99.', 'تصليح الهواتف والأجهزة اللوحية والكمبيوتر والإلكترونيات وأجهزة الألعاب في شيكاغو من TecPro99.', 'Ремонт телефонов, планшетов, компьютеров, электроники и игровых консолей в Чикаго от TecPro99.'],
@@ -51,14 +54,15 @@ const copyRows = [
   ['4.8 out of 5 average customer rating', 'Calificación promedio de clientes: 4.8 de 5', 'متوسط تقييم العملاء 4.8 من 5', 'Средняя оценка клиентов: 4,8 из 5'],
   ['5 out of 5 stars', '5 de 5 estrellas', '5 نجوم من 5', '5 звезд из 5'],
   ['Services', 'Servicios', 'الخدمات', 'Услуги'],
+  ['iPhone repair Chicago', 'Reparación de iPhone en Chicago', 'تصليح آيفون في شيكاغو', 'Ремонт iPhone в Чикаго'],
   ['How it works', 'Cómo funciona', 'كيف نعمل', 'Как это работает'],
   ['Visit us', 'Visítanos', 'زورونا', 'Как нас найти'],
   ['FAQ', 'Preguntas', 'الأسئلة', 'Вопросы'],
   ['Request a Repair', 'Solicitar reparación', 'طلب إصلاح', 'Оставить заявку'],
-  ['Chicago device repair', 'Reparación de dispositivos en Chicago', 'تصليح الأجهزة في شيكاغو', 'Ремонт техники в Чикаго'],
-  ['Your tech has a', 'Tu dispositivo merece', 'جهازك يستحق', 'Ваша техника должна'],
-  ['life to get back to.', 'volver a funcionar.', 'أن يعود للعمل.', 'вернуться в строй.'],
-  ['From a cracked screen to a console that will not power on, TecPro99 gives you a clear repair path and careful service for the devices you use every day.', 'Desde una pantalla rota hasta una consola que no enciende, TecPro99 te ofrece un proceso claro y un servicio cuidadoso para los dispositivos que usas todos los días.', 'من شاشة مكسورة إلى جهاز ألعاب لا يعمل، تقدم لك TecPro99 مسار إصلاح واضحًا وخدمة دقيقة للأجهزة التي تستخدمها يوميًا.', 'От разбитого экрана до игровой консоли, которая не включается: TecPro99 предлагает понятный план и аккуратный ремонт техники, которой вы пользуетесь каждый день.'],
+  ['Chicago iPhone and device repair', 'Reparación de iPhone y dispositivos en Chicago', 'تصليح آيفون والأجهزة في شيكاغو', 'Ремонт iPhone и техники в Чикаго'],
+  ['iPhone & electronics repair', 'Reparación de iPhone y electrónicos', 'تصليح آيفون والإلكترونيات', 'Ремонт iPhone и электроники'],
+  ['in Chicago.', 'en Chicago.', 'في شيكاغو.', 'в Чикаго.'],
+  ['From a cracked iPhone screen to a console that will not power on, TecPro99 gives you a clear repair path and careful service for the devices you use every day.', 'Desde una pantalla de iPhone rota hasta una consola que no enciende, TecPro99 te ofrece un proceso claro y un servicio cuidadoso para los dispositivos que usas todos los días.', 'من شاشة آيفون مكسورة إلى جهاز ألعاب لا يعمل، تقدم لك TecPro99 مسار إصلاح واضحًا وخدمة دقيقة للأجهزة التي تستخدمها يوميًا.', 'От разбитого экрана iPhone до игровой консоли, которая не включается: TecPro99 предлагает понятный план и аккуратный ремонт техники, которой вы пользуетесь каждый день.'],
   ['Call TecPro99', 'Llamar a TecPro99', 'اتصل بـ TecPro99', 'Позвонить в TecPro99'],
   ['Bring the device in, tell us what changed, and we will help you figure out the next right step.', 'Trae el dispositivo, cuéntanos qué pasó y te ayudaremos a elegir el siguiente paso.', 'أحضر الجهاز وأخبرنا بما حدث، وسنساعدك في اختيار الخطوة المناسبة.', 'Принесите устройство и расскажите, что произошло. Мы поможем определить следующий шаг.'],
   ['Phones', 'Celulares', 'هواتف', 'Телефоны'],
@@ -84,7 +88,7 @@ const copyRows = [
   ['04 / CONSOLE', '04 / CONSOLA', '04 / جهاز ألعاب', '04 / КОНСОЛЬ'],
   ['05 / DIAGNOSTICS', '05 / DIAGNÓSTICO', '05 / فحص', '05 / ДИАГНОСТИКА'],
   ['06 / RECOVERY', '06 / RECUPERACIÓN', '06 / استعادة', '06 / ВОССТАНОВЛЕНИЕ'],
-  ['Screen repair', 'Reparación de pantalla', 'تصليح الشاشة', 'Ремонт экрана'],
+  ['iPhone screen repair', 'Reparación de pantalla de iPhone', 'تصليح شاشة آيفون', 'Ремонт экрана iPhone'],
   ['For cracks, display problems, touch issues, and broken glass.', 'Para grietas, fallas de imagen, problemas táctiles y vidrio roto.', 'للشقوق ومشاكل العرض واللمس والزجاج المكسور.', 'При трещинах, проблемах с изображением, сенсором и разбитом стекле.'],
   ['Battery replacement', 'Cambio de batería', 'تبديل البطارية', 'Замена батареи'],
   ['When your phone drains too fast, overheats, or will not hold a charge.', 'Cuando el celular se descarga rápido, se calienta o no conserva la carga.', 'عندما تنفد البطارية بسرعة أو ترتفع حرارة الهاتف أو لا يحتفظ بالشحن.', 'Если телефон быстро разряжается, перегревается или не держит заряд.'],
@@ -299,6 +303,7 @@ function localize(source, locale) {
   html = html.replace(new RegExp(`(<a href="${info.path.replaceAll('/', '\\/')}"[^>]*)(>)`), '$1 aria-current="page"$2');
   html = html.replace(/(<summary aria-label="[^"]+"><i[^>]+><\/i><span>)[A-Z]{2}(<\/span>)/, `$1${info.code}$2`);
   html = html.replaceAll('src="assets/', 'src="/assets/').replaceAll('href="assets/', 'href="/assets/').replaceAll('url("assets/', 'url("/assets/');
+  html = html.replaceAll('href="/iphone-repair-chicago/"', `href="${info.iphonePath}"`);
 
   const jsonIndex = locale === 'es' ? 1 : locale === 'ar' ? 2 : 3;
   for (const row of copyRows) {
