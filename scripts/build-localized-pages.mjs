@@ -306,11 +306,13 @@ function localize(source, locale) {
   html = html.replaceAll('href="/iphone-repair-chicago/"', `href="${info.iphonePath}"`);
 
   const jsonIndex = locale === 'es' ? 1 : locale === 'ar' ? 2 : 3;
-  for (const row of copyRows) {
-    const english = JSON.stringify(row[0]);
-    const translated = JSON.stringify(row[jsonIndex]);
-    html = html.replaceAll(english, translated);
-  }
+  // Translate structured display text without changing form values or JavaScript contracts.
+  html = html.replace(/(<script\b[^>]*type="application\/ld\+json"[^>]*>)([\s\S]*?)(<\/script>)/gi,
+    (_, opening, json, closing) => {
+      const data = JSON.parse(json, (_key, value) =>
+        typeof value === 'string' ? translations.get(value) ?? value : value);
+      return `${opening}\n${JSON.stringify(data, null, 2).split('\n').map(line => `    ${line}`).join('\n')}\n  ${closing}`;
+    });
   html = html.replaceAll('"inLanguage": "en-US"', `"inLanguage": "${info.languageTag}"`);
   html = html.replaceAll('"https://techpro99.com/#webpage"', `"https://techpro99.com${info.path}#webpage"`);
 

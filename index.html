@@ -1296,6 +1296,7 @@
     }
 
     function showPhoneConfirmation() {
+      trackEvent('repair_request_confirm', repairRequestForm.dataset.service || 'general');
       const formattedPhone = formatUSPhone(repairRequestForm.elements.phoneNumber.value);
       repairRequestForm.elements.phoneNumber.value = formattedPhone;
       repairPhoneReview.textContent = formattedPhone;
@@ -1389,6 +1390,8 @@
     }
 
     function showSubmissionError(result = {}) {
+      const errorCode = Object.hasOwn(requestErrorMessages, result.code) ? result.code : 'SERVICE_UNAVAILABLE';
+      trackEvent('repair_request_error', errorCode);
       const message = requestErrorMessages[result.code] || submissionFailureMessage;
       if (result.code === 'VALIDATION_FAILED' || result.code === 'CAPTCHA_FAILED') {
         returnToPhoneField(false);
@@ -1560,6 +1563,7 @@
           return;
         }
 
+        trackEvent('repair_request_attempt', repairRequestForm.dataset.service || 'general');
         const response = await fetch(repairRequestEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -1580,6 +1584,7 @@
         clearConfirmationStatus();
         trackEvent('repair_request_submit', repairRequestForm.dataset.service || 'general');
       } catch (error) {
+        trackEvent('repair_request_error', 'NETWORK_ERROR');
         showConfirmationStatus(submissionFailureMessage);
         if (repairRequestConfig && repairRequestConfig.mode === 'production') resetTurnstile();
       } finally {
