@@ -1,0 +1,18 @@
+# Publish only the customer website and its request endpoints.
+/*
+!/api/
+/api/*
+!/api/repair-request.mjs
+!/api/repair-request-config.mjs
+!/assets/
+!/ar/
+!/es/
+!/ru/
+!/iphone-repair-chicago/
+!/index.html
+!/favicon.ico
+!/robots.txt
+!/sitemap.xml
+!/llms.txt
+!/7f11ece60d8e6a31b291e346cf27b5c1.txt
+!/vercel.json
