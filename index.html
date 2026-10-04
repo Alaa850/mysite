@@ -1527,6 +1527,7 @@
       if (isSubmitting || !validateRepairRequest()) return;
       const cooldownRemaining = getBrowserCooldownRemaining();
       if (cooldownRemaining > 0) {
+        trackEvent('repair_request_error', 'BROWSER_COOLDOWN');
         const minutesRemaining = Math.max(1, Math.ceil(cooldownRemaining / 60000));
         showFormStatus(`A repair request was recently submitted from this browser. Please wait ${minutesRemaining} minute${minutesRemaining === 1 ? '' : 's'} or call TecPro99 at (773) 628-7132.`, 'error');
         return;
@@ -1536,10 +1537,12 @@
         const config = await loadRepairRequestConfig();
         if (config.mode === 'unavailable') {
           showFormStatus(submissionFailureMessage, 'error');
+          trackEvent('repair_request_error', 'CONFIG_UNAVAILABLE');
           return;
         }
         if (config.mode === 'production' && !captchaToken) {
           showFormStatus(requestErrorMessages.CAPTCHA_FAILED, 'error');
+          trackEvent('repair_request_error', 'CAPTCHA_REQUIRED');
           return;
         }
         showPhoneConfirmation();
@@ -1555,10 +1558,12 @@
         const config = await loadRepairRequestConfig();
         if (config.mode === 'unavailable') {
           showConfirmationStatus(submissionFailureMessage);
+          trackEvent('repair_request_error', 'CONFIG_UNAVAILABLE');
           return;
         }
         if (config.mode === 'production' && !captchaToken) {
           returnToPhoneField(false);
+          trackEvent('repair_request_error', 'CAPTCHA_REQUIRED');
           showFormStatus('Please complete spam protection before submitting your request.', 'error');
           return;
         }

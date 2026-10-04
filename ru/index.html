@@ -1595,6 +1595,7 @@
       if (isSubmitting || !validateRepairRequest()) return;
       const cooldownRemaining = getBrowserCooldownRemaining();
       if (cooldownRemaining > 0) {
+        trackEvent('repair_request_error', 'BROWSER_COOLDOWN');
         const minutesRemaining = Math.max(1, Math.ceil(cooldownRemaining / 60000));
         showFormStatus(`С этого браузера недавно уже отправлялась заявка. Подождите ${minutesRemaining} мин. или позвоните в TecPro99: (773) 628-7132.`, 'error');
         return;
@@ -1604,10 +1605,12 @@
         const config = await loadRepairRequestConfig();
         if (config.mode === 'unavailable') {
           showFormStatus(submissionFailureMessage, 'error');
+          trackEvent('repair_request_error', 'CONFIG_UNAVAILABLE');
           return;
         }
         if (config.mode === 'production' && !captchaToken) {
           showFormStatus(requestErrorMessages.CAPTCHA_FAILED, 'error');
+          trackEvent('repair_request_error', 'CAPTCHA_REQUIRED');
           return;
         }
         showPhoneConfirmation();
@@ -1623,10 +1626,12 @@
         const config = await loadRepairRequestConfig();
         if (config.mode === 'unavailable') {
           showConfirmationStatus(submissionFailureMessage);
+          trackEvent('repair_request_error', 'CONFIG_UNAVAILABLE');
           return;
         }
         if (config.mode === 'production' && !captchaToken) {
           returnToPhoneField(false);
+          trackEvent('repair_request_error', 'CAPTCHA_REQUIRED');
           showFormStatus('Пройдите проверку от спама перед отправкой.', 'error');
           return;
         }

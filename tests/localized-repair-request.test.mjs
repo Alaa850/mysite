@@ -50,6 +50,9 @@ for (const [localeIndex, locale] of ['en', 'es', 'ar', 'ru'].entries()) {
     }
     assert.match(html, /trackEvent\('repair_request_attempt'/);
     assert.match(html, /trackEvent\('repair_request_error', 'NETWORK_ERROR'\)/);
+    for (const code of ['BROWSER_COOLDOWN', 'CONFIG_UNAVAILABLE', 'CAPTCHA_REQUIRED']) {
+      assert.ok(html.includes(`trackEvent('repair_request_error', '${code}')`), `Missing ${code} telemetry`);
+    }
     assert.doesNotMatch(html, /customer-assistant|api\/customer-chat/);
   });
 }
