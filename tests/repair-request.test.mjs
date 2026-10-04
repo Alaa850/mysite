@@ -1,6 +1,42 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFile } from 'node:fs/promises';
 import handler from '../api/repair-request.mjs';
+
+test('deployment duration accommodates both sequential upstream timeouts', async () => {
+  const config = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const source = await readFile(new URL('../api/repair-request.mjs', import.meta.url), 'utf8');
+  const secondsPerCall = Number(source.match(/const CRM_TIMEOUT_MS = (\d+) \* 1000/)[1]);
+  assert.ok(config.functions['api/repair-request.mjs'].maxDuration >= secondsPerCall * 2 + 5);
+});
+
+test('production never invents a success reference for an unconfirmed CRM response', async () => {
+  const restore = applyEnvironment({
+    REPAIR_REQUEST_MODE: 'production',
+    TURNSTILE_SECRET_KEY: 'turnstile-secret',
+    TURNSTILE_EXPECTED_HOSTNAME: 'techpro99.com',
+    REPAIR_REQUEST_API_URL: 'https://crm.example.test/requests',
+    REPAIR_REQUEST_API_KEY: 'crm-secret'
+  });
+  const originalFetch = globalThis.fetch;
+  const replies = [new Response('not JSON'), Response.json({}), Response.json({ success: false, referenceNumber: 'WEB-INVALID' })];
+  globalThis.fetch = async (url) => String(url).includes('turnstile')
+    ? Response.json({ success: true, hostname: 'techpro99.com' }) : replies.shift();
+  try {
+    for (let index = 0; index < 3; index++) {
+      const response = await handler.fetch(buildRequest(validBody({
+        phoneNumber: `312555012${index}`, requestId: `unconfirmed-crm-${index}`
+      }), `203.0.113.${40 + index}`));
+      assert.equal(response.status, 503);
+      const body = await response.json();
+      assert.equal(body.success, false);
+      assert.equal(body.referenceNumber, undefined);
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
+    restore();
+  }
+});
 
 function buildRequest(body, ip = '203.0.113.10') {
   return new Request('https://techpro99.com/api/repair-request', {

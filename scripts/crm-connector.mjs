@@ -207,6 +207,7 @@ export function createCrmConnector(options = {}) {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), FORWARD_TIMEOUT_MS);
       let crmResponse;
+      let result;
       try {
         const headers = {
           Accept: 'application/json',
@@ -220,14 +221,16 @@ export function createCrmConnector(options = {}) {
           body: JSON.stringify(payload),
           signal: controller.signal
         });
+        result = await crmResponse.json().catch(() => ({}));
       } finally {
         clearTimeout(timeout);
       }
 
-      const result = await crmResponse.json().catch(() => ({}));
       if (!crmResponse.ok) throw new Error(`Local CRM returned HTTP ${crmResponse.status}`);
-      const referenceNumber = cleanText(result.referenceNumber || result.reference || result.id, 100)
-        || `WEB-${String(Date.now()).slice(-7)}`;
+      const referenceNumber = cleanText(result.referenceNumber || result.reference || result.id, 100);
+      if (result.success === false || !referenceNumber) {
+        throw new Error('Local CRM did not confirm a saved request');
+      }
       if (idempotencyKey) {
         completedRequests.set(idempotencyKey, { referenceNumber, expiresAt: now + IDEMPOTENCY_TTL_MS });
       }

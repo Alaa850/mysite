@@ -208,7 +208,10 @@ async function sendToCrm(payload, requestId) {
       throw new Error('Repair request CRM rejected the submission');
     }
     const referenceNumber = cleanText(result.referenceNumber || result.reference || result.id, 100);
-    return referenceNumber || `WEB-${String(Date.now()).slice(-7)}`;
+    if (result.success === false || !referenceNumber) {
+      throw new Error('Repair request CRM did not confirm a saved request');
+    }
+    return referenceNumber;
   } finally {
     clearTimeout(timeout);
   }

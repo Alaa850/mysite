@@ -8,6 +8,33 @@ import { createCrmConnector } from '../scripts/crm-connector.mjs';
 
 const connectorKey = 'test-connector-key-with-more-than-32-characters';
 
+test('connector rejects unconfirmed CRM responses and does not cache false success', async () => {
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), 'tecpro99-ack-'));
+  const configPath = path.join(temporaryDirectory, 'connector.json');
+  await writeFile(configPath, JSON.stringify({ crmHost: '127.0.0.1', crmPort: 5063, crmPath: '/api/repair-requests' }));
+  const replies = [new Response('not JSON'), Response.json({}),
+    Response.json({ success: false, referenceNumber: 'WEB-INVALID' }),
+    Response.json({ success: true, referenceNumber: 'WEB-CONFIRMED' })];
+  const connector = createCrmConnector({ configPath, connectorApiKey: connectorKey,
+    fetchImpl: async () => replies.shift() });
+  const port = await listen(connector);
+  try {
+    for (let index = 0; index < 3; index++) {
+      const response = await postRepair(port, repairPayload(), 'ack-retry-request');
+      assert.equal(response.status, 502);
+      const body = await response.json();
+      assert.equal(body.success, false);
+      assert.equal(body.referenceNumber, undefined);
+    }
+    const confirmed = await postRepair(port, repairPayload(), 'ack-retry-request');
+    assert.equal(confirmed.status, 200);
+    assert.equal((await confirmed.json()).referenceNumber, 'WEB-CONFIRMED');
+  } finally {
+    await close(connector);
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
+});
+
 function repairPayload(name = 'Jordan Lee') {
   return {
     source: 'TecPro99 Website',
