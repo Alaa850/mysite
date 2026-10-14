@@ -61,7 +61,11 @@ const server = createServer(async (request, response) => {
   }
 
   try {
-    const file = await readFile(filePath);
+    let file = await readFile(filePath);
+    // Local QA must not send test visits to the production analytics property.
+    if (path.extname(filePath).toLowerCase() === '.html') {
+      file = Buffer.from(file.toString('utf8').replace(/<script\b[^>]*src="https:\/\/www\.googletagmanager\.com\/[^"]*"[^>]*><\/script>/g, ''));
+    }
     response.writeHead(200, {
       'Cache-Control': 'no-store',
       'Content-Type': contentTypes[path.extname(filePath).toLowerCase()] || 'application/octet-stream'

@@ -210,6 +210,8 @@
     gtag('config', 'G-PWLSS3VE8R');
   </script>
   <script defer src="/assets/site-analytics.js"></script>
+  <link rel="stylesheet" href="/assets/marketing-attribution.css">
+  <script defer src="/assets/marketing-attribution.js"></script>
 
   <style>
     :root {
@@ -1442,7 +1444,7 @@
         model: formData.get('model'),
         problemDescription: selectedService && description ? `${selectedService}: ${description}` : description || selectedService,
         preferredContactMethod: formData.get('preferredContactMethod'),
-        pageUrl: window.location.href,
+        pageUrl: window.TecPro99Measurement?.requestPageUrl() || window.location.href,
         submittedAt: new Date().toISOString(),
         consent: formData.get('consent') === 'on',
         companyWebsite: formData.get('companyWebsite'),

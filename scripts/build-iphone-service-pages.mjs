@@ -261,6 +261,8 @@ ${alternateLocales}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PWLSS3VE8R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-PWLSS3VE8R');</script>
   <script defer src="/assets/site-analytics.js"></script>
+  <link rel="stylesheet" href="/assets/marketing-attribution.css">
+  <script defer src="/assets/marketing-attribution.js"></script>
   <style>
     :root{--ink:#171714;--muted:#5d5b54;--paper:#f7f4ee;--paper2:#ebe6dc;--white:#fffdf9;--line:#d7d1c5;--acid:#d6f354;--blue:#2d63ee;--orange:#f4774f;--max:1180px;--radius:8px}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Manrope",Arial,sans-serif;line-height:1.55}body[dir="rtl"],html[dir="rtl"] body{font-family:"Noto Sans Arabic","Manrope",Arial,sans-serif}a{color:inherit}img{display:block;max-width:100%}.container{width:min(calc(100% - 40px),var(--max));margin-inline:auto}.eyebrow{margin:0 0 12px;color:#1748b5;font-family:"DM Mono",monospace;font-size:12px;font-weight:600;text-transform:uppercase}.button{display:inline-flex;min-height:48px;align-items:center;justify-content:center;gap:9px;padding:0 18px;border:1px solid var(--ink);border-radius:6px;font-weight:800;text-decoration:none}.button-primary{background:var(--acid);color:var(--ink)}.button-light{background:rgba(255,255,255,.94);color:var(--ink)}.button svg{width:18px;height:18px}
