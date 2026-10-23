@@ -1,4 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
+import { getShopClosure } from '../assets/shop-closure-config.mjs';
 
 const MAX_REQUEST_BYTES = 16 * 1024;
 const IP_RATE_LIMIT_WINDOW_MS = 30 * 60 * 1000;
@@ -221,6 +222,16 @@ export default {
   async fetch(request) {
     if (request.method !== 'POST') {
       return jsonResponse({ success: false, error: 'Method not allowed.' }, 405, { Allow: 'POST' });
+    }
+
+    const closure = getShopClosure();
+    if (closure) {
+      return jsonResponse({
+        success: false,
+        code: 'SHOP_TEMPORARILY_CLOSED',
+        error: 'The shop is closed for a holiday. Repair requests will resume automatically at the reopening time.',
+        reopensAt: closure.reopensAt
+      }, 503, { 'Retry-After': String(closure.retryAfterSeconds) });
     }
 
     const origin = request.headers.get('origin');

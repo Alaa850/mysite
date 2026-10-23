@@ -1,0 +1,10 @@
+.shop-closure-notice { position: relative; z-index: 2; background: #fff3cb; color: #352b10; border-block: 1px solid #e5ce83; padding: 20px 24px; font-family: inherit; }
+.shop-closure-inner { max-width: 1200px; margin-inline: auto; }
+[data-shop-closed="true"] .shop-closure-header { position: relative; top: auto; background: #171714; }
+.shop-closure-notice strong { display: block; font-size: 20px; line-height: 1.35; letter-spacing: 0; }
+.shop-closure-notice p { margin: 7px 0 0; font-size: 15px; line-height: 1.55; color: inherit; }
+.shop-closure-notice time { font-weight: 700; }
+[data-shop-closed="true"] [aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+[data-shop-closed="true"] #promoModal,
+[data-shop-closed="true"] #repairRequestModal { display: none !important; }
+@media (max-width: 600px) { .shop-closure-notice { padding: 16px 20px; } .shop-closure-notice strong { font-size: 18px; } .shop-closure-notice p { font-size: 14px; } }
